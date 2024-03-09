@@ -6,7 +6,7 @@ import './App.css'
 function App() {
   const [count, setCount] = useState(0)
 const [data,setData]=useState('')
-  fetch('http://127.0.0.1:5000/').then(res=>res.json()).then(res=>{
+  fetch('http://127.0.0.1:5173/').then(res=>res.json()).then(res=>{
     setData(res.name)
   
 }).catch(err=>{
