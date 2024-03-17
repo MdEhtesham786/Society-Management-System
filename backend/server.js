@@ -7,12 +7,12 @@ const hostname = '127.0.0.1';
 const app = express();
 import cors from "cors";
 app.use(cors());
-import { userModel } from "./models/userModel.js";
+import userModel from "./models/userModel.js";
 app.get('/', async (req, res) => {
     try {
         res.json({
             success: true,
-            name: "Ehtesham"
+            name: "Xyz"
         });
     } catch (err) {
         console.log(err);
