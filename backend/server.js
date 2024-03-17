@@ -12,7 +12,7 @@ app.get('/', async (req, res) => {
     try {
         res.json({
             success: true,
-            name: "Ehtesham"
+            name: "Xyz"
         });
     } catch (err) {
         console.log(err);
