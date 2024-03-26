@@ -1,0 +1,20 @@
+/* CustomButton.css */
+
+button, [type='button'], [type='reset'], [type='submit']{
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.custom-button:hover {
+    background-color: #0056b3;
+}
+
+.custom-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

@@ -1,0 +1,28 @@
+.generate-bills {
+    background-color: var(--primary-color);
+    margin-top: 10px;
+    padding: 0 0 17px 34px;
+    border-radius: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    justify-content: center;
+    border: 0.5px #9F9F9F solid;
+    box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.heading {
+    font-size: 20px;
+    line-height: 30px;
+    text-decoration: underline;
+}
+
+.inputs-parent {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    row-gap: 1rem;
+    width: 100%;
+}
+
