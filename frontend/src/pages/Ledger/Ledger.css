@@ -21,7 +21,7 @@
     width: 100%;
     gap: 10px;
     align-self: center;
-    padding: 5px 36px;
+    /* padding: 5px 36px; uncomment mat karna */
 }
 
 .textarea-wrapper textarea {
@@ -30,4 +30,5 @@
     background-color: var(--input-bg);
     border-radius: 10px;
     border: 0.5px solid #858585
+    
 }

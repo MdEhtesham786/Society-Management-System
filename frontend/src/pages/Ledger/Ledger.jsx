@@ -65,10 +65,10 @@ const Ledger = () => {
   const rebateInputs = [
     { label: 'Rebate Date :', type: 'date', ...rebateInputHandlers[0] },
     { label: 'Rebate Days :', type: 'number', ...rebateInputHandlers[1] },
-    { label: 'Rebate Perc(%):', type: 'number', ...rebateInputHandlers[2] },
+    { label: 'RebatePerc(%):', type: 'number', ...rebateInputHandlers[2] },
     { label: 'Type:', ...rebateInputHandlers[3] },
     { label: 'Interest Days :', type: 'number', ...rebateInputHandlers[4] },
-    { label: 'Interest Perc(%) :', type: 'number', ...rebateInputHandlers[5] },
+    { label: 'InterestPerc(%):', type: 'number', ...rebateInputHandlers[5] },
     { label: 'Manual Interest ?', type: 'checkbox', ...rebateInputHandlers[6] },
   ];
 
@@ -90,7 +90,7 @@ const Ledger = () => {
             children={
               <div className="textarea-wrapper">
                 <label htmlFor="">Narration</label>
-                <textarea name="" id="" cols="10" rows="3"></textarea>
+                <textarea style={{resize:'none', padding:"0.5rem"}} name="" id="" cols="10" rows="3"></textarea>
               </div>
             }
           />
@@ -106,15 +106,15 @@ const Ledger = () => {
             <CustomButton
               type={'submit'}
               children={'Generate Bills'}
-              style={{ backgroundColor: '#119F8E', boxShadow: '2px 4px 4px 0px #00000040' }}
+              style={{ backgroundColor: '#119F8E', boxShadow: '2px 4px 4px 0px #00000040', border:'1px solid #000000'}}
             />
             <CustomButton
               children={'Edit Bills'}
-              style={{ backgroundColor: '#045E92', boxShadow: '2px 4px 4px 0px #00000040' }}
+              style={{ backgroundColor: '#045E92', boxShadow: '2px 4px 4px 0px #00000040',border:'1px solid #000000' }}
             />
             <CustomButton
               children={'View'}
-              style={{ backgroundColor: '#A9CEED', boxShadow: '2px 3px 3px 0px #00000040', border: '0.5px solid #808080' }}
+              style={{ backgroundColor: '#A9CEED', boxShadow: '2px 3px 3px 0px #00000040', border:'1px solid #000000' }}
             />
           </div>
         </div>
