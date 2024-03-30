@@ -8,16 +8,13 @@ const app = express();
 import cors from "cors";
 app.use(cors());
 import userModel from "./models/userModel.js";
-app.get('/', async (req, res) => {
-    try {
-        res.json({
-            success: true,
-            name: "Xyz"
-        });
-    } catch (err) {
-        console.log(err);
-    }
-});
+import catchAsyncErrors from "./middleware/catchAsyncErrors.js";
+app.get('/home', catchAsyncErrors(async (req, res, next) => {
+    res.json({
+        success: true,
+
+    });
+}));
 const start = async (url) => {
     connectDB(url);
     app.listen(port, () => {
@@ -33,3 +30,5 @@ const start = async (url) => {
 
 };
 start(process.env.MONGO_URI);
+
+
