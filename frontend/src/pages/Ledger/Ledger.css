@@ -1,12 +1,8 @@
-.ledger {
-    display: flex;
-    justify-content: space-between;
-}
-
 .bills {
     width: 77.77%;
     margin-top: 9px;
 }
+
 .bill-btns {
     display: flex;
     align-items: center;
@@ -30,5 +26,4 @@
     background-color: var(--input-bg);
     border-radius: 10px;
     border: 0.5px solid #858585
-    
 }

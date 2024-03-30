@@ -1,7 +1,5 @@
-import React, { useState } from 'react'
-import Navbar from '../../components/Navbar/Navbar'
+import  { useState } from 'react'
 import GenerateBills from '../../components/Generate-Bills/GenerateBills'
-import SideMenu from '../../layout/Side-Menu/SideMenu'
 import CustomButton from '../../components/Button/CustomButton'
 import './Ledger.css'
 
@@ -80,20 +78,17 @@ const Ledger = () => {
 
   return (
     <>
-      <Navbar />
-      <div className="Container ledger">
-        <SideMenu />
+        
         <div className="bills" >
           <h2 className='text-2xl font-semibold text-center'>Generate Bills</h2>
           <GenerateBills
             inputs={amountInputs}
-            children={
-              <div className="textarea-wrapper">
+          >
+          {<div className="textarea-wrapper">
                 <label htmlFor="">Narration</label>
                 <textarea style={{resize:'none', padding:"0.5rem"}} name="" id="" cols="10" rows="3"></textarea>
-              </div>
-            }
-          />
+              </div>}
+              </GenerateBills>
           <GenerateBills
             heading={'Rebate On null'}
             inputs={rebateInputs}
@@ -105,20 +100,22 @@ const Ledger = () => {
           <div className='bill-btns'>
             <CustomButton
               type={'submit'}
-              children={'Generate Bills'}
               style={{ backgroundColor: '#119F8E', boxShadow: '2px 4px 4px 0px #00000040', border:'1px solid #000000'}}
-            />
+            >
+              {'Generate Bills'}
+              </CustomButton>
             <CustomButton
-              children={'Edit Bills'}
               style={{ backgroundColor: '#045E92', boxShadow: '2px 4px 4px 0px #00000040',border:'1px solid #000000' }}
-            />
+            >
+              {'Edit Bills'}
+              </CustomButton>
             <CustomButton
-              children={'View'}
               style={{ backgroundColor: '#A9CEED', boxShadow: '2px 3px 3px 0px #00000040', border:'1px solid #000000' }}
-            />
+            >
+              {'View'}
+              </CustomButton>
           </div>
         </div>
-      </div>
     </>
   )
 }
