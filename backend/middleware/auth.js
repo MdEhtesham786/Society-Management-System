@@ -1,13 +1,13 @@
-import catchAsyncErrors from '../middleware/catchAsyncErrors';
-import ErrorHandler from '../utils.js/errorHandler';
-const jwt = require('jsonwebtoken');
+import catchAsyncErrors from '../middleware/catchAsyncErrors.js';
+import ErrorHandler from '../utils.js/errorHandler.js';
 import jwt from "jsonwebtoken";
-import userModel from '../models/userModel';
-exports.isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
+import userModel from '../models/userModel.js';
+export const isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
     const { token } = req.cookies;//string
     // if (!token) {
     //     return next(new ErrorHandler('Please login to access this resource', 401));
     // }
+    console.log(token);
     if (token) {
         try {
             const decodedData = jwt.verify(token, process.env.JWT_SECRET);
@@ -26,7 +26,7 @@ exports.isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
     next();
 
 });
-exports.authorizeRoles = (...roles) => {
+export const authorizeRoles = (...roles) => {
     return (req, res, next) => {
         // console.log(req.user);
         if (!req.user) {

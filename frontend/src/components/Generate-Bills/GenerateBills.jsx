@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 import CustomInput from '../Input/CustomInput'
 
 const GenerateBills = ({ heading, inputs,children }) => {
-    return (
+    return (            
         <div className='generate-bills'>
             <h2 className="heading ">{heading}</h2>
             <div className="inputs-parent">
@@ -20,9 +20,9 @@ const GenerateBills = ({ heading, inputs,children }) => {
                             disabled={input.disabled}
                             inputName={input.name}
                             value={input.value}
-                        />
-                    ))
-                }
+                            />
+                        ))
+                    }
             </div>
             { children && children}
         </div>
