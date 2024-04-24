@@ -100,12 +100,15 @@ const navigate = useNavigate()
     })
     })
   const [username,setUsername] = useState('')
+  axios.defaults.withCredentials = true
+
   const fetchData = async()=>{
     try {
-      const  res = await axios.get(`http://127.0.0.1:5173/api/v1/ledger`)
-      console.log(res.data)
+      const  res = await axios.get(`http://127.0.0.1:5003/api/v1/ledger`)
+    console.log(res)
       if(!res.data.success){
         navigate('/api/v1/auth/login')
+        console.log('ab dekhte')
       }else{
 
         setUsername(res.user.username)
@@ -118,7 +121,7 @@ const navigate = useNavigate()
   }
   useEffect(() => {
     fetchData().then(res=>{
-      if(res.success){
+      if(res?.data?.success){
         document.title = username
       }
     })    

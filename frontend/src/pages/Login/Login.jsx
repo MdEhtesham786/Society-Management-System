@@ -39,20 +39,18 @@ setEmail(e.target.value)
   const handleLoginSubmit =async (e)=>{
     try {
       // e.preventDefault()
-      const res = await axios.post('http://127.0.0.1:5173/api/v1/auth/login',{
+      const res = await axios.post('http://127.0.0.1:5003/api/v1/auth/login',{
         email,password
       })
 // alert('Please fill out all required fields.');
 if(res.data.success){
-  console.log(res.data)
   if(res.data.jwtToken){
 navigate('/api/v1/ledger')
-  }else{
-    console.log('navigate nhi krna tha')
-    navigate('/api/v1/auth/login')
   }
 }else{
   setError(res.data.message)
+  setEmail('')
+  setPassword('')
 }
 
     } catch (err) {
@@ -98,6 +96,7 @@ Image
                 </label>
                 <div className="mt-2">
                   <input 
+                  value={email}
                   onChange={handleEmailInput}
                     id="email"
                     name="email"
@@ -122,8 +121,8 @@ Image
                 </div>
                 <div className="mt-2">
                   <input
+                  value={password}
                   onChange={handlePasswordInput}
-
                     id="password"
                     name="password"
                     type="password"
@@ -135,9 +134,10 @@ Image
               </div>
   
               <div>
+              {console.log(email.length,password.length)}
                 <button
                   onClick={handleLoginSubmit}
-                  className={`flex w-full justify-center rounded-md bg-indigo-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm ${email.length>4&&password.length>4?'hover:bg-indigo-600':'bg-indigo-400 cursor-not-allowed'} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+                  className={`flex w-full justify-center rounded-md  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm ${email.length>4&&password.length>4?'hover:bg-indigo-600 bg-indigo-700':'bg-indigo-400 cursor-not-allowed'} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
                   disabled={email.length<4||password.length<4}
                 >
                   Sign in

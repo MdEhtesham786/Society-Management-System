@@ -1,6 +1,7 @@
 import catchAsyncErrors from "../middleware/catchAsyncErrors.js";
 import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
+import { sendCookie } from "../utils.js/jwtToken.js";
 export const register = catchAsyncErrors(async (req, res) => {
     try {
         const { username, email, password, confirm_password } = req.body;
@@ -48,12 +49,13 @@ export const login = catchAsyncErrors(async (req, res) => {
                     message: 'Invalid Email or Password'
                 });
             }
-            const jwtToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
-            res.cookie('token', jwtToken);
+            const loggedInUser = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
+            sendCookie('token', loggedInUser, 31536000000, res);
+            // res.cookie('token', jwtToken);
             return res.json({
                 success: true,
                 user,
-                jwtToken
+                jwtToken: loggedInUser
             });
         } else {
             res.json({

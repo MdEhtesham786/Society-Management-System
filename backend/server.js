@@ -8,7 +8,12 @@ const app = express();
 import cors from "cors";
 import cookieParser from "cookie-parser";
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+    origin: ["http://localhost:5173"],
+    credentials: true,
+    methods: ["GET", "POST"]
+}));
+app.options('*', cors());
 // import userModel from "./models/userModel.js";
 import userRoutes from "./routes/userRoutes.js";
 import routes from "./routes/routes.js";

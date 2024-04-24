@@ -16,7 +16,7 @@ export const ledger = async (req, res) => {
         return res.json({
             success: false,
             message: 'User must be logged in to get access to this page',
-            req: req.cookies
+            cookies: req.cookies
         });
     }
 };
