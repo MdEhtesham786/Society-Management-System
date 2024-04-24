@@ -5,6 +5,11 @@
 }
 
 .Container {
-  max-width: 1440px;
-  margin: 0 auto;
+  /* max-width: 1440px; */
+  /* margin: 0 auto; */
+}
+
+.ledger {
+  display: flex;
+  justify-content: space-between;
 }
