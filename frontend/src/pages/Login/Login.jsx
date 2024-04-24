@@ -40,7 +40,12 @@ setEmail(e.target.value)
     try {
       // e.preventDefault()
       const res = await axios.post('http://127.0.0.1:5003/api/v1/auth/login',{
-        email,password
+        email,
+        password
+      },
+      {
+        withCredentials: true,
+        credentials:'include'
       })
 // alert('Please fill out all required fields.');
 if(res.data.success){

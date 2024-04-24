@@ -5,7 +5,7 @@ import CustomButton from '../../components/Button/CustomButton'
 import axios from 'axios'
 import './Ledger.css'
 
-const Ledger = () => {
+const Ledger = (props) => {
 const navigate = useNavigate()
   // Bill Amounts 6
   const [type, setType] = useState('')
@@ -105,13 +105,11 @@ const navigate = useNavigate()
   const fetchData = async()=>{
     try {
       const  res = await axios.get(`http://127.0.0.1:5003/api/v1/ledger`)
-    console.log(res)
       if(!res.data.success){
         navigate('/api/v1/auth/login')
-        console.log('ab dekhte')
       }else{
-
-        setUsername(res.user.username)
+        setUsername(res.data.user.username)
+        props.setUser(res.data.user.username)
       }
       return res.data
       // return parsedData
@@ -121,8 +119,8 @@ const navigate = useNavigate()
   }
   useEffect(() => {
     fetchData().then(res=>{
-      if(res?.data?.success){
-        document.title = username
+      if(res.success){
+document.title = res.user.username      
       }
     })    
     console.log('Component mounted');

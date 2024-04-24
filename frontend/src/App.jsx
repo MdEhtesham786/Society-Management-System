@@ -5,20 +5,23 @@ import Navbar from './components/Navbar/Navbar'
 import SideMenu from './layout/Side-Menu/SideMenu'
 import Dashboard from "./pages/Dashboard/Dashboard"
 import Login from "./pages/Login/Login"
+import { useState } from 'react';
 // import { Helmet,HelmetProvider } from 'react-helmet-async';
 
 function App() {
   const defaultPath = '/api/v1'
 const location = useLocation()
+const [user,setUser] = useState('')
   const routes = [
     { path: '/', component: Dashboard,exact:true },
   
-    { path: '/ledger', component: Ledger,exact:true },
+    { path: '/ledger', component: Ledger,exact:true,props:{setUser} },
+    
   ];
   const isLoginPage = location.pathname==='/api/v1/auth/login'
   return (
     <>
-  <Navbar/>
+  <Navbar user={user}/>
       <div className="Container ledger">
 {isLoginPage ? null : <SideMenu />}
         <Routes>
@@ -26,7 +29,7 @@ const location = useLocation()
           <Route
             key={index}
             path={defaultPath+route.path}
-            element={<route.component />}
+            element={<route.component {...route.props}/>}
             exact={route.exact} 
           />
         ))}
