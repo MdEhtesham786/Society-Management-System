@@ -7,16 +7,12 @@ export const isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
     // if (!token) {
     //     return next(new ErrorHandler('Please login to access this resource', 401));
     // }
-    console.log('I got lucky', token);
     if (token) {
         try {
             const decodedData = jwt.verify(token, process.env.JWT_SECRET,);
-            const user = await userModel.findById({ _id: decodedData.id }, {
-                expiresIn: '1y'
-            });
+            const user = await userModel.findById({ _id: decodedData.id });
             req.user = user;
             req.token = token;
-            console.log('NHI AAYAA');
         } catch (err) {
             if (err.name === 'TokenExpiredError') {
                 console.log('Jwt Expired (Token cleared)');

@@ -49,7 +49,9 @@ export const login = catchAsyncErrors(async (req, res) => {
                     message: 'Invalid Email or Password'
                 });
             }
-            const loggedInUser = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
+            const loggedInUser = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+                expiresIn: '1y'
+            });
             sendCookie('token', loggedInUser, 31536000000, res);
             // res.cookie('token', jwtToken);
             return res.json({

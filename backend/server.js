@@ -4,16 +4,16 @@ import connectDB from "./db/connect.js";
 dotenv.config();
 const port = process.env.PORT || 5000;
 const hostname = '127.0.0.1';
-const app = express();
 import cors from "cors";
 import cookieParser from "cookie-parser";
-app.use(cookieParser());
+const app = express();
 app.use(cors({
-    origin: ["http://localhost:5173"],
+    origin: 'http://localhost:5173',
     credentials: true,
     methods: ["GET", "POST"]
 }));
 app.options('*', cors());
+app.use(cookieParser());
 // import userModel from "./models/userModel.js";
 import userRoutes from "./routes/userRoutes.js";
 import routes from "./routes/routes.js";

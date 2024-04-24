@@ -4,7 +4,8 @@ export const sendCookie = (cookieName, token, expiryTime, res) => {
         httpOnly: false,
         sameSite: 'none', // Allows cross-origin requests
         path: '/',
-        // secure: true // Ensures cookie is only sent over HTTPS
+        domain: '127.0.0.1',
+        secure: true // Ensures cookie is only sent over HTTPS
 
     };
     return res.cookie(cookieName, token, options);
