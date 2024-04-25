@@ -32,7 +32,7 @@ const navigate = useNavigate()
   const amountInputHandlers = [
     { onChange: (e) => setType(e.target.value), value: type,label:'Type' },
     { onChange: (e) => setSubtype(e.target.value), value: subtype,label:'SubType' },
-    { onChange: (e) => setIsCreditCheck(e.target.checked), value: isCreditCheck,label:'is Credit Limit?' },
+    { onChange: (e) => setIsCreditCheck(e.target.checked), value: isCreditCheck,label:'is Credit Limit?',type:'checkbox' },
     { onChange: (e) => setBillDate(e.target.value), value: billDate,label:'Bill Date' },
     { onChange: (e) => setDueDate(e.target.value), value: dueDate,label:'Due Date' },
     { onChange: (e) => setCreditAmount(e.target.value), value: creditAmount,label:'Credit Amount' }
@@ -41,7 +41,7 @@ const navigate = useNavigate()
   const rebateInputHandlers = [
     { onChange: (e) => setRebateDate(e.target.value), value: rebateDate,label:'Rebate Date :',type:'date' },
     { onChange: (e) => setRebateDays(e.target.value), value: rebateDays,label:'Rebate Days :',type:'number' },
-    { onChange: (e) => setRebatePercentage(e.target.value), value: rebatePercentage,label:'RebatePerc(%):',type:'number' },
+    { onChange: (e) => setRebatePercentage(e.target.value), value: rebatePercentage,label:'RebatePerc(%):',type:'checkbox' },
     { onChange: (e) => setInterestType(e.target.value), value: interestType,label:'Type:',type:'text' },
     { onChange: (e) => setInterestDays(e.target.value), value: interestDays,label:'Interest Days :',type:'number' },
     { onChange: (e) => setInterestPercentage(e.target.value), value: interestPercentage,label:'InterestPerc(%):',type:'number' },
@@ -66,7 +66,8 @@ const navigate = useNavigate()
   amountInputs.push({
      label: input.label,
       onChange:input.onChange,
-      value:input.value
+      value:input.value,
+      type:input.type
     })
     })
   // const rebateInputs = [
@@ -83,7 +84,8 @@ const navigate = useNavigate()
   rebateInputs.push({
      label: input.label,
       onChange:input.onChange,
-      value:input.value
+      value:input.value,
+      type:input.type
     })
     })
   // const selectionInputs = [
