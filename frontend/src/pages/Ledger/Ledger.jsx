@@ -2,7 +2,7 @@ import  { useState,useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import GenerateBills from '../../components/Generate-Bills/GenerateBills'
 import CustomButton from '../../components/Button/CustomButton'
-import axios from 'axios'
+import PropTypes from "prop-types"
 import './Ledger.css'
 
 const Ledger = (props) => {
@@ -101,32 +101,6 @@ const navigate = useNavigate()
       value:input.value
     })
     })
-  const [username,setUsername] = useState('')
-  axios.defaults.withCredentials = true
-
-  const fetchData = async()=>{
-    try {
-      const  res = await axios.get(`http://127.0.0.1:5003/api/v1/ledger`)
-      if(!res.data.success){
-        navigate('/api/v1/auth/login')
-      }else{
-        setUsername(res.data.user.username)
-        props.setUser(res.data.user.username)
-      }
-      return res.data
-      // return parsedData
-    } catch (err) {
-      console.log(err)
-    }
-  }
-  useEffect(() => {
-    fetchData().then(res=>{
-      if(res.success){
-document.title = res.user.username      
-      }
-    })    
-    console.log('Component mounted');
-  }, []);
   return (
     <>
         
@@ -170,5 +144,7 @@ document.title = res.user.username
     </>
   )
 }
-
+Ledger.propTypes = {
+  user:PropTypes.object
+}
 export default Ledger

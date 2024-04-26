@@ -2,6 +2,19 @@ import catchAsyncErrors from "../middleware/catchAsyncErrors.js";
 import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import { sendCookie } from "../utils.js/jwtToken.js";
+export const isLoggedInUser = async (req, res) => {
+    if (req.token) {
+        return res.json({
+            success: true,
+            user: req.user
+        });
+    } else {
+        return res.json({
+            success: false,
+            message: 'User must be logged in to get access to this page',
+        });
+    }
+};
 export const register = catchAsyncErrors(async (req, res) => {
     try {
         const { username, email, password, confirm_password } = req.body;

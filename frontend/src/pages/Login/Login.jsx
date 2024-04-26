@@ -48,8 +48,9 @@ setEmail(e.target.value)
         credentials:'include'
       })
 // alert('Please fill out all required fields.');
-if(res.data.success){
-  if(res.data.jwtToken){
+const {data} = res
+if(data.success){
+  if(data.user){
 navigate('/api/v1/ledger')
   }
 }else{
@@ -76,10 +77,10 @@ navigate('/api/v1/ledger')
           <body class="h-full">
           ```
         */}
-              <div className=" w-[50%] h-[40rem] px-6 py-12   lg:px-8 ">
+              <div className=" w-[50%] h-[35rem] px-6 py-12   lg:px-8  ">
 Image
           </div>
-        <div className="flex min-h-full w-[50%]  flex-col justify-center px-6  py-12 lg:px-8">
+        <div className="flex min-h-full w-[50%] h-[35rem]  flex-col justify-center px-6  py-12 lg:px-8 ">
     
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
@@ -87,7 +88,7 @@ Image
               src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
               alt="Your Company"
             />
-            <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            <h2 className="mt-4 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
               Sign in to your account
             </h2>
           </div>
@@ -139,7 +140,6 @@ Image
               </div>
   
               <div>
-              {console.log(email.length,password.length)}
                 <button
                   onClick={handleLoginSubmit}
                   className={`flex w-full justify-center rounded-md  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm ${email.length>4&&password.length>4?'hover:bg-indigo-600 bg-indigo-700':'bg-indigo-400 cursor-not-allowed'} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}

@@ -19,7 +19,7 @@ const Navbar = (props) => {
             </div>
             <div className="hahaha text-xl font-bold">
                 
- Welcome {props.user&&props.user} !
+  {props.user.username&& 'Welcome '+ props.user.username+'!'} 
             </div>
             <div className="hamburger">
                 <img src={hamburgerIcon} alt="hamburger" />
@@ -28,6 +28,6 @@ const Navbar = (props) => {
     )
 }
 Navbar.propTypes={
-    user:PropTypes.string
+    user:PropTypes.object
 }
 export default Navbar
