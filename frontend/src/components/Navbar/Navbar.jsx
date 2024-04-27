@@ -21,7 +21,6 @@ const location = useLocation()
                     withCredentials: true,
                     credentials:'include'
                   })
-console.log(import.meta.env.VITE_COOKIE_DOMAIN);
                 const {data} =res 
                 if(data.success){
                     navigate('/api/v1/auth/login')

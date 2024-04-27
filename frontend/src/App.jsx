@@ -58,7 +58,7 @@ document.title = res.user.username
   <Navbar user={user}/>
       <div className="Container ">
 {isLoginPage ? null : <SideMenu />}
-<section className={`${isLoginPage?'w-full':'w-[77.77%]'} mt-9px`}>
+<section className={`${isLoginPage?'w-full':'w-[77.77%]'} mt-9`}>
 
         <Routes>
       {routes.map((route, index) => (
