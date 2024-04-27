@@ -23,7 +23,6 @@ const Navbar = (props) => {
             credentials: "include",
           }
         );
-        console.log(import.meta.env.VITE_COOKIE_DOMAIN);
         const { data } = res;
         if (data.success) {
           navigate("/api/v1/auth/login");
@@ -35,6 +34,7 @@ const Navbar = (props) => {
       console.log(err);
     }
   };
+
   return (
     <nav className="navbar Container">
       <a href="/" className="logo-wrapper cursor-pointer">
