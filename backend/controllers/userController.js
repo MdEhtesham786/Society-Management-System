@@ -87,3 +87,20 @@ export const login = catchAsyncErrors(async (req, res) => {
         });
     }
 });
+export const logout = catchAsyncErrors(async (req, res) => {
+    const { token } = req.cookies;
+    if (token) {
+        const result = res.clearCookie('token', { domain: process.env.COOKIE_DOMAIN, path: '/', sameSite: 'none', secure: true });
+        res.json({
+            success: true,
+            // result,
+            message: 'Token successfully removed'
+        });
+        console.log('Token successfully removed');
+    } else {
+        res.json({
+            success: false,
+            message: 'Token not found'
+        });
+    }
+});

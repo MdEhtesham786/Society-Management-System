@@ -103,8 +103,7 @@ const navigate = useNavigate()
     })
   return (
     <>
-        
-        <div className="bills" >
+        <div className=''>
           <h2 className='text-2xl font-semibold text-center'>Generate Bills</h2>
           <GenerateBills
             inputs={amountInputs}

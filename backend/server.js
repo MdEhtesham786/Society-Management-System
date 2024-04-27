@@ -18,6 +18,7 @@ app.use(cookieParser());
 import userRoutes from "./routes/userRoutes.js";
 import routes from "./routes/routes.js";
 import catchAsyncErrors from "./middleware/catchAsyncErrors.js";
+import userModel from "./models/userModel.js";
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/v1/auth', userRoutes);
@@ -27,6 +28,11 @@ app.get('/', catchAsyncErrors(async (req, res, next) => {
         success: true,
 
     });
+}));
+app.post('/makeSeller', catchAsyncErrors(async (req, res) => {
+    // const user = await userModel.findOne({ _id: '' });
+    // user.roles.push('admin');
+    // res.json({ user });
 }));
 const start = async (url) => {
     connectDB(url);
@@ -42,6 +48,7 @@ const start = async (url) => {
     });
 
 };
+
 start(process.env.MONGO_URI);
 
 

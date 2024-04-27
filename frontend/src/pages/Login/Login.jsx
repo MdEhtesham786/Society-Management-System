@@ -77,6 +77,8 @@ navigate('/api/v1/ledger')
           <body class="h-full">
           ```
         */}
+        <div className="flex">
+
               <div className=" w-[50%] h-[35rem] px-6 py-12   lg:px-8  ">
 Image
           </div>
@@ -158,6 +160,8 @@ Image
             </p> */}
           </div>
         </div>
+        </div>
+
       </>
     )
   }

@@ -22,7 +22,7 @@ const location = useLocation()
     
   ];
   const isLoginPage = location.pathname==='/api/v1/auth/login'
-  axios.defaults.withCredentials = true
+  axios.defaults.withCredentials = true//The most important line for cookies
 
   const fetchData = async()=>{
     try {
@@ -33,6 +33,7 @@ const location = useLocation()
           navigate('/api/v1/auth/login')
         }
       }else{
+        console.log(data)
         if(data.user){
           setUser(data.user)
         }else{
@@ -55,19 +56,22 @@ document.title = res.user.username
   return (
     <>
   <Navbar user={user}/>
-      <div className="Container ledger">
+      <div className="Container ">
 {isLoginPage ? null : <SideMenu />}
+<section className={`${isLoginPage?'w-full':'w-[77.77%]'} mt-9px`}>
+
         <Routes>
       {routes.map((route, index) => (
-          <Route
-            key={index}
-            path={index===0?route.path:defaultPath+route.path}
-            element={<route.component {...route.props} user={user}/>}
-            exact={route.exact}
-          />
-        ))}
+        <Route
+        key={index}
+        path={index===0?route.path:defaultPath+route.path}
+        element={<route.component {...route.props} user={user}/>}
+        exact={route.exact}
+        />
+      ))}
    <Route path='/api/v1/auth/login' element={<Login/>} exact={true} />
     </Routes>      
+      </section>
    </div> 
    </>
   )
