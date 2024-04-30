@@ -48,6 +48,8 @@ function App() {
       return res.data;
       // return parsedData
     } catch (err) {
+      // console.log("DATA",data)
+      console.log(err.message);
       console.log(err);
     }
   };
@@ -58,6 +60,21 @@ function App() {
       }
     });
   }, []);
+
+  //Hardest code 
+//   const [formData, setFormData] = useState({
+//     name:'',
+//     age:0,
+//     class:'5b',
+//     isjoined:true
+//   })
+//   const handleInputChange = (e) => {
+//     const { name, value, type } = e.target;
+//   setFormData({
+//     ...formData,
+//     [name]: e.target[type === "checkbox" ? "checked" : "value"]
+//   })
+// }
   return (
     <>
       <Navbar user={user} />
