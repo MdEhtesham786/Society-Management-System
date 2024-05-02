@@ -18,7 +18,6 @@ const Menu = (props)=>{
     //     console.log(data)
     // })s
 const {data,unique} = props
-console.log(data.subItem&&`#collapse${unique}${data.subItem.length}`)
 return(
     <>
     {data.subItem?
