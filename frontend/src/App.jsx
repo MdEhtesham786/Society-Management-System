@@ -1,10 +1,10 @@
 import "./App.css";
-import Ledger from "./pages/Ledger/Ledger";
+import BillGeneration from "./pages/Bill Generation/Bill-Generation";
+import Ledger from "./pages/Ledger/Ledger.jsx";
 import {
   Route,
   Routes,
   useLocation,
-  redirect,
   useNavigate,
 } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
@@ -24,7 +24,8 @@ function App() {
   const location = useLocation();
   const routes = [
     { path: "/", component: Dashboard, exact: true },
-    { path: "/ledger", component: Ledger, exact: true },
+    { path: "/bill-generation", component: BillGeneration, exact: true },
+    { path: "/ledger", component: Ledger, exact: true }
   ];
   const isLoginPage = location.pathname === "/api/v1/auth/login";
   axios.defaults.withCredentials = true; //The most important line for cookies
@@ -38,7 +39,6 @@ function App() {
           navigate("/api/v1/auth/login");
         }
       } else {
-        console.log(data);
         if (data.user) {
           setUser(data.user);
         } else {
@@ -62,18 +62,20 @@ function App() {
   }, []);
 
   //Hardest code 
-//   const [formData, setFormData] = useState({
-//     name:'',
-//     age:0,
-//     class:'5b',
-//     isjoined:true
-//   })
-//   const handleInputChange = (e) => {
-//     const { name, value, type } = e.target;
-//   setFormData({
-//     ...formData,
-//     [name]: e.target[type === "checkbox" ? "checked" : "value"]
-//   })
+  // const [formData, setFormData] = useState({
+  //   name:'',
+  //   age:0,
+  //   class:'5b',
+  //   isjoined:true
+  // })
+
+  // const handleInputChange = (e) => {
+  //   const { name, value, type } = e.target;
+  // setFormData({
+  //   // ...formData,
+  //   [name]: e.target[type === "checkbox" ? "checked" : "value"]
+  // })
+
 // }
   return (
     <>
@@ -94,6 +96,7 @@ function App() {
           </Routes>
         </section>
       </div>
+      
     </>
   );
 }

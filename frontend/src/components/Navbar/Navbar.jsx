@@ -46,7 +46,6 @@ const Navbar = (props) => {
         </div>
       </a>
       <div className=" text-2xl font-bold">
-        {console.log(props.user)}
         {props.user.username && "Welcome " + props.user.username + "!"}
       </div>
       {isLoginPage ? null : (
