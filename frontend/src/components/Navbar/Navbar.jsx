@@ -5,7 +5,7 @@ import logoText from "../../assets/icons/logo-text.svg";
 import hamburgerIcon from "../../assets/icons/hamburger.svg";
 import PropTypes from "prop-types";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 const Navbar = (props) => {
@@ -37,14 +37,14 @@ const Navbar = (props) => {
 
   return (
     <nav className="navbar Container">
-      <a href="/" className="logo-wrapper cursor-pointer">
+      <Link to="/" className="logo-wrapper cursor-pointer">
         <div className="logo-icon">
           <img src={logo} alt="logo-icon" />
         </div>
         <div className="logo-text">
           <img src={logoText} alt="logo-text" />
         </div>
-      </a>
+      </Link>
       <div className=" text-2xl font-bold">
         {props.user.username && "Welcome " + props.user.username + "!"}
       </div>

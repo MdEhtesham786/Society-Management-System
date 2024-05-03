@@ -9,12 +9,12 @@ const SideMenu = () => {
     <>
       <aside
         id="default-sidebar"
-        className="w-[20%] transition-transform  sm:translate-x-0"
+        className="w-[20%] transition-transform  sm:translate-x-0 rounded-xl"
         aria-label="Sidebar"
       >
         <div
           id="accordionExample"
-          className="px-3 py-4 overflow-y-auto side-menu"
+          className="px-2 py-4 overflow-y-auto side-menu"
         >
           <ul className="font-medium">
             {MenuData.map((data, i) => {
