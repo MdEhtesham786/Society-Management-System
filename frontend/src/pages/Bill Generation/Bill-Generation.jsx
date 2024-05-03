@@ -166,7 +166,7 @@ const BillGeneration = (props) => {
         <h2 className="text-2xl font-semibold text-center">Generate Bills</h2>
         <GenerateBills inputs={amountInputs}>
           {
-            <div className="textarea-wrapper">
+            <div className=" textarea-wrapper">
               <label htmlFor="">Narration</label>
               <textarea
                 style={{ resize: "none", padding: "0.5rem" }}

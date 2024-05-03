@@ -33,7 +33,7 @@ const MenuData = [
   },
   {
     title: "Vendor Management",
-    path: "/api/v1/",
+    path: "/api/v1/vendormanagement",
     subItem: [
       {
         title: "Add Vendor Account",
@@ -55,7 +55,7 @@ const MenuData = [
   },
   {
     title: "Registers",
-    path: "/api/v1/",
+    path: "/api/v1/registers",
 
     subItem: [
       {
@@ -118,7 +118,7 @@ const MenuData = [
   },
   {
     title: "Masters",
-    path: "/api/v1/",
+    path: "/api/v1/masters",
 
     subItem: [
       { title: "General Account", path: "/api/v1/masters/generalaccount" },
@@ -128,7 +128,7 @@ const MenuData = [
   },
   {
     title: "Transaction",
-    path: "/api/v1/",
+    path: "/api/v1/transaction",
 
     subItem: [
       { title: "Bill Generation", path: "/api/v1/transaction/billgeneration" },
@@ -167,7 +167,7 @@ const MenuData = [
   },
   {
     title: "Setting",
-    path: "/api/v1/",
+    path: "/api/v1/setting",
     subItem: [
       { title: "Bill Setting", path: "/api/v1/setting/billsetting" },
       {
@@ -183,7 +183,7 @@ const MenuData = [
   },
   {
     title: "Print",
-    path: "/api/v1/",
+    path: "/api/v1/print",
     subItem: [
       {
         title: "Print Bill with Receipt",

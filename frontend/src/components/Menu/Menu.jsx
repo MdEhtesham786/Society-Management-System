@@ -2,19 +2,27 @@ import "./Menu.css";
 import MenuData from "./MenuData";
 import { useEffect } from "react";
 import { Collapse, initTWE } from "tw-elements";
-import { Link } from "react-router-dom";
+import { Link,useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
+
 const Menu = (props) => {
+  const location = useLocation();
+
+  // useEffect(()=>{
+  //   MenuData.forEach((route)=>{
+  //     if(location.pathname==='/api/v1'+route.path||location.pathname===route.path){
+  //       route.currentPage = true
+  //       console.log(route)
+  //     }
+  //     // console.log(location.pathname,route)
+  //     })
+  // },[location.pathname])
   useEffect(() => {
-    // Initialize tw-elements
     initTWE({ Collapse });
-    // initTWE();
-    console.log("Successfully applied");
   }, []);
-  // MenuData.forEach((data)=>{
-  //     console.log(data)
-  // })s
+
   const { data, unique } = props;
+  // console.log(data.title:'')
   return (
     <>
       {data.subItem ? (
@@ -23,7 +31,7 @@ const Menu = (props) => {
           className="rounded-t-lg   dark:border-neutral-600 dark:bg-body-dark "
         >
           <h2 className="mb-0 flex " id="headingOne5">
-            <div className="flex items-center  px-2 w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <div className={`flex items-center  px-2 w-full text-gray-900 rounded-lg dark:text-white ${'/api/v1/'+location.pathname.split('/').reverse()[1]===data.path?'bg-gray-100':''}  hover:bg-gray-100 dark:hover:bg-gray-700 group`}>
               <div>
                 <svg
                   className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -67,7 +75,7 @@ const Menu = (props) => {
             {data.subItem.map((item, i) => {
               return (
                 <Link key={i} className="" to={item.path}>
-                  <div
+                  <div style={location.pathname===item.path?{backgroundColor:'#b9c8d3'}:{}}
                     id={`collapse${unique}${data.subItem.length}`}
                     className="hover:bg-[#b9c8d3] !visible hidden bg-[#c5d5e1] "
                     data-twe-collapse-item
@@ -84,7 +92,7 @@ const Menu = (props) => {
         <li key={unique}>
           <Link
             to={data.path}
-            className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white ${location.pathname===data.path?'bg-gray-100':''}  hover:bg-gray-100 dark:hover:bg-gray-700 group`}
           >
             <svg
               className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -104,5 +112,6 @@ const Menu = (props) => {
 };
 Menu.propTypes = {
   data: PropTypes.object,
+  unique:PropTypes.number
 };
 export default Menu;
