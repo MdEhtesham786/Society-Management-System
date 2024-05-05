@@ -3,7 +3,7 @@ import CustomButton from '../../components/Button/CustomButton'
 import "./Ledger.css"
 import React, { useRef, useState } from 'react';
 const Ledger = (props)=>{
-    const myRef = useRef(null);
+   
     const handleKeyDown = (e)=>{
         if (e.keyCode === 38) {
             console.log('up');
@@ -34,7 +34,7 @@ const Ledger = (props)=>{
                 </div>
                 <div className='flex'>
                 <label htmlFor="account" className='font-semibold text-xl grid place-items-center'>Account:</label>
-                <input type="number" ref={myRef} name="account" id="account" onKeyDown={handleKeyDown} className='w-[27rem] h-10 rounded-lg border-[#d5d5d5] ml-3 border' />
+                <input type="number"  name="account" id="account" onKeyDown={handleKeyDown} className='w-[27rem] h-10 rounded-lg border-[#d5d5d5] ml-3 border' />
                 </div>
             </div>
             <div className="h-[33%] flex items-center ">
