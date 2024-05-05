@@ -1,7 +1,7 @@
 import Dashboard from "./pages/Dashboard/Dashboard";
 import BillGeneration from "./pages/Bill Generation/Bill-Generation";
 import Ledger from "./pages/Ledger/Ledger.jsx";
-
+import Receipt from "./pages/Receipt/receipt.jsx";
 const vendorManagement = [
     {
       path: "/vendormanagement/addvendoraccount",
@@ -49,13 +49,13 @@ const vendorManagement = [
       component: BillGeneration,
       exact: true,
     },
-    { path: "/transaction/memberreceipt", component: Dashboard, exact: true },
-    { path: "/transaction/bankreceipt", component: Dashboard, exact: true },
-    { path: "/transaction/cashreceipt", component: Dashboard, exact: true },
+    { path: "/transaction/memberreceipt", component: Receipt, exact: true,props:{page:'Member'} },
+    { path: "/transaction/bankreceipt", component: Receipt, exact: true,props:{page:'Bank'} },
+    { path: "/transaction/cashreceipt", component: Receipt, exact: true,props:{page:'Cash'} },
     {
       path: "/transaction/supplementaryreceipt",
-      component: Dashboard,
-      exact: true,
+      component: Receipt,
+      exact: true,props:{page:'Supplementary'}
     },
     { path: "/transaction/bankpayment", component: Dashboard, exact: true },
     { path: "/transaction/cashpayment", component: Dashboard, exact: true },
