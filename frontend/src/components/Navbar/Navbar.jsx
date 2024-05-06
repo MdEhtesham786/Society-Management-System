@@ -1,8 +1,8 @@
-import React from "react";
+// import React from "react";
 import "./Navbar.css";
 import logo from "../../assets/icons/logo.svg";
 import logoText from "../../assets/icons/logo-text.svg";
-import hamburgerIcon from "../../assets/icons/hamburger.svg";
+// import hamburgerIcon from "../../assets/icons/hamburger.svg";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -46,7 +46,7 @@ const Navbar = (props) => {
         </div>
       </Link>
       <div className=" text-2xl font-bold">
-        {props.user.username && "Welcome " + props.user.username + "!"}
+        {props.user?.username && "Welcome " + props.user.username + "!"}
       </div>
       {isLoginPage ? null : (
         <button onClick={handleLogout} className="bg-gray-300 h-8 w-20">

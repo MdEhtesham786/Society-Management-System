@@ -3,20 +3,21 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import SideMenu from "./layout/Side-Menu/SideMenu";
 import Login from "./pages/Login/Login";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import routes from "./routes";
+import {useDispatch,useSelector} from "react-redux"
+import {isLogin} from "./reducer/userReducer"
 // import { Helmet,HelmetProvider } from 'react-helmet-async';
 function App() {
   const defaultPath = "/api/v1";
   const navigate = useNavigate();
-  const [user, setUser] = useState({});
   const location = useLocation();
-
- 
-
   const isLoginPage = location.pathname === "/api/v1/auth/login";
   axios.defaults.withCredentials = true; //The most important line for cookies
+  const dispatch = useDispatch()
+
+  // const [loggedInUser,setLoggedInUser] = useState({})
 
   const fetchData = async () => {
     try {
@@ -28,49 +29,25 @@ function App() {
         }
       } else {
         if (data.user) {
-          setUser(data.user);
+  dispatch(isLogin({...data}))
           if(location.pathname === '/api/v1/auth/login'){
 navigate('/')
           }
         } else {
-          console.log("User nhi hai");
+navigate('/api/v1/auth/login')
         }
       }
       return res.data;
-      // return parsedData
     } catch (err) {
-      // console.log("DATA",data)
-      console.log(err.message);
       console.log(err);
       navigate("/api/v1/auth/login");
     }
   };
   useEffect(() => {
-    fetchData().then((res) => {
-      if (res.success) {
-        document.title = res.user.username;
-      }
-    });
-
+    fetchData()
   },[]);
- 
-
-  //Hardest code
-  // const [formData, setFormData] = useState({
-  //   name:'',
-  //   age:0,
-  //   class:'5b',
-  //   isjoined:true
-  // })
-
-  // const handleInputChange = (e) => {
-  //   const { name, value, type } = e.target;
-  // setFormData({
-  //   // ...formData,
-  //   [name]: e.target[type === "checkbox" ? "checked" : "value"]
-  // })
-
-  // }
+const user = useSelector(state=>state.loggedInUser.user)
+  
   return (
     <>
       <Navbar user={user} />
@@ -95,3 +72,4 @@ navigate('/')
 }
 
 export default App;
+// useEffect->fetchData->dispatch(...data)->variable user store using useSelector->passes as a props in navbar component.

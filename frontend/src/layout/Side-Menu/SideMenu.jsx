@@ -10,7 +10,7 @@ const SideMenu = () => {
 
 MenuData.forEach((menu)=>{
 if(location.pathname===menu.path){
-  document.title = menu.title
+  document.title = 'Grihamitra-'+menu.title
 }
 })
   },[location.pathname])

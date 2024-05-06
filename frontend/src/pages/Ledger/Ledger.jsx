@@ -13,6 +13,8 @@ const Ledger = (props)=>{
             e.preventDefault();
         }
     }
+    const handleWheel = (e)=>{
+    }
     const [arr,setArr]=useState([])
     const handleViewBtn = ()=>{
         setArr([...arr,1])
@@ -34,7 +36,7 @@ const Ledger = (props)=>{
                 </div>
                 <div className='flex'>
                 <label htmlFor="account" className='font-semibold text-xl grid place-items-center'>Account:</label>
-                <input type="number"  name="account" id="account" onKeyDown={handleKeyDown} className='w-[27rem] h-10 rounded-lg border-[#d5d5d5] ml-3 border' />
+                <input type="number"  name="account" id="account" onKeyDown={handleKeyDown} onWheel={(e)=>handleWheel(e,{passive:false})} className='w-[27rem] h-10 rounded-lg border-[#d5d5d5] ml-3 border' />
                 </div>
             </div>
             <div className="h-[33%] flex items-center ">
