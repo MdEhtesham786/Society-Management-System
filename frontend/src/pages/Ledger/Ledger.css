@@ -1,34 +1,11 @@
-
-.ledger {
-  display: flex;
-  justify-content: space-between;
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
-.bills {
-  width: 77.77%;
-  margin-top: 9px;
-}
+.statement p {
+    height: 100%;
+    /* border-right: 1px solid black; */
 
-.bill-btns {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 15px;
-  padding: 5px;
-}
-
-.textarea-wrapper {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  gap: 10px;
-  align-self: center;
-}
-
-.textarea-wrapper textarea {
-  width: 50%;
-  resize: horizontal;
-  background-color: var(--input-bg);
-  border-radius: 10px;
-  border: 0.5px solid #858585;
 }

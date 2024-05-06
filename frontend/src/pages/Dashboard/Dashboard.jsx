@@ -1,7 +1,8 @@
 // import React from 'react'
 // import PropTypes from 'prop-types'
+// import { useState } from "react";
 import "./Dashboard.css"
-function Dashboard(props) {
+const Dashboard = ()=> {
   return (
   <>
   <div className="grid grid-rows-10 items-center  w-[97%] m-4 mb-0 rounded-lg overflow-hidden">

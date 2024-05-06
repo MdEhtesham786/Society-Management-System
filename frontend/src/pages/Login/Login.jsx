@@ -51,7 +51,7 @@ setEmail(e.target.value)
 const {data} = res
 if(data.success){
   if(data.user){
-navigate('/api/v1/ledger')
+navigate('/')
   }
 }else{
   setError(res.data.message)

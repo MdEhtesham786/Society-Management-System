@@ -1,149 +1,126 @@
-import  { useState,useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import GenerateBills from '../../components/Generate-Bills/GenerateBills'
+
 import CustomButton from '../../components/Button/CustomButton'
-import PropTypes from "prop-types"
-import './Ledger.css'
-
-const Ledger = (props) => {
-const navigate = useNavigate()
-  // Bill Amounts 6
-  const [type, setType] = useState('')
-  const [subtype, setSubtype] = useState('')
-  const [isCreditCheck, setIsCreditCheck] = useState(false)
-  const [billDate, setBillDate] = useState('')
-  const [dueDate, setDueDate] = useState('')
-  const [creditAmount, setCreditAmount] = useState('')
-
-  // Rebate 7
-  const [rebateDate, setRebateDate] = useState('')
-  const [rebateDays, setRebateDays] = useState('')
-  const [rebatePercentage, setRebatePercentage] = useState(false)
-  const [interestType, setInterestType] = useState('')
-  const [interestDays, setInterestDays] = useState('')
-  const [interestPercentage, setInterestPercentage] = useState('')
-  const [manualInterest, setManualInterest] = useState('')
-
-  // Selection 3
-  const [building, setBuilding] = useState('')
-  const [wing, setWing] = useState('')
-  const [name, setName] = useState('')
-
-  const amountInputHandlers = [
-    { onChange: (e) => setType(e.target.value), value: type,label:'Type' },
-    { onChange: (e) => setSubtype(e.target.value), value: subtype,label:'SubType' },
-    { onChange: (e) => setIsCreditCheck(e.target.checked), value: isCreditCheck,label:'is Credit Limit?',type:'checkbox' },
-    { onChange: (e) => setBillDate(e.target.value), value: billDate,label:'Bill Date' },
-    { onChange: (e) => setDueDate(e.target.value), value: dueDate,label:'Due Date' },
-    { onChange: (e) => setCreditAmount(e.target.value), value: creditAmount,label:'Credit Amount' }
-  ];
-
-  const rebateInputHandlers = [
-    { onChange: (e) => setRebateDate(e.target.value), value: rebateDate,label:'Rebate Date :',type:'date' },
-    { onChange: (e) => setRebateDays(e.target.value), value: rebateDays,label:'Rebate Days :',type:'number' },
-    { onChange: (e) => setRebatePercentage(e.target.value), value: rebatePercentage,label:'RebatePerc(%):',type:'checkbox' },
-    { onChange: (e) => setInterestType(e.target.value), value: interestType,label:'Type:',type:'text' },
-    { onChange: (e) => setInterestDays(e.target.value), value: interestDays,label:'Interest Days :',type:'number' },
-    { onChange: (e) => setInterestPercentage(e.target.value), value: interestPercentage,label:'InterestPerc(%):',type:'number' },
-    { onChange: (e) => setManualInterest(e.target.value), value: manualInterest,label:'Manual Interest ?',type:'checkbox' }
-  ];
-
-  const selectionInputHandlers = [
-    { onChange: (e) => setBuilding(e.target.value), value: building,label:'Building' },
-    { onChange: (e) => setWing(e.target.value), value: wing,label:'Wing' },
-    { onChange: (e) => setName(e.target.value), value: name,label:'Name' }
-  ];
-    //   const amountInputs = [
-    // { label: 'Type:', ...amountInputHandlers[0] },
-    // { label: 'Subtype:', ...amountInputHandlers[1] },
-    // { label: 'is Credit Limit?', type: 'checkbox', ...amountInputHandlers[2] },
-    // { label: 'Bill Date', type: 'date', ...amountInputHandlers[3] },
-    // { label: 'Due Date', type: 'date', ...amountInputHandlers[4] },
-    // { label: 'Credit Amount', type: 'number', ...amountInputHandlers[5] }
-  // ];
-  const amountInputs = []
-  amountInputHandlers.forEach((input,index)=>{
-  amountInputs.push({
-     label: input.label,
-      onChange:input.onChange,
-      value:input.value,
-      type:input.type
-    })
-    })
-  // const rebateInputs = [
-  //   { label: 'Rebate Date :', type: 'date', ...rebateInputHandlers[0] },
-  //   { label: 'Rebate Days :', type: 'number', ...rebateInputHandlers[1] },
-  //   { label: 'RebatePerc(%):', type: 'number', ...rebateInputHandlers[2] },
-  //   { label: 'Type:', ...rebateInputHandlers[3] },
-  //   { label: 'Interest Days :', type: 'number', ...rebateInputHandlers[4] },
-  //   { label: 'InterestPerc(%):', type: 'number', ...rebateInputHandlers[5] },
-  //   { label: 'Manual Interest ?', type: 'checkbox', ...rebateInputHandlers[6] },
-  // ];
-  const rebateInputs = []
-  rebateInputHandlers.forEach((input,index)=>{
-  rebateInputs.push({
-     label: input.label,
-      onChange:input.onChange,
-      value:input.value,
-      type:input.type
-    })
-    })
-  // const selectionInputs = [
-  //   { label: 'Building:', ...selectionInputHandlers[0] },
-  //   { label: 'Wing:', ...selectionInputHandlers[1] },
-  //   { label: 'Name:', ...selectionInputHandlers[2] }
-  // ];
-  const selectionInputs = []
-  selectionInputHandlers.forEach((input,index)=>{
-    selectionInputs.push({
-     label: input.label,
-      onChange:input.onChange,
-      value:input.value
-    })
-    })
-  return (
-    <>
-        <div className=''>
-          <h2 className='text-2xl font-semibold text-center'>Generate Bills</h2>
-          <GenerateBills
-            inputs={amountInputs}
-          >
-          {<div className="textarea-wrapper">
-                <label htmlFor="">Narration</label>
-                <textarea style={{resize:'none', padding:"0.5rem"}} name="" id="" cols="10" rows="3"></textarea>
-              </div>}
-              </GenerateBills>
-          <GenerateBills
-            heading={'Rebate On null'}
-            inputs={rebateInputs}
-          />
-          <GenerateBills
-            heading={'Selection'}
-            inputs={selectionInputs}
-          />
-          <div className='bill-btns'>
-            <CustomButton
-              type={'submit'}
-              style={{ backgroundColor: '#119F8E', boxShadow: '2px 4px 4px 0px #00000040', border:'1px solid #000000'}}
+import "./Ledger.css"
+import React, { useRef, useState } from 'react';
+const Ledger = (props)=>{
+    const myRef = useRef(null);
+    const handleKeyDown = (e)=>{
+        if (e.keyCode === 38) {
+            console.log('up');
+            e.preventDefault();
+        } else if (e.keyCode === 40) {
+            console.log('down');
+            e.preventDefault();
+        }
+    }
+    const [arr,setArr]=useState([])
+    const handleViewBtn = ()=>{
+        setArr([...arr,1])
+    }
+    const handleDownloadBtn = ()=>{
+        const newArr = [...arr]
+        newArr.pop()
+        setArr(newArr)
+    }
+    return(
+        <>
+        <div className='flex flex-col bg-blue h-[100%] px-2'>
+        <h2 className='text-2xl font-semibold text-center'>Ledger Report</h2>
+        <div className='bg-[#E9F2F2] h-[35%] my-2 rounded-lg flex flex-col px-10 py-3 border-[#cdcdcd] border drop-shadow-lg'>
+            <div className="flex justify-between items-center h-[33%]">
+                <div className='flex'>
+                <label htmlFor="type" className='font-semibold text-xl grid place-items-center'>Type:</label>
+                <input type="text" name="type" id="type" className='w-[17rem] h-10 rounded-lg border-[#d5d5d5] ml-3 border' />
+                </div>
+                <div className='flex'>
+                <label htmlFor="account" className='font-semibold text-xl grid place-items-center'>Account:</label>
+                <input type="number" ref={myRef} name="account" id="account" onKeyDown={handleKeyDown} className='w-[27rem] h-10 rounded-lg border-[#d5d5d5] ml-3 border' />
+                </div>
+            </div>
+            <div className="h-[33%] flex items-center ">
+                <div className='flex w-[50%]'>
+                <label htmlFor="date" className='font-semibold text-xl grid place-items-center'>Date:</label>
+                <input type="text" name="start_date" id="start_date" className='w-[10rem] h-10 rounded-lg border-[#d5d5d5] ml-3 border' />
+                <label htmlFor="end_date" className='font-semibold text-xl grid place-items-center ml-4'>To</label>
+                <input type="text" name="end_date" id="end_date" className='w-[10rem] h-10 rounded-lg border-[#d5d5d5] ml-3 border' />
+                </div>
+                <div className='w-[50%] flex justify-end'>
+                <CustomButton onClick={handleViewBtn}
+            type={"submit"}
+            style={{
+                backgroundColor: "#A9CEED",
+                boxShadow: "2px 4px 4px 0px #00000040",
+                border: "1px solid #808080",
+                width:'8rem',
+                color:'#2A353F',
+                fontWeight:'600',
+                fontSize:'1.125rem',
+                display:'grid',
+                placeItems:'center'
+            } }
             >
-              {'Generate Bills'}
-              </CustomButton>
-            <CustomButton
-              style={{ backgroundColor: '#045E92', boxShadow: '2px 4px 4px 0px #00000040',border:'1px solid #000000' }}
+            {"View"}
+          </CustomButton>
+              </div>
+            </div>
+            <div className="h-[33%] flex items-center">
+                <div className='w-full flex justify-end'>
+
+
+  <select id="countries" className="w-[8rem]  font-[600] bg-gray-50 border border-[#d5d5d5] text-[#282828]  rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <option defaultValue='pdf' value='pdf' >PDF</option>
+    <option value="excel">EXCEL</option>
+    <option value="excel_r">EXCEL(R)</option> 
+  </select> 
+
+
+            <CustomButton onClick={handleDownloadBtn}
+            type={"submit"}
+            style={{
+                backgroundColor: "#045E92",
+                boxShadow: "2px 4px 4px 0px #00000040",
+                border: "1px solid #000000",
+                width:'11rem',
+                fontWeight:'600',
+                fontSize:'1.125rem',
+                display:'grid',
+                placeItems:'center',
+                color:'#F2F2F2',
+                marginLeft:'1rem'
+            } }
             >
-              {'Edit Bills'}
-              </CustomButton>
-            <CustomButton
-              style={{ backgroundColor: '#A9CEED', boxShadow: '2px 3px 3px 0px #00000040', border:'1px solid #000000' }}
-            >
-              {'View'}
-              </CustomButton>
-          </div>
+            {"Download"}
+          </CustomButton>
+              </div>
+            </div>
         </div>
-    </>
-  )
-}
-Ledger.propTypes = {
-  user:PropTypes.object
+        <div className='bg-[#E9F2F2] h-[55%] my-2 rounded-lg flex flex-col px-2 pt-1 border-[#cdcdcd] border drop-shadow-lg'>
+            <h3 className='text-xl font-semibold text-center'>
+                STATEMENT
+            </h3>
+            <div className='border border-[#959595] min-h-[90%] w-full rounded-lg overflow-y-auto flex flex-col'>
+                {arr.map((e,i)=>{
+                    return(
+                        <div className={`min-h-12 statement ${i%2===0?'bg-[#F3F9FB]':'bg-transparent'} ${arr.length-1===i&&arr.length>6?'border-b-[0px]':'border-b[1px]'} border border-t-[0px] border-l-[0px] border-r-[0px] border-[#9F9F9F]  flex`} key={i}>
+    <p className="w-[11%] border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px]  "></p>
+    <p className="w-[9%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] "></p>
+    <p className="w-[13%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] "></p>
+    <p className="w-[19%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] "></p>
+    <p className="w-[12%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] "></p>
+    <p className="w-[9%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] "></p>
+    <p className="w-[9%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] "></p>
+    <p className="w-[9%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] "></p>
+    <p className="w-[9%]  "></p>
+</div>
+                    )
+                })}
+
+
+            </div>
+        </div>
+
+        </div>
+        </>
+    )
 }
 export default Ledger

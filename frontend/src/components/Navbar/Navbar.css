@@ -1,18 +1,21 @@
-@import url('../../assets/colors/color.css');
-@import url('../../assets/fonts/fonts.css');
+@import url("../../assets/colors/color.css");
+@import url("../../assets/fonts/fonts.css");
 
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: var(--primary-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
 .logo-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 15px;
-    gap: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 15px;
+  gap: 4px;
 }
