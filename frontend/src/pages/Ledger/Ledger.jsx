@@ -40,9 +40,9 @@ const Ledger = (props)=>{
             <div className="h-[33%] flex items-center ">
                 <div className='flex w-[50%]'>
                 <label htmlFor="date" className='font-semibold text-xl grid place-items-center'>Date:</label>
-                <input type="text" name="start_date" id="start_date" className='w-[10rem] h-10 rounded-lg border-[#d5d5d5] ml-3 border' />
-                <label htmlFor="end_date" className='font-semibold text-xl grid place-items-center ml-4'>To</label>
-                <input type="text" name="end_date" id="end_date" className='w-[10rem] h-10 rounded-lg border-[#d5d5d5] ml-3 border' />
+                <input type="date" name="start_date" id="start_date" className='rounded-lg border border-[#d5d5d5] ml-4 w-[10rem]' />
+                <label htmlFor="end_date" className='font-semibold text-xl grid place-items-center mx-4'>To</label>
+                <input type="date" name="end_date" id="end_date" className='rounded-lg border border-[#d5d5d5] w-[10rem]' />
                 </div>
                 <div className='w-[50%] flex justify-end'>
                 <CustomButton onClick={handleViewBtn}

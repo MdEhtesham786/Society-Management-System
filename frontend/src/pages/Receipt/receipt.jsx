@@ -21,11 +21,11 @@ const Receipt = (props)=>{
     const handleViewBtn =()=>{
         if(expand){
             myRef.current.classList.add('w-0')
-            myRef.current.classList.remove('w-[18.5rem]')
+            myRef.current.classList.remove('w-[19rem]')
             
             setExpand(false)
         }else{
-            myRef.current.classList.add('w-[18.5rem]')
+            myRef.current.classList.add('w-[19rem]')
             myRef.current.classList.remove('w-0')
             setExpand(true)
         }
@@ -39,23 +39,6 @@ const Receipt = (props)=>{
             e.preventDefault();
         }
     }
-  const [showOne, setShowOne] = useState(false);
-  const [showTwo, setShowTwo] = useState(false);
-
-  const handleChangeOne = (selectedDate) => {
-    console.log(selectedDate);
-  };
-
-  const handleCloseOne = (state) => {
-    setShowOne(state);
-  };
-  const handleChangeTwo = (selectedDate) => {
-    console.log(selectedDate);
-  };
-
-  const handleCloseTwo = (state) => {
-    setShowTwo(state);
-  };
     return(
         <>
        <div className='flex flex-col bg-blue h-[85rem] px-2'>
@@ -118,29 +101,29 @@ const Receipt = (props)=>{
                 <input type="text" name="entry_branch" id="entry_branch" className='w-[35%] h-10 rounded-lg border-[#d5d5d5] ml-2 border' />
               </div>
             </div>
-            <div className="h-[20%] flex items-center ">
+            <div className="h-[15%] flex items-center ">
             <div className='flex w-[40%]'>
-                <label htmlFor="cheque_refno" className=' text-xl grid place-items-center font-[500]'>Cheque/Ref no :</label>
-                <input type="number" name="cheque_refno" id="cheque_refno" className='w-[65%] h-10 rounded-lg border-[#d5d5d5] ml-2 border' />
+                <label htmlFor="cheque_refno" className=' text-lg grid place-items-center font-[500]'>Cheque/Ref no :</label>
+                <input type="number" onKeyDown={handleKeyDown} name="cheque_refno" id="cheque_refno" className='w-[65%] h-10 rounded-lg border-[#d5d5d5] ml-2 border' />
                 </div>
                 <div className='w-[60%] flex '>
-                <label htmlFor="cheque_ref_date" className=' text-xl grid place-items-center font-[500] ml-4'>Cheque/Ref Date :</label>
+                <label htmlFor="cheque_ref_date" className=' text-lg grid place-items-center font-[500] ml-4'>Cheque/Ref Date :</label>
                 <input type="text" name="cheque_ref_date" id="cheque_ref_date" className='w-[25%] h-10 rounded-lg border-[#d5d5d5] ml-2 border' />
-                <label htmlFor="micr_ifsc" className=' text-xl grid place-items-center ml-4 font-[500]'>MICR/IFSC :</label>
+                <label htmlFor="micr_ifsc" className=' text-lg grid place-items-center ml-4 font-[500]'>MICR/IFSC :</label>
                 <input type="text" name="micr_ifsc" id="micr_ifsc" className='w-[25%] h-10 rounded-lg border-[#d5d5d5] ml-2 border' />
               </div>
             </div>
-            <div className="h-[22%] flex items-start ">
+            <div className="h-[22%] mt-3 flex items-start ">
             <div className='flex w-[45%]'>
                 <label htmlFor="interest" className=' text-lg grid place-items-center font-[500]'>Interest :</label>
-                <input type="number" name="interest" id="interest" className='w-[28%] h-10 rounded-lg border-[#d5d5d5] ml-2 border' />
+                <input type="number" onKeyDown={handleKeyDown} name="interest" id="interest" className='w-[28%] h-10 rounded-lg border-[#d5d5d5] ml-2 border' />
                 <label htmlFor="amount" className=' text-lg grid place-items-center font-[500] ml-4'>Amount :</label>
-                <input type="number" name="amount" id="amount" className='w-[35%] h-10 rounded-lg border-[#d5d5d5] ml-2 border' />
+                <input type="number" onKeyDown={handleKeyDown} name="amount" id="amount" className='w-[35%] h-10 rounded-lg border-[#d5d5d5] ml-2 border' />
                 </div>
                 <div className='w-[55%] flex items-start h-full'>
                     <div className=" flex w-[46%] ml-4 ">
                 <label htmlFor="principal" className=' text-lg grid place-items-center font-[500]'>Principal :</label>
-                <input type="number" name="principal" id="principal" className='w-[67%] h-10 rounded-lg border-[#d5d5d5] ml-2 border' />
+                <input type="number" onKeyDown={handleKeyDown} name="principal" id="principal" className='w-[67%] h-10 rounded-lg border-[#d5d5d5] ml-2 border' />
                     </div>
                     <div className="w-[50%] flex flex-col h-full ml-4">
                         <p className="h-[50%] flex items-center text-lg font-[500]">Amount :</p>
@@ -214,15 +197,17 @@ const Receipt = (props)=>{
                 <label htmlFor="selection_bank" className=' text-lg grid place-items-center font-[500]'>Bank :</label>
                 <input type="text" name="selection_bank" id="selection_bank" className='w-[35%] h-10 rounded-lg border-[#d5d5d5] ml-2 border' />
                 <label htmlFor="selection_amount" className=' text-lg grid place-items-center ml-4 font-[500]'>Amount :</label>
-                <input type="number" name="selection_amount" id="selection_amount" className='w-[35%] h-10 rounded-lg border-[#d5d5d5] ml-2 border' />
+                <input type="number" onKeyDown={handleKeyDown} name="selection_amount" id="selection_amount" className='w-[35%] h-10 rounded-lg border-[#d5d5d5] ml-2 border' />
               </div>
             </div>
-            <div className="h-[29%] flex items-center ">
+            <div className="h-[29%] flex  items-center ">
             <div className='flex w-[45%]'>
             <label htmlFor="start_date" className=' text-lg grid place-items-center font-[600]'>Date :</label>
-			<Datepicker options={{...dateOptions,title:'From',inputIdProp:'start_date'}} onChange={handleChangeOne} show={showOne} setShow={handleCloseOne} classNames="w-[35%] ml-4" />
+            <input type="date" name="start_date" id="start_date" className="w-[35%] ml-4 rounded-lg border border-[#d5d5d5] " />
             <label htmlFor="end_date" className=' text-lg grid place-items-center font-[600] mx-4'>To</label>
-			<Datepicker options={{...dateOptions,title:'To',inputIdProp:'end_date'}} onChange={handleChangeTwo}  show={showTwo} setShow={handleCloseTwo} classNames="w-[35%]" />
+			
+            <input type="date" name="end_date" id="end_date" className="w-[35%] rounded-lg border border-[#d5d5d5] " />
+
                 </div>
                 <div className='w-[55%] flex '>
                 <label htmlFor="records" className=' text-xl grid place-items-center ml-4 font-[500]'>Records :</label>
@@ -235,7 +220,7 @@ const Receipt = (props)=>{
     <option value="50">50</option> 
   </select> 
                 <label htmlFor="cheque_no" className=' text-xl grid place-items-center ml-4 font-[500]'>Cheque no :</label>
-                <input type="number" name="cheque_no" id="cheque_no" className='w-[38%] h-10 rounded-lg border-[#d5d5d5] ml-2 border' />
+                <input type="number" onKeyDown={handleKeyDown} name="cheque_no" id="cheque_no" className='w-[38%] h-10 rounded-lg border-[#d5d5d5] ml-2 border' />
               </div>
             </div>
             <div className="flex justify-center items-center h-[29%]">
@@ -259,7 +244,7 @@ const Receipt = (props)=>{
           </CustomButton>
             </div>
         </div>
-        <div className=' bg-[#E9F2F2] -z-10 h-[34%] my-2 rounded-lg flex flex-col px-2 pt-1 border-[#cdcdcd] border drop-shadow-lg'>
+        <div className=' bg-[#E9F2F2]  h-[34%] my-2 rounded-lg flex flex-col px-2 pt-1 border-[#cdcdcd] border drop-shadow-lg'>
             
             <div className='mt-1 border border-[#959595] min-h-[95%] max-h-[95%] w-full rounded-lg overflow-y-auto flex flex-col '>
             <div className={`min-h-12 statement bg-[#F3F9FB] border-b[1px] border border-t-[0px] border-l-[0px] border-r-[0px] border-[#9F9F9F]  flex`} >
