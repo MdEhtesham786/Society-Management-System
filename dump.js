@@ -62,3 +62,9 @@ app.listen(port, () => {
 
 // Document your codebase, including API endpoints, component structure, and project dependencies, to facilitate maintenance and onboarding of new developers.
 // By following these best practices and guidelines, you can effectively start and manage your MERN stack web app with 64 pages. Remember to prioritize maintainability, scalability, and performance throughout the development process.
+
+
+
+// Date Picker
+{/* <Datepicker options={{...dateOptions,title:'To',inputIdProp:'end_date'}} onChange={handleChangeTwo}  show={showTwo} setShow={handleCloseTwo} classNames="w-[35%] " />
+             */}

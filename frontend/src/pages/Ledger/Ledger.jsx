@@ -3,7 +3,7 @@ import CustomButton from '../../components/Button/CustomButton'
 import "./Ledger.css"
 import React, { useRef, useState } from 'react';
 const Ledger = (props)=>{
-    const myRef = useRef(null);
+   
     const handleKeyDown = (e)=>{
         if (e.keyCode === 38) {
             console.log('up');
@@ -34,15 +34,15 @@ const Ledger = (props)=>{
                 </div>
                 <div className='flex'>
                 <label htmlFor="account" className='font-semibold text-xl grid place-items-center'>Account:</label>
-                <input type="number" ref={myRef} name="account" id="account" onKeyDown={handleKeyDown} className='w-[27rem] h-10 rounded-lg border-[#d5d5d5] ml-3 border' />
+                <input type="number"  name="account" id="account" onKeyDown={handleKeyDown} className='w-[27rem] h-10 rounded-lg border-[#d5d5d5] ml-3 border' />
                 </div>
             </div>
             <div className="h-[33%] flex items-center ">
                 <div className='flex w-[50%]'>
                 <label htmlFor="date" className='font-semibold text-xl grid place-items-center'>Date:</label>
-                <input type="text" name="start_date" id="start_date" className='w-[10rem] h-10 rounded-lg border-[#d5d5d5] ml-3 border' />
-                <label htmlFor="end_date" className='font-semibold text-xl grid place-items-center ml-4'>To</label>
-                <input type="text" name="end_date" id="end_date" className='w-[10rem] h-10 rounded-lg border-[#d5d5d5] ml-3 border' />
+                <input type="date" name="start_date" id="start_date" className='rounded-lg border border-[#d5d5d5] ml-4 w-[10rem]' />
+                <label htmlFor="end_date" className='font-semibold text-xl grid place-items-center mx-4'>To</label>
+                <input type="date" name="end_date" id="end_date" className='rounded-lg border border-[#d5d5d5] w-[10rem]' />
                 </div>
                 <div className='w-[50%] flex justify-end'>
                 <CustomButton onClick={handleViewBtn}

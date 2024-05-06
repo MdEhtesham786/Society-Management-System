@@ -29,6 +29,9 @@ function App() {
       } else {
         if (data.user) {
           setUser(data.user);
+          if(location.pathname === '/api/v1/auth/login'){
+navigate('/')
+          }
         } else {
           console.log("User nhi hai");
         }
