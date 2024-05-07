@@ -10,6 +10,16 @@ const DebitNote = () => {
   const handleSearchBtn = () => {
     setArr2([...arr2, 1]);
   };
+
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 38) {
+      console.log("up");
+      e.preventDefault();
+    } else if (e.keyCode === 40) {
+      console.log("down");
+      e.preventDefault();
+    }
+  };
   return (
     <>
       <div className="flex flex-col bg-blue h-[85rem] px-2">
@@ -142,6 +152,7 @@ const DebitNote = () => {
             </label>
             <input
               type="number"
+              onKeyDown={handleKeyDown}
               name="amount"
               id="amount"
               className="w-[25%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
@@ -154,6 +165,7 @@ const DebitNote = () => {
             </label>
             <input
               type="number"
+              onKeyDown={handleKeyDown}
               name="principal"
               id="principal"
               className="w-[25%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
@@ -166,6 +178,7 @@ const DebitNote = () => {
             </label>
             <input
               type="number"
+              onKeyDown={handleKeyDown}
               name="interest"
               id="interest"
               className="w-[25%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
@@ -267,6 +280,7 @@ const DebitNote = () => {
             </label>
             <input
               type="number"
+              onKeyDown={handleKeyDown}
               name="amount_search"
               id="amount_search"
               className="w-[20.8%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
