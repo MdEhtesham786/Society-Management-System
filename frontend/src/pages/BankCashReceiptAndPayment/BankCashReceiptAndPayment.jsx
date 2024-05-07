@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import CustomButton from "../../components/Button/CustomButton";
-import "./BankCashPayment.css";
+import "./BankCashReceiptAndPayment.css";
 import PropTypes from "prop-types";
 const Receipt = (props) => {
   const { page, accountSelectionName } = props;

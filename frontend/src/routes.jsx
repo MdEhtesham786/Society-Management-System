@@ -4,7 +4,9 @@ import Ledger from "./pages/Ledger/Ledger.jsx";
 import Receipt from "./pages/Receipt/receipt.jsx";
 import DebitNote from "./pages/DebitNote/DebitNote";
 import ClosingJV from "./pages/ClosingJV/ClosingJV";
-import BankCashPayment from "./pages/Bank_Cash_Payment/BankCashPaymet";
+import BankCashReceiptAndPayment from "./pages/BankCashReceiptAndPayment/BankCashReceiptAndPayment";
+import OpeningBalance from "./pages/OpeningBalance/OpeningBalance";
+import MultipleReceiptAndPayment from "./pages/MultipleReceiptAndPayment/MultipleReceiptAndPayment";
 
 const vendorManagement = [
   {
@@ -64,7 +66,7 @@ const transactions = [
   },
   {
     path: "/transaction/bankreceipt",
-    component: BankCashPayment,
+    component: BankCashReceiptAndPayment,
     exact: true,
     props: {
       page: "Bank Receipt",
@@ -73,7 +75,7 @@ const transactions = [
   },
   {
     path: "/transaction/cashreceipt",
-    component: BankCashPayment,
+    component: BankCashReceiptAndPayment,
     exact: true,
     props: {
       page: "Cash Receipt",
@@ -91,7 +93,7 @@ const transactions = [
   },
   {
     path: "/transaction/bankpayment",
-    component: BankCashPayment,
+    component: BankCashReceiptAndPayment,
     exact: true,
     props: {
       page: "Bank Payment",
@@ -100,7 +102,7 @@ const transactions = [
   },
   {
     path: "/transaction/cashpayment",
-    component: BankCashPayment,
+    component: BankCashReceiptAndPayment,
     exact: true,
     props: {
       page: "Cash Payment",
@@ -136,9 +138,24 @@ const transactions = [
     exact: true,
     props: { page: "Journal Voucher (Closing)" },
   },
-  { path: "/transaction/openingbalance", component: Dashboard, exact: true },
-  { path: "/transaction/multiplereceipt", component: Dashboard, exact: true },
-  { path: "/transaction/multiplepayment", component: Dashboard, exact: true },
+  {
+    path: "/transaction/openingbalance",
+    component: OpeningBalance,
+    exact: true,
+    props: { page: "Opening Balance" },
+  },
+  {
+    path: "/transaction/multiplereceipt",
+    component: MultipleReceiptAndPayment,
+    exact: true,
+    props: { page: "Multiple Receipt" },
+  },
+  {
+    path: "/transaction/multiplepayment",
+    component: MultipleReceiptAndPayment,
+    exact: true,
+    props: { page: "Multiple Payment" },
+  },
   { path: "/transaction/ledgeredit", component: Dashboard, exact: true },
   {
     path: "/transaction/chequeslipgeneraton",
