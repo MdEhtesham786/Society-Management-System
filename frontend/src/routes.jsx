@@ -3,6 +3,9 @@ import BillGeneration from "./pages/Bill Generation/Bill-Generation";
 import Ledger from "./pages/Ledger/Ledger.jsx";
 import Receipt from "./pages/Receipt/receipt.jsx";
 import DebitNote from "./pages/DebitNote/DebitNote";
+import ClosingJV from "./pages/ClosingJV/ClosingJV";
+import BankCashPayment from "./pages/Bank_Cash_Payment/BankCashPaymet";
+
 const vendorManagement = [
   {
     path: "/vendormanagement/addvendoraccount",
@@ -54,37 +57,85 @@ const transactions = [
     path: "/transaction/memberreceipt",
     component: Receipt,
     exact: true,
-    props: { page: "Member" },
+    props: {
+      page: "Member Receipt",
+      accountSelectionName: "SELECT BANK/CASH ACCOUNT",
+    },
   },
   {
     path: "/transaction/bankreceipt",
-    component: Receipt,
+    component: BankCashPayment,
     exact: true,
-    props: { page: "Bank" },
+    props: {
+      page: "Bank Receipt",
+      accountSelectionName: "SELECT BANK ACCOUNT",
+    },
   },
   {
     path: "/transaction/cashreceipt",
-    component: Receipt,
+    component: BankCashPayment,
     exact: true,
-    props: { page: "Cash" },
+    props: {
+      page: "Cash Receipt",
+      accountSelectionName: "SELECT CASH ACCOUNT",
+    },
   },
   {
     path: "/transaction/supplementaryreceipt",
     component: Receipt,
     exact: true,
-    props: { page: "Supplementary" },
+    props: {
+      page: "Supplementary Receipt",
+      accountSelectionName: "SELECT BANK/CASH ACCOUNT",
+    },
   },
-  { path: "/transaction/bankpayment", component: Dashboard, exact: true },
-  { path: "/transaction/cashpayment", component: Dashboard, exact: true },
+  {
+    path: "/transaction/bankpayment",
+    component: BankCashPayment,
+    exact: true,
+    props: {
+      page: "Bank Payment",
+      accountSelectionName: "SELECT BANK ACCOUNT",
+    },
+  },
+  {
+    path: "/transaction/cashpayment",
+    component: BankCashPayment,
+    exact: true,
+    props: {
+      page: "Cash Payment",
+      accountSelectionName: "SELECT CASH ACCOUNT",
+    },
+  },
   {
     path: "/transaction/bankreconcillation",
     component: Dashboard,
     exact: true,
   },
-  { path: "/transaction/debitnote", component: DebitNote, exact: true },
-  { path: "/transaction/creditnote", component: Dashboard, exact: true },
-  { path: "/transaction/journalvoucher", component: Dashboard, exact: true },
-  { path: "/transaction/closingjv", component: Dashboard, exact: true },
+  {
+    path: "/transaction/debitnote",
+    component: DebitNote,
+    exact: true,
+    props: { page: "Debit Note" },
+  },
+  {
+    path: "/transaction/creditnote",
+    component: DebitNote,
+    exact: true,
+    props: { page: "Credit Note" },
+  },
+  {
+    path: "/transaction/journalvoucher",
+    component: DebitNote,
+    exact: true,
+    props: { page: "Journal Voucher" },
+  },
+  {
+    path: "/transaction/closingjv",
+    component: ClosingJV,
+    exact: true,
+    props: { page: "Journal Voucher (Closing)" },
+  },
   { path: "/transaction/openingbalance", component: Dashboard, exact: true },
   { path: "/transaction/multiplereceipt", component: Dashboard, exact: true },
   { path: "/transaction/multiplepayment", component: Dashboard, exact: true },

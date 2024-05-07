@@ -1,12 +1,9 @@
 import React, { useState, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
 import CustomButton from "../../components/Button/CustomButton";
-import Datepicker from "tailwind-datepicker-react";
 import "./receipt.css";
 import PropTypes from "prop-types";
-import dateOptions from "../../components/DatePicker/DatePicker";
 const Receipt = (props) => {
-  const { page } = props;
+  const { page, accountSelectionName } = props;
   const myRef = useRef(null);
   const [expand, setExpand] = useState(false);
   const [arr, setArr] = useState([]);
@@ -42,10 +39,10 @@ const Receipt = (props) => {
   return (
     <>
       <div className="flex flex-col bg-blue h-[85rem] px-2">
-        <h2 className="text-2xl font-semibold text-center">{page} Receipt</h2>
+        <h2 className="text-2xl font-semibold text-center">{page}</h2>
         <div className="bg-[#E9F2F2] h-[10%] my-2 rounded-lg flex flex-col px-6 py-3 border-[#cdcdcd] border drop-shadow-lg ">
-          <div className="flex justify-between items-center h-[40%]  font-semibold">
-            SELECT BANK / CASH ACCOUNT
+          <div className="flex justify-between underline underline-offset-4 items-center h-[40%]  font-semibold">
+            {accountSelectionName}
           </div>
           <div className="h-[60%] flex items-center">
             <div className="w-full flex justify-start">
