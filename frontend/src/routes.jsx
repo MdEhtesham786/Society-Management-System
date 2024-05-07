@@ -7,6 +7,8 @@ import ClosingJV from "./pages/ClosingJV/ClosingJV";
 import BankCashReceiptAndPayment from "./pages/BankCashReceiptAndPayment/BankCashReceiptAndPayment";
 import OpeningBalance from "./pages/OpeningBalance/OpeningBalance";
 import MultipleReceiptAndPayment from "./pages/MultipleReceiptAndPayment/MultipleReceiptAndPayment";
+import LedgerEdit from "./pages/LedgerEdit/LedgerEdit";
+import ChequeSlipGeneration from "./pages/ChequeSlipGeneration/ChequeSlipGeneration";
 
 const vendorManagement = [
   {
@@ -156,11 +158,12 @@ const transactions = [
     exact: true,
     props: { page: "Multiple Payment" },
   },
-  { path: "/transaction/ledgeredit", component: Dashboard, exact: true },
+  { path: "/transaction/ledgeredit", component: LedgerEdit, exact: true },
   {
     path: "/transaction/chequeslipgeneraton",
-    component: Dashboard,
+    component: ChequeSlipGeneration,
     exact: true,
+    props: { page: "Cheque Slip Generaton" },
   },
 ];
 
