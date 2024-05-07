@@ -1,33 +1,16 @@
 import { useState, } from "react";
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
-// import GenerateBills from "../../components/Generate-Bills/GenerateBills";
+import { setIsLoggedIn,setUser } from "../../reducer/authSlice";
+import { useDispatch } from "react-redux";
 export default function Example() {
   
-  //Dynamic inputs
-  // Step 1 useState
-  // Step 2 Handlers
-  // Step 3 Inputs
-  // Step 4 Generate bills
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
-  const [remember,setRemember] = useState(false)
+  // const [remember,setRemember] = useState(false)
   const[error,setError] = useState('')
-  // const [fieldValidator,setFieldValidator]= useState(false)
-  // const loginInputHandlers=[
-  //   {onChange:(e)=>setEmail(e.target.value),value:email,label:'Email'},
-  //   {onChange:(e)=>setPassword(e.target.value),value:password,label:'Password'},
-  //   {onChange:(e)=>setRemember(e.target.value),value:remember,label:'Remember'}
-  // ]
-  // const loginInputs = []
-  // loginInputHandlers.forEach((input,index)=>{
-  // loginInputs.push({
-  //    label: input.label,
-  //     onChange:input.onChange,
-  //     value:input.value
-  //   })
-  //   })
   const handleEmailInput = (e)=>{
 setEmail(e.target.value)
 
@@ -36,7 +19,7 @@ setEmail(e.target.value)
     setPassword(e.target.value)
 
   }
-  const handleLoginSubmit =async (e)=>{
+  const handleLoginSubmit =async ()=>{
     try {
       // e.preventDefault()
       const res = await axios.post('http://127.0.0.1:5003/api/v1/auth/login',{
@@ -51,7 +34,10 @@ setEmail(e.target.value)
 const {data} = res
 if(data.success){
   if(data.user){
-navigate('/')
+    
+    dispatch(setIsLoggedIn(true))
+    dispatch(setUser(data.user))
+navigate('/ ')
   }
 }else{
   setError(res.data.message)

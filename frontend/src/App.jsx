@@ -1,4 +1,5 @@
 import "./App.css";
+import { useState } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import SideMenu from "./layout/Side-Menu/SideMenu";
@@ -7,33 +8,41 @@ import { useEffect } from "react";
 import axios from "axios";
 import routes from "./routes";
 import {useDispatch,useSelector} from "react-redux"
-import {isLogin} from "./reducer/userReducer"
+import {setIsLoggedIn,setUser} from "./reducer/authSlice.js"
+import Spinner from "./components/Loader/Spinner.jsx";
 // import { Helmet,HelmetProvider } from 'react-helmet-async';
 function App() {
   const defaultPath = "/api/v1";
+  axios.defaults.withCredentials = true; //The most important line for cookies
   const navigate = useNavigate();
   const location = useLocation();
-  const isLoginPage = location.pathname === "/api/v1/auth/login";
-  axios.defaults.withCredentials = true; //The most important line for cookies
   const dispatch = useDispatch()
+  const isLoginPage = location.pathname === "/api/v1/auth/login";
+  const [loading, setLoading] = useState(true); // State to track loading status
+  const [authChecked, setAuthChecked] = useState(false); // State to track if authentication check completed
 
-  // const [loggedInUser,setLoggedInUser] = useState({})
+  //Redux State
+  const user = useSelector(state=>state.user)
+  const isLoggedIn = useSelector(state=>state.isLoggedIn)
 
   const fetchData = async () => {
     try {
+
       const res = await axios.post(`http://127.0.0.1:5003/api/v1/auth/islogin`);
       const { data } = res;
       if (!data.success) {
+
         if (!isLoginPage) {
           navigate("/api/v1/auth/login");
         }
       } else {
         if (data.user) {
-  dispatch(isLogin({...data}))
+          dispatch(setIsLoggedIn(data.success))
+          dispatch(setUser(data.user))
           if(location.pathname === '/api/v1/auth/login'){
-navigate('/')
+            navigate('/')
           }
-        } else {
+} else {
 navigate('/api/v1/auth/login')
         }
       }
@@ -41,20 +50,32 @@ navigate('/api/v1/auth/login')
     } catch (err) {
       console.log(err);
       navigate("/api/v1/auth/login");
+    }finally {
+      setLoading(false)
+      setAuthChecked(true)
     }
   };
   useEffect(() => {
     fetchData()
   },[]);
-const user = useSelector(state=>state.loggedInUser.user)
-  
+  useEffect(()=>{
+    if(authChecked&&!isLoggedIn||!user){
+      if(location.pathname!=='/api/v1/auth/login'){
+        navigate('/api/v1/auth/login')
+      }
+    }
+
+  },[location.pathname,isLoggedIn,user,authChecked,navigate])
   return (
     <>
       <Navbar user={user} />
-      <div className="Container">
-        {isLoginPage ? null : <SideMenu />}
+      <div className="Container  ">
+        {isLoginPage ?  null : <SideMenu />}
         <section className={`${isLoginPage ? "w-full" : "w-[78.77%]"} mt-3 h-[40.37rem] max-h-[40.37rem] overflow-y-auto`}>
+    {loading?<Spinner/>:
+
           <Routes>
+
             {routes.map((route, index) => (
               <Route
                 key={index}
@@ -64,7 +85,7 @@ const user = useSelector(state=>state.loggedInUser.user)
               />
             ))}
             <Route path="/api/v1/auth/login" element={<Login />} exact={true} />
-          </Routes>
+          </Routes>}
         </section>
       </div>
     </>

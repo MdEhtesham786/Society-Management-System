@@ -7,8 +7,12 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-
+// import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import {setIsLoggedIn,setUser} from "../../reducer/authSlice"
 const Navbar = (props) => {
+  const {user} =props 
+  const dispatch = useDispatch()
   const location = useLocation();
   const isLoginPage = location.pathname === "/api/v1/auth/login";
   const navigate = useNavigate();
@@ -25,6 +29,8 @@ const Navbar = (props) => {
         );
         const { data } = res;
         if (data.success) {
+dispatch(setIsLoggedIn(false))
+dispatch(setUser({}))
           navigate("/api/v1/auth/login");
         } else {
           console.log(data.message);
@@ -46,7 +52,7 @@ const Navbar = (props) => {
         </div>
       </Link>
       <div className=" text-2xl font-bold">
-        {props.user?.username && "Welcome " + props.user.username + "!"}
+        {user.username && "Welcome " + user.username + "!"}
       </div>
       {isLoginPage ? null : (
         <button onClick={handleLogout} className="bg-gray-300 h-8 w-20">
