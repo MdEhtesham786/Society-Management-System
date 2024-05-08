@@ -2,8 +2,19 @@ import React, { useState, useRef } from "react";
 import CustomButton from "../../components/Button/CustomButton";
 import "./receipt.css";
 import PropTypes from "prop-types";
+import Select from "../../components/Select/Select";
 const Receipt = (props) => {
-  const { page, accountSelectionName } = props;
+  let exampleArr = []
+  for (let i = 0; i < 15; i++) {
+    if(i==0){
+      exampleArr.push({title:'Select',value:'select'})
+    }else{
+      exampleArr.push({title:'Mrs. Sushma M. Singh / Mr. Manoj S. Singh',value:'Mrs. Sushma M. Singh / Mr. Manoj S. Singh'})
+
+    }
+    
+  }
+  const { page,accountSelectionName } = props;
   const myRef = useRef(null);
   const [expand, setExpand] = useState(false);
   const [arr, setArr] = useState([]);
@@ -32,7 +43,6 @@ const Receipt = (props) => {
       console.log("up");
       e.preventDefault();
     } else if (e.keyCode === 40) {
-      console.log("down");
       e.preventDefault();
     }
   };
@@ -42,28 +52,13 @@ const Receipt = (props) => {
         <h2 className="text-2xl font-semibold text-center">{page}</h2>
         <div className="bg-[#E9F2F2] h-[10%] my-2 rounded-lg flex flex-col px-6 py-3 border-[#cdcdcd] border drop-shadow-lg ">
           <div className="flex justify-between underline underline-offset-4 items-center h-[40%]  font-semibold">
-            {accountSelectionName}
+         {accountSelectionName}
           </div>
           <div className="h-[60%] flex items-center">
             <div className="w-full flex justify-start">
               <div className="w-[50%] flex">
-                <select
-                  id="countries"
-                  defaultValue={"bank"}
-                  className="w-[8.5rem] h-10  font-[500] bg-gray-50 border border-[#d5d5d5] text-[#282828]  rounded-lg focus:ring-blue-500 focus:border-blue-500 block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  <option value="bank">Bank</option>
-                  <option value="cash">Cash</option>
-                </select>
-                <select
-                  id="countries"
-                  defaultValue={"select_account"}
-                  className="mx-6 w-[12.5rem] h-10  font-[500] bg-gray-50 border border-[#d5d5d5] text-[#282828]  rounded-lg focus:ring-blue-500 focus:border-blue-500 block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  <option value="select_account">Select Account</option>
-                  <option value="axis_bank">Axis Bank</option>
-                  <option value="tdcc_bank">TDCC Bank</option>
-                </select>
+                {page==='Member Receipt'||page ==='Supplementary Receipt'? <Select classNames={'h-10 w-[8.5rem]'} id={'bank_cash'} name={'bank_cash'} defaultValue={'bank'} optionArr={[{title:'Bank',value:'bank'},{title:'Cash',value:'cash'}]}/>:''}
+                <Select classNames={`h-10 w-[12.5rem] ${page==='Member Receipt'||page ==='Supplementary Receipt'?'mx-6':'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={[{title:'Select Account',value:'select_amount'},{title:'Axis Bank',value:'axis_bank'},{title:'TDCC Bank',value:'tdcc_bank'}]}/>
                 <CustomButton
                   onClick={handleViewBtn}
                   type={"submit"}
@@ -108,12 +103,13 @@ const Receipt = (props) => {
               >
                 Name :
               </label>
-              <input
+              {/* <input
                 type="text"
                 name="entry_name"
                 id="entry_name"
                 className="w-[85%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
-              />
+              /> */}
+<Select id={'entry_name'} name={'entry_name'}classNames={'h-10 w-[85%] ml-2'} optionArr={exampleArr}  />
             </div>
             <div className="w-[55%] flex justify-center">
               <label
@@ -165,11 +161,11 @@ const Receipt = (props) => {
               >
                 Cheque/Ref Date :
               </label>
-              <input
-                type="text"
-                name="cheque_ref_date"
-                id="cheque_ref_date"
-                className="w-[25%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
+                   <input
+                type="date"
+                name="start_date"
+                id="start_date"
+                className="rounded-lg border border-[#d5d5d5] ml-2 w-[25%]"
               />
               <label
                 htmlFor="micr_ifsc"
@@ -498,5 +494,6 @@ const Receipt = (props) => {
 };
 Receipt.propTypes = {
   page: PropTypes.string,
+  accountSelectionName:PropTypes.string
 };
 export default Receipt;

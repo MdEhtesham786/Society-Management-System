@@ -4,7 +4,6 @@ import Ledger from "./pages/Ledger/Ledger.jsx";
 import Receipt from "./pages/Receipt/receipt.jsx";
 import DebitNote from "./pages/DebitNote/DebitNote";
 import ClosingJV from "./pages/ClosingJV/ClosingJV";
-import BankCashReceiptAndPayment from "./pages/BankCashReceiptAndPayment/BankCashReceiptAndPayment";
 import OpeningBalance from "./pages/OpeningBalance/OpeningBalance";
 import MultipleReceiptAndPayment from "./pages/MultipleReceiptAndPayment/MultipleReceiptAndPayment";
 import LedgerEdit from "./pages/LedgerEdit/LedgerEdit";
@@ -68,7 +67,7 @@ const transactions = [
   },
   {
     path: "/transaction/bankreceipt",
-    component: BankCashReceiptAndPayment,
+    component: Receipt,
     exact: true,
     props: {
       page: "Bank Receipt",
@@ -77,7 +76,7 @@ const transactions = [
   },
   {
     path: "/transaction/cashreceipt",
-    component: BankCashReceiptAndPayment,
+    component: Receipt,
     exact: true,
     props: {
       page: "Cash Receipt",
@@ -95,7 +94,7 @@ const transactions = [
   },
   {
     path: "/transaction/bankpayment",
-    component: BankCashReceiptAndPayment,
+    component: Receipt,
     exact: true,
     props: {
       page: "Bank Payment",
@@ -104,7 +103,7 @@ const transactions = [
   },
   {
     path: "/transaction/cashpayment",
-    component: BankCashReceiptAndPayment,
+    component: Receipt,
     exact: true,
     props: {
       page: "Cash Payment",
