@@ -4,12 +4,69 @@ const MenuData = [
     path: "/",
   },
   {
-    title: "Pay Now",
-    path: "/api/v1/pay",
+    title: "Admin",
+    path: "/api/v1/admin",
+    subItem: [
+      { title: "Upload", path: "/api/v1/admin/upload" },
+      { title: "Add Society", path: "/api/v1/admin/addsociety" },
+      { title: "Account Seting", path: "/api/v1/admin/accountsetting" },
+      { title: "Repair Interest", path: "/api/v1/admin" },
+      { title: "Code Utilities", path: "/api/v1/admin/codeutilities" },
+      { title: "Add Roles", path: "/api/v1/admin/addroles" },
+      { title: "Menu Access", path: "/api/v1/admin/menuaccess" },
+      { title: "Add Users", path: "/api/v1/admin/addusers" },
+      { title: "Voucher List", path: "/api/v1/voucherlist" },
+      { title: "Certificate", path: "/api/v1/admin/certificates" },
+      { title: "Lock Society", path: "/api/v1/admin/locksociety" },
+    ],
   },
+  {
+    title: "Transaction",
+    path: "/api/v1/transaction",
+
+    subItem: [
+      { title: "Bill Generation", path: "/api/v1/transaction/billgeneration" },
+      { title: "Member Receipt", path: "/api/v1/transaction/memberreceipt" },
+      { title: "Bank Receipt", path: "/api/v1/transaction/bankreceipt" },
+      { title: "Cash Receipt", path: "/api/v1/transaction/cashreceipt" },
+      {
+        title: "Supplementary Receipt",
+        path: "/api/v1/transaction/supplementaryreceipt",
+      },
+      { title: "Bank Payment", path: "/api/v1/transaction/bankpayment" },
+      { title: "Cash Payment", path: "/api/v1/transaction/cashpayment" },
+      {
+        title: "Bank Reconcillation",
+        path: "/api/v1/transaction/bankreconcillation",
+      },
+      { title: "Debit Note", path: "/api/v1/transaction/debitnote" },
+      { title: "Credit Note", path: "/api/v1/transaction/creditnote" },
+      { title: "Journal Voucher", path: "/api/v1/transaction/journalvoucher" },
+      { title: "Closing JV", path: "/api/v1/transaction/closingjv" },
+      { title: "Opening Balance", path: "/api/v1/transaction/openingbalance" },
+      {
+        title: "Multiple Receipt",
+        path: "/api/v1/transaction/multiplereceipt",
+      },
+      {
+        title: "Multiple Payment",
+        path: "/api/v1/transaction/multiplepayment",
+      },
+      { title: "Ledger Edit", path: "/api/v1/transaction/ledgeredit" },
+      {
+        title: "Cheque Slip Generation",
+        path: "/api/v1/transaction/chequeslipgeneraton",
+      },
+    ],
+  },
+
   {
     title: "Ledger",
     path: "/api/v1/ledger",
+  },
+  {
+    title: "Pay Now",
+    path: "/api/v1/pay",
   },
   {
     title: "Outstanding Report",
@@ -126,45 +183,7 @@ const MenuData = [
       { title: "Personal Account", path: "/api/v1/masters/personalaccount" },
     ],
   },
-  {
-    title: "Transaction",
-    path: "/api/v1/transaction",
 
-    subItem: [
-      { title: "Bill Generation", path: "/api/v1/transaction/billgeneration" },
-      { title: "Member Receipt", path: "/api/v1/transaction/memberreceipt" },
-      { title: "Bank Receipt", path: "/api/v1/transaction/bankreceipt" },
-      { title: "Cash Receipt", path: "/api/v1/transaction/cashreceipt" },
-      {
-        title: "Supplementary Receipt",
-        path: "/api/v1/transaction/supplementaryreceipt",
-      },
-      { title: "Bank Payment", path: "/api/v1/transaction/bankpayment" },
-      { title: "Cash Payment", path: "/api/v1/transaction/cashpayment" },
-      {
-        title: "Bank Reconcillation",
-        path: "/api/v1/transaction/bankreconcillation",
-      },
-      { title: "Debit Note", path: "/api/v1/transaction/debitnote" },
-      { title: "Credit Note", path: "/api/v1/transaction/creditnote" },
-      { title: "Journal Voucher", path: "/api/v1/transaction/journalvoucher" },
-      { title: "Closing JV", path: "/api/v1/transaction/closingjv" },
-      { title: "Opening Balance", path: "/api/v1/transaction/openingbalance" },
-      {
-        title: "Multiple Receipt",
-        path: "/api/v1/transaction/multiplereceipt",
-      },
-      {
-        title: "Multiple Payment",
-        path: "/api/v1/transaction/multiplepayment",
-      },
-      { title: "Ledger Edit", path: "/api/v1/transaction/ledgeredit" },
-      {
-        title: "Cheque Slip Generation",
-        path: "/api/v1/transaction/chequeslipgeneraton",
-      },
-    ],
-  },
   {
     title: "Setting",
     path: "/api/v1/setting",
