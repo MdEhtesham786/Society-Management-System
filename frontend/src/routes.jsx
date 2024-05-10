@@ -190,11 +190,29 @@ const print = [
   { path: "/print/printbillmonthbreakup", component: Dashboard, exact: true },
 ];
 
+const admin = [
+  { path: "/admin/upload", component: Dashboard, exact: true },
+  { path: "/admin/addsociety", component: Dashboard, exact: true },
+  { path: "/admin/accountsetting", component: Dashboard, exact: true },
+  { path: "/admin/repairinterest", component: Dashboard, exact: true },
+  { path: "/admin/codeutilities", component: Dashboard, exact: true },
+  { path: "/admin/addroles", component: Dashboard, exact: true },
+  { path: "/admin/menuaccess", component: Dashboard, exact: true },
+  { path: "/admin/addusers", component: Dashboard, exact: true },
+  { path: "/admin/voucherlist", component: Dashboard, exact: true },
+  { path: "/admin/certificates", component: Dashboard, exact: true },
+  { path: "/admin/locksociety", component: Dashboard, exact: true },
+];
+
 const routes = [
   { path: "/", component: Dashboard, exact: true },
   // { path: "/bill-generation", component: BillGeneration, exact: true },
-  { path: "/pay", component: Dashboard, exact: true },
+
+  ...admin,
+  ...transactions,
+
   { path: "/ledger", component: Ledger, exact: true },
+  { path: "/pay", component: Dashboard, exact: true },
   { path: "/outstandingreport", component: Dashboard, exact: true },
   { path: "/complaint", component: Dashboard, exact: true },
   { path: "/ledger", component: Dashboard, exact: true },
@@ -211,7 +229,7 @@ const routes = [
   { path: "/memberlist", component: Dashboard, exact: true },
 
   ...masters,
-  ...transactions,
+
   ...setting,
   ...print,
 ];
