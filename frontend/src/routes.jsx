@@ -8,6 +8,7 @@ import OpeningBalance from "./pages/OpeningBalance/OpeningBalance";
 import MultipleReceiptAndPayment from "./pages/MultipleReceiptAndPayment/MultipleReceiptAndPayment";
 import LedgerEdit from "./pages/LedgerEdit/LedgerEdit";
 import ChequeSlipGeneration from "./pages/ChequeSlipGeneration/ChequeSlipGeneration";
+import Admin from "./pages/Admin/admin.jsx";
 
 const vendorManagement = [
   {
@@ -90,6 +91,8 @@ const transactions = [
     props: {
       page: "Supplementary Receipt",
       accountSelectionName: "SELECT BANK/CASH ACCOUNT",
+     
+      
     },
   },
   {
@@ -108,6 +111,7 @@ const transactions = [
     props: {
       page: "Cash Payment",
       accountSelectionName: "SELECT CASH ACCOUNT",
+      
     },
   },
   {
@@ -192,6 +196,7 @@ const print = [
 
 const routes = [
   { path: "/", component: Dashboard, exact: true },
+  {path:'/admin',component:Admin,exact:true},
   // { path: "/bill-generation", component: BillGeneration, exact: true },
   { path: "/pay", component: Dashboard, exact: true },
   { path: "/ledger", component: Ledger, exact: true },

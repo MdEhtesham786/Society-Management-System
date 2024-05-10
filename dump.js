@@ -68,3 +68,82 @@ app.listen(port, () => {
 // Date Picker
 {/* <Datepicker options={{...dateOptions,title:'To',inputIdProp:'end_date'}} onChange={handleChangeTwo}  show={showTwo} setShow={handleCloseTwo} classNames="w-[35%] " />
              */}
+readFile('./memberList.json', 'utf-8', async (err, data) => {
+    if (err) {
+        console.log(err);
+        return res.status(500).json({ error: 'Failed to read member list file' });
+    }
+    try {
+        let arr = [];
+        const memberList = JSON.parse(data);
+        const adminId = '663cc99733356e422ca18d05';
+        memberList.forEach((member) => {
+            member.managerId = adminId;
+            arr.push(member);
+        });
+        const allMembers = await memberModel.find();
+
+        arr.forEach(async (users, i) => {
+            try {
+                // await new memberModel(users).save().then((res) => console.log('ressss', res));
+            } catch (err) {
+                console.log(err);
+
+            }
+
+        });
+        // await memberModel.deleteMany({ Wing: '' });
+        res.json({
+            success: true, nhBits: allMembers.length,
+            allMembers
+
+        });
+    } catch (err) {
+        console.log(err);
+        return res.json({ error: err });
+    }
+});
+
+readFile('./memberList.json', 'utf-8', async (err, data) => {
+    if (err) {
+        console.log(err);
+        return res.status(500).json({ error: 'Failed to read member list file' });
+    }
+    try {
+        let arr = [];
+        const memberList = JSON.parse(data);
+        const adminId = '663cc99733356e422ca18d05';
+        memberList.forEach((member) => {
+            member.managerId = adminId;
+            arr.push(member);
+        });
+
+        arr.forEach(async (users, i) => {
+            try {
+                if (users.BillCode === 'Shop-1A') {
+                    console.log(users);
+                    // await new memberModel(users).save().then((res) => console.log(res));
+                } else {
+
+                }
+                // await new memberModel(users).save().then((res) => console.log('ressss', res));
+                // console.log(allMembers[i].BillCode, '', users.BillCode);
+            } catch (err) {
+                console.log(err);
+
+            }
+
+        });
+        // await memberModel.deleteMany({ Wing: '' });
+        const allMembers = await memberModel.find();
+
+        res.json({
+            success: true, nhBits: allMembers.length,
+            allMembers
+
+        });
+    } catch (err) {
+        console.log(err);
+        return res.json({ error: err });
+    }
+});

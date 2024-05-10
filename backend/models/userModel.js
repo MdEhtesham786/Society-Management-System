@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, 'Please Enter your Email'],
-        minLength: [4, 'Name should have more than 4 characters']
+        minLength: [4, 'Email should have more than 4 characters']
     },
     password: {
         type: String,
@@ -31,8 +31,9 @@ const userSchema = new mongoose.Schema({
     roles: {
         type: Array,
         default: ['manager']
-    }
+    },
 });
+
 // Hashing password before save
 userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) {
@@ -45,6 +46,7 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.comparePassword = async function (enteredPassword) {
     return bcrypt.compare(enteredPassword, this.password);
 };
+
 const userModel = mongoose.model('user', userSchema);
 export default userModel;
 

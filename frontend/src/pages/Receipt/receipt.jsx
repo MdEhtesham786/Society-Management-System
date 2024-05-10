@@ -1,9 +1,13 @@
-import React, { useState, useRef } from "react";
+import  { useState, useRef, useEffect } from "react";
 import CustomButton from "../../components/Button/CustomButton";
 import "./receipt.css";
 import PropTypes from "prop-types";
 import Select from "../../components/Select/Select";
+import { useLocation } from "react-router-dom";
 const Receipt = (props) => {
+  const location = useLocation()
+  let bankArr =[{title:'Select Account',value:'select_amount'},{title:'Axis Bank',value:'axis_bank'},{title:'TDCC Bank',value:'tdcc_bank'}]
+  let cashArr =[{title:'Select Account',value:'select_amount'},{title:'Cash',value:'cash'}]
   let exampleArr = []
   for (let i = 0; i < 15; i++) {
     if(i==0){
@@ -46,6 +50,19 @@ const Receipt = (props) => {
       e.preventDefault();
     }
   };
+  // const [receipt,setReceipt] = useState(props.page==='Cash Receipt'|| props.page==='Cash Payment'?'cash':'bank')
+  const [memberReceipt,setMemberReceipt] = useState('bank')
+  const [supplementaryReceipt,setSupplementaryReceipt] = useState('bank')
+  const handleMemberChange = (e)=>{
+setMemberReceipt(e.target.value)
+  }
+  const handleSupplementaryChange = (e)=>{
+    setSupplementaryReceipt(e.target.value)
+      }
+  useEffect(()=>{
+    setMemberReceipt('bank')
+    setSupplementaryReceipt('bank')
+  },[location.pathname])
   return (
     <>
       <div className="flex flex-col bg-blue h-[85rem] px-2">
@@ -57,8 +74,27 @@ const Receipt = (props) => {
           <div className="h-[60%] flex items-center">
             <div className="w-full flex justify-start">
               <div className="w-[50%] flex">
-                {page==='Member Receipt'||page ==='Supplementary Receipt'? <Select classNames={'h-10 w-[8.5rem]'} id={'bank_cash'} name={'bank_cash'} defaultValue={'bank'} optionArr={[{title:'Bank',value:'bank'},{title:'Cash',value:'cash'}]}/>:''}
-                <Select classNames={`h-10 w-[12.5rem] ${page==='Member Receipt'||page ==='Supplementary Receipt'?'mx-6':'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={[{title:'Select Account',value:'select_amount'},{title:'Axis Bank',value:'axis_bank'},{title:'TDCC Bank',value:'tdcc_bank'}]}/>
+
+                {/* Member Receipt */}
+                {page==='Member Receipt'&&
+                 <> <Select onChange={handleMemberChange} classNames={'h-10 w-[8.5rem]'} id={'bank_cash'} name={'bank_cash'}  defaultValue={'bank'} optionArr={[{title:'Bank',value:'bank'},{title:'Cash',value:'cash'}]}/>
+                <Select classNames={`h-10 w-[12.5rem] ${page==='Member Receipt'||page ==='Supplementary Receipt'?'mx-6':'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={memberReceipt==='bank'?bankArr:cashArr}/></>}
+
+                {/* Supplementary Receipt */}
+                {page==='Supplementary Receipt'&& <> <Select onChange={handleSupplementaryChange} classNames={'h-10 w-[8.5rem]'} id={'bank_cash'} name={'bank_cash'}  defaultValue={'bank'} optionArr={[{title:'Bank',value:'bank'},{title:'Cash',value:'cash'}]}/>
+                <Select classNames={`h-10 w-[12.5rem] ${page==='Member Receipt'||page ==='Supplementary Receipt'?'mx-6':'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={supplementaryReceipt==='bank'?bankArr:cashArr}/></>}
+
+                {/* Other Pages */}
+                {page!=='Member Receipt'&&page!== 'Supplementary Receipt'? <Select classNames={`h-10 w-[12.5rem] ${page==='Member Receipt'||page ==='Supplementary Receipt'?'mx-6':'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={props.page ==='Bank Payment'|| props.page==='Bank Receipt'?bankArr:cashArr}/>:''}
+
+                {/* {page==='Member Receipt'||page ==='Supplementary Receipt'?
+
+                <> <Select onChange={handleChange} classNames={'h-10 w-[8.5rem]'} id={'bank_cash'} name={'bank_cash'}  defaultValue={'bank'} optionArr={[{title:'Bank',value:'bank'},{title:'Cash',value:'cash'}]}/>
+
+                 <Select classNames={`h-10 w-[12.5rem] ${page==='Member Receipt'||page ==='Supplementary Receipt'?'mx-6':'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={receipt==='bank'?bankArr:cashArr}/></>
+                 :
+                  <Select classNames={`h-10 w-[12.5rem] ${page==='Member Receipt'||page ==='Supplementary Receipt'?'mx-6':'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={props.page ==='Bank Payment'|| props.page==='Bank Receipt'?bankArr:cashArr}/>} */}
+               
                 <CustomButton
                   onClick={handleViewBtn}
                   type={"submit"}

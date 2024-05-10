@@ -6,6 +6,8 @@ const port = process.env.PORT || 5000;
 const hostname = "127.0.0.1";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import memberModel from "./models/memberModel.js";
+import { readFile } from "fs";
 const app = express();
 app.use(
   cors({
@@ -28,19 +30,28 @@ app.use("/api/v1", routes);
 app.get(
   "/",
   catchAsyncErrors(async (req, res, next) => {
-    res.json({
-      success: true,
-    });
+    res.json({ success: true });
   })
 );
-app.post(
+app.get(
   "/makeSeller",
   catchAsyncErrors(async (req, res) => {
-    // const user = await userModel.findOne({ _id: '' });
+    const user = await userModel.findOne({ _id: '663cc8e325041a584d3d7f61' });
     // user.roles.push('admin');
-    // res.json({ user });
+    // user.admin = {
+    //   themeSettings: {
+    //     sidemenuTheme: {},
+    //     navbarTheme: {},
+    //     pageTheme: {}
+    //   }
+    // };
+    // await user.save();
+    res.json({ user });
   })
 );
+app.get('/addMembers', catchAsyncErrors(async (req, res) => {
+  res.json({ memberList });
+}));
 const start = async (url) => {
   connectDB(url);
   const server = app.listen(port, () => {

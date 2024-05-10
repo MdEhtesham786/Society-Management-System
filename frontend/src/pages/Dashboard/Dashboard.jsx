@@ -1,7 +1,7 @@
 // import React from 'react'
 import PropTypes from 'prop-types'
 // import { useState,useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import { useDispatch} from 'react-redux';
 import { setIsLoggedIn,setUser } from '../../reducer/authSlice';
 import "./Dashboard.css"
@@ -57,7 +57,7 @@ dispatch(setUser({}))
 </div>
 <div className="w-[45%] h-[80%] mb-4 mr-8 self-end flex justify-evenly items-center flex-col ">
   <div className="btn">{user.username}</div>
-  <div className="btn">{user.roles&&user.roles[1].split('')[0].toUpperCase().concat(user.roles[1].slice(1))}</div>
+  <Link to='/api/v1/admin'  className="btn">{user.roles&&user.roles[1].split('')[0].toUpperCase().concat(user.roles[1].slice(1))}</Link>
   <div className="btn">Settings</div>
   <button onClick={handleLogout} className="btn">Log Out</button>
 </div>

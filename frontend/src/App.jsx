@@ -62,6 +62,7 @@ function App() {
         navigate("/api/v1/auth/login");
       }
     }
+    console.log(user)
   }, [location.pathname, isLoggedIn, user, authChecked, navigate]);
   return (
     <>
@@ -77,7 +78,7 @@ function App() {
             <Spinner />
           ) : (
             <Routes>
-              {routes.map((route, index) => (
+              {routes.map((route, index) => ( 
                 <Route
                   key={index}
                   path={index === 0 ? route.path : defaultPath + route.path}
