@@ -1,61 +1,68 @@
 import { useState, } from "react";
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
-import { setIsLoggedIn,setUser } from "../../reducer/authSlice";
+import { setIsLoggedIn, setUser } from "../../reducer/authSlice";
 import { useDispatch } from "react-redux";
+import hideIcon from '../../assets/icons/hide.png'
+import viewIcon from '../../assets/icons/view.png'
+
 export default function Example() {
-  
+
   const navigate = useNavigate();
   const dispatch = useDispatch()
-  const [email,setEmail] = useState('')
-  const [password,setPassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   // const [remember,setRemember] = useState(false)
-  const[error,setError] = useState('')
-  const handleEmailInput = (e)=>{
-setEmail(e.target.value)
+  const [error, setError] = useState('')
+  const handleEmailInput = (e) => {
+    setEmail(e.target.value)
 
   }
-  const handlePasswordInput = (e)=>{
+  const handlePasswordInput = (e) => {
     setPassword(e.target.value)
-
   }
-  const handleLoginSubmit =async ()=>{
+
+  const showPasswordToggle = () => {
+    setShowPassword(prevVal => !prevVal)
+  }
+  const handleLoginSubmit = async () => {
     try {
       // e.preventDefault()
-      const res = await axios.post('http://127.0.0.1:5003/api/v1/auth/login',{
+      const res = await axios.post('http://127.0.0.1:5003/api/v1/auth/login', {
         email,
         password
       },
-      {
-        withCredentials: true,
-        credentials:'include'
-      })
-// alert('Please fill out all required fields.');
-const {data} = res
-if(data.success){
-  if(data.user){
-    
-    dispatch(setIsLoggedIn(true))
-    dispatch(setUser(data.user))
-navigate('/ ')
-  }
-}else{
-  setError(res.data.message)
-  setEmail('')
-  setPassword('')
-}
+        {
+          withCredentials: true,
+          credentials: 'include'
+        })
+      // alert('Please fill out all required fields.');
+      const { data } = res
+      if (data.success) {
+        if (data.user) {
+
+          dispatch(setIsLoggedIn(true))
+          dispatch(setUser(data.user))
+          navigate('/ ')
+        }
+      } else {
+        setError(res.data.message)
+        setEmail('')
+        setPassword('')
+      }
 
     } catch (err) {
       console.log(err)
       setError(err.message)
-      
+
     }
 
 
   }
-    return (
-      <>
-        {/*
+  return (
+    <>
+      {/*
           This example requires updating your template:
   
           ```
@@ -63,13 +70,13 @@ navigate('/ ')
           <body class="h-full">
           ```
         */}
-        <div className="flex">
+      <div className="flex">
 
-              <div className=" w-[50%] h-[35rem] px-6 py-12   lg:px-8  ">
-Image
-          </div>
+        <div className=" w-[50%] h-[35rem] px-6 py-12   lg:px-8  ">
+          Image
+        </div>
         <div className="flex min-h-full w-[50%] h-[35rem]  flex-col justify-center px-6  py-12 lg:px-8 ">
-    
+
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
               className="mx-auto h-10 w-auto"
@@ -80,8 +87,8 @@ Image
               Sign in to your account
             </h2>
           </div>
-          <p className="mx-auto mt-3 text-red-500 h-6  font-bold">{error&&error}</p>
-  
+          <p className="mx-auto mt-3 text-red-500 h-6  font-bold">{error && error}</p>
+
           <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
             <div className="space-y-6">
               <div>
@@ -89,9 +96,9 @@ Image
                   Email address
                 </label>
                 <div className="mt-2">
-                  <input 
-                  value={email}
-                  onChange={handleEmailInput}
+                  <input
+                    value={email}
+                    onChange={handleEmailInput}
                     id="email"
                     name="email"
                     type="email"
@@ -101,7 +108,7 @@ Image
                   />
                 </div>
               </div>
-  
+
               <div>
                 <div className="flex items-center justify-between">
                   <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
@@ -113,31 +120,36 @@ Image
                     </a>
                   </div>
                 </div>
-                <div className="mt-2">
+                <div className="mt-2 flex rounded-md border border-gray-300 shadow-sm ring-gray-300 jusify-center ring-1 ring-inset align-center relative">
                   <input
-                  value={password}
-                  onChange={handlePasswordInput}
+                    value={password}
+                    onChange={handlePasswordInput}
                     id="password"
                     name="password"
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     autoComplete="current-password"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="w-full py-1.5 px-3 rounded-md border-none text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm sm:leading-6"
                   />
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3" onClick={showPasswordToggle}>
+                    <img src={showPassword ? viewIcon : hideIcon} style={{ width: '25px', height: '25px' }} alt="hide-icon" />
+                  </div>
                 </div>
+
+
               </div>
-  
+
               <div>
                 <button
                   onClick={handleLoginSubmit}
-                  className={`flex w-full justify-center rounded-md  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm ${email.length>4&&password.length>4?'hover:bg-indigo-600 bg-indigo-700':'bg-indigo-400 cursor-not-allowed'} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
-                  disabled={email.length<4||password.length<4}
+                  className={`flex w-full justify-center rounded-md  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm ${email.length > 4 && password.length > 4 ? 'hover:bg-indigo-600 bg-indigo-700' : 'bg-indigo-400 cursor-not-allowed'} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+                  disabled={email.length < 4 || password.length < 4}
                 >
                   Sign in
                 </button>
               </div>
             </div>
-  
+
             {/* <p className="mt-10 text-center text-sm text-gray-500">
               Not a member?{' '}
               <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
@@ -146,9 +158,8 @@ Image
             </p> */}
           </div>
         </div>
-        </div>
+      </div>
 
-      </>
-    )
-  }
-  
+    </>
+  )
+}
