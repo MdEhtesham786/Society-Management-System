@@ -1,6 +1,6 @@
 .generate-bills {
     background-color: var(--primary-color);
-    margin-top: 10px;
+    /* margin-top: 10px; */
     padding: 0 0 17px 34px;
     border-radius: 10px;
     width: 100%;
@@ -8,8 +8,7 @@
     flex-direction: column;
     gap: 25px;
     justify-content: center;
-    border: 0.5px #9F9F9F solid;
-    box-shadow: 0px 4px 4px 0px #00000040;
+    border: 0.5px #cdcdcd solid;
 }
 
 .heading {

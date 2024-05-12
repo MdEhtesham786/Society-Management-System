@@ -22,7 +22,9 @@ const BillGeneration = (props) => {
   const [interestDays, setInterestDays] = useState("");
   const [interestPercentage, setInterestPercentage] = useState("");
   const [manualInterest, setManualInterest] = useState("");
-
+const [formData,setFormData] = useState({
+  Type:''
+})
   // Selection 3
   const [building, setBuilding] = useState("");
   const [wing, setWing] = useState("");
@@ -169,7 +171,7 @@ const BillGeneration = (props) => {
             <div className=" textarea-wrapper">
               <label htmlFor="">Narration</label>
               <textarea
-                style={{ resize: "none", padding: "0.5rem" }}
+                style={{ resize: "none", padding: "0.5rem",borderColor:'#d5d5d5' }}
                 name=""
                 id=""
                 cols="10"

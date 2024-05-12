@@ -9,7 +9,7 @@
 .input-wrapper input {
     background-color: var(--input-bg);
     outline: none;
-    border: 0.5px #858585 solid;
+    border: 0.5px #d5d5d5 solid;
     border-radius: 10px;
     font-size: 18px;
     width: 64%;
