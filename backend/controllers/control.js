@@ -21,23 +21,7 @@ export const ledger = async (req, res) => {
         });
     }
 };
-export const memberReceipt = async (req, res) => {
-    if (req.token) {
-        const memberList = await memberModel.find();
-        return res.json({
-            success: true,
-            memberList
-            ,
-            token: req.token,
-            user: req.user
-        });
-    } else {
-        return res.json({
-            success: false,
-            message: 'User must be logged in to get access to this page',
-        });
-    }
-}
+
 
 
 

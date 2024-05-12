@@ -7,6 +7,7 @@ export const isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
     // if (!token) {
     //     return next(new ErrorHandler('Please login to access this resource', 401));
     // }
+
     if (token) {
         try {
             const decodedData = jwt.verify(token, process.env.JWT_SECRET,);
@@ -17,7 +18,6 @@ export const isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
             if (err.name === 'TokenExpiredError') {
                 console.log('Jwt Expired (Token cleared)');
                 res.clearCookie('token');
-                console.log('Ye bakchodi nhi');
             }
         }
     }

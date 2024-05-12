@@ -6,13 +6,17 @@ import PropTypes from "prop-types";
 import Select from "../../components/Select/Select";
 import { useLocation } from "react-router-dom";
 const Receipt = (props) => {
+  axios.defaults.withCredentials = true; //The most important line for cookies
   const location = useLocation()
+
   let bankArr = [{ title: 'Select Account', value: 'select_amount' }, { title: 'Axis Bank', value: 'axis_bank' }, { title: 'TDCC Bank', value: 'tdcc_bank' }]
   let cashArr = [{ title: 'Select Account', value: 'select_amount' }, { title: 'Cash', value: 'cash' }]
+//UseREF
+
+  const myRef = useRef(null);
 
   //UseState
   const { page, accountSelectionName } = props;
-  const myRef = useRef(null);
   const [expand, setExpand] = useState(false);
   const [arr, setArr] = useState([]);
   const [memberReceipt, setMemberReceipt] = useState('bank')
@@ -54,12 +58,22 @@ const Receipt = (props) => {
   }
   const handleMemberReceiptSubmit = async () => {
     try {
-      axios.post('transaction/memberReceipt')
+//     memberReceiptRef.current.forEach((member)=>{
+// console.log(member)
+//     })
+     const res =  axios.post('transaction/memberReceipt')
+     setFormDataMemberReceipt({})
+const {data} = res
+  // console.log(data)
     } catch (err) {
       console.log(err)
 
     }
   }
+  const handleMemberReceiptChange = async(e)=>{
+console.log(e)
+  }
+  
   const handleBankReceiptSubmit = async () => {
     try {
 
@@ -138,19 +152,11 @@ const Receipt = (props) => {
   const handleSupplementaryChange = (e) => {
     setSupplementaryReceipt(e.target.value)
   }
-  const fetchData = async () => {
-    try {
-      const res = await axios.get(`http://127.0.0.1:5003/api/v1/transaction/memberReceipt`);
-      const { data } = res
-      if (data.success) {
-        return data
-      } else {
-        console.log(data)
-      }
+
 
       const fetchData = async () => {
         try {
-          const res = await axios.get(`http://127.0.0.1:5003/api/v1/transaction/memberreceipt`);
+          const res = await axios.get('transaction/memberreceipt');
           const { data } = res
           if (data.success) {
             return data
@@ -165,7 +171,6 @@ const Receipt = (props) => {
 
       //UseEffects
       useEffect(() => {
-        console.log('Lund')
         fetchData().then((res) => {
           let arr = []
           res.memberList.forEach((member, i) => {
@@ -208,16 +213,16 @@ const Receipt = (props) => {
                   <div className="w-[50%] flex">
 
                     {/* Member Receipt */}
-                    {page === 'Member Receipt' &&
-                      <> <Select onChange={handleMemberChange} classNames={'h-10 w-[8.5rem]'} id={'bank_cash'} name={'bank_cash'} defaultValue={'bank'} optionArr={[{ title: 'Bank', value: 'bank' }, { title: 'Cash', value: 'cash' }]} />
-                        <Select classNames={`h-10 w-[12.5rem] ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={memberReceipt === 'bank' ? bankArr : cashArr} /></>}
-
+                    {page === 'Member Receipt' && 
+                      <> <Select onChange={handleMemberChange}  classNames={'h-10 w-[8.5rem]'} id={'bank_cash'} name={'bank_cash'} defaultValue={'bank'} optionArr={[{ title: 'Bank', value: 'bank' }, { title: 'Cash', value: 'cash' }]} />
+                        <Select  classNames={`h-10 w-[12.5rem]  ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={memberReceipt === 'bank' ? bankArr : cashArr} /></>}
+ 
                     {/* Supplementary Receipt */}
-                    {page === 'Supplementary Receipt' && <> <Select onChange={handleSupplementaryChange} classNames={'h-10 w-[8.5rem]'} id={'bank_cash'} name={'bank_cash'} defaultValue={'bank'} optionArr={[{ title: 'Bank', value: 'bank' }, { title: 'Cash', value: 'cash' }]} />
-                      <Select classNames={`h-10 w-[12.5rem] ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={supplementaryReceipt === 'bank' ? bankArr : cashArr} /></>}
+                    {page === 'Supplementary Receipt' && <> <Select  onChange={handleSupplementaryChange} classNames={'h-10 w-[8.5rem]'} id={'bank_cash'} name={'bank_cash'} defaultValue={'bank'} optionArr={[{ title: 'Bank', value: 'bank' }, { title: 'Cash', value: 'cash' }]} />
+                      <Select  classNames={`h-10 w-[12.5rem] ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={supplementaryReceipt === 'bank' ? bankArr : cashArr} /></>}
 
                     {/* Other Pages */}
-                    {page !== 'Member Receipt' && page !== 'Supplementary Receipt' ? <Select classNames={`h-10 w-[12.5rem] ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={props.page === 'Bank Payment' || props.page === 'Bank Receipt' ? bankArr : cashArr} /> : ''}
+                    {page !== 'Member Receipt' && page !== 'Supplementary Receipt' ? <Select  classNames={`h-10 w-[12.5rem] ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={props.page === 'Bank Payment' || props.page === 'Bank Receipt' ? bankArr : cashArr} /> : ''}
                     <CustomButton
                       onClick={handleViewBtn}
                       type={"submit"}
@@ -268,7 +273,7 @@ const Receipt = (props) => {
                 id="entry_name"
                 className="w-[85%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
               /> */}
-                  <Select id={'entry_name'} name={'entry_name'} classNames={'h-10 w-[80%] ml-2'} optionArr={memberList} />
+                  <Select  id={'entry_name'} name={'entry_name'} classNames={'h-10 w-[80%] ml-2'} optionArr={memberList} />
                 </div>
                 <div className="w-[68%] flex justify-center">
                   <label
@@ -277,7 +282,8 @@ const Receipt = (props) => {
                   >
                     Bank :
                   </label>
-                  <input
+                  <input 
+                  defaultValue=""
                     type="text"
                     name="entry_bank"
                     id="entry_bank"
@@ -289,7 +295,8 @@ const Receipt = (props) => {
                   >
                     Branch :
                   </label>
-                  <input
+                  <input 
+                  defaultValue=""
                     type="text"
                     name="entry_branch"
                     id="entry_branch"
@@ -301,11 +308,13 @@ const Receipt = (props) => {
                   >
                     Date :
                   </label>
-                  <input
+                  <input 
+                  
+                  
                     type="date"
                     name="date"
                     id="date"
-                    value={new Date().toISOString().split('T')[0]}
+                    defaultValue={new Date().toISOString().split('T')[0]}
                     className="rounded-lg border border-[#d5d5d5] ml-2 w-[23%]"
                   />
                 </div>
@@ -318,7 +327,8 @@ const Receipt = (props) => {
                   >
                     Cheque/Ref no :
                   </label>
-                  <input
+                  <input 
+                  defaultValue=""
                     type="number"
                     onKeyDown={handleKeyDown}
                     name="cheque_refno"
@@ -333,7 +343,8 @@ const Receipt = (props) => {
               >
                 MICR/IFSC :
               </label>
-              <input
+              <input 
+              defaultValue=""
                 type="text"
                 name="micr_ifsc"
                 id="micr_ifsc"
@@ -345,11 +356,12 @@ const Receipt = (props) => {
               >
                 Cheque/Ref Date :
               </label>
-                   <input
+                   <input 
+                   
                 type="date"
                 name="start_date"
                 id="start_date"
-                value={new Date().toISOString().split('T')[0]}
+                defaultValue={new Date().toISOString().split('T')[0]}
                 className="rounded-lg border border-[#d5d5d5] ml-2 w-[25%]"
               />
             
@@ -363,7 +375,8 @@ const Receipt = (props) => {
               >
                 Amount :
               </label>
-              <input
+              <input 
+              defaultValue=""
                 type="number"
                 onKeyDown={handleKeyDown}
                 name="amount"
@@ -376,7 +389,8 @@ const Receipt = (props) => {
               >
                 Principal :
               </label>
-              <input
+              <input 
+              defaultValue=""
                 type="number"
                 onKeyDown={handleKeyDown}
                 name="principal"
@@ -392,7 +406,8 @@ const Receipt = (props) => {
                 >
                   Interest :
                 </label>
-                <input
+                <input 
+                defaultValue=""
                   type="number"
                   onKeyDown={handleKeyDown}
                   name="interest"
@@ -418,7 +433,7 @@ const Receipt = (props) => {
               >
                 Narration :
               </label>
-              <textarea
+              <textarea 
                 name="narration"
                 id="narration"
                 className="ml-2 resize-none w-[85%] h-24 rounded-lg border border-[#d5d5d5]"
@@ -484,6 +499,7 @@ const Receipt = (props) => {
                 Name :
               </label>
               <input
+              defaultValue=""
                 type="text"
                 name="selection_name"
                 id="selection_name"
@@ -498,6 +514,7 @@ const Receipt = (props) => {
                 Bank :
               </label>
               <input
+              defaultValue=""
                 type="text"
                 name="selection_bank"
                 id="selection_bank"
@@ -510,6 +527,7 @@ const Receipt = (props) => {
                 Amount :
               </label>
               <input
+              defaultValue=""
                 type="number"
                 onKeyDown={handleKeyDown}
                 name="selection_amount"
@@ -527,6 +545,7 @@ const Receipt = (props) => {
                 Date :
               </label>
               <input
+              defaultValue=""
                 type="date"
                 name="start_date"
                 id="start_date"
@@ -540,6 +559,7 @@ const Receipt = (props) => {
               </label>
 
               <input
+              defaultValue=""
                 type="date"
                 name="end_date"
                 id="end_date"
@@ -573,6 +593,7 @@ const Receipt = (props) => {
                 Cheque no :
               </label>
               <input
+              defaultValue=""
                 type="number"
                 onKeyDown={handleKeyDown}
                 name="cheque_no"
