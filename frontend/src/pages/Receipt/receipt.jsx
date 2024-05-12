@@ -5,6 +5,7 @@ import "./receipt.css";
 import PropTypes from "prop-types";
 import Select from "../../components/Select/Select";
 import { useLocation } from "react-router-dom";
+
 const Receipt = (props) => {
   axios.defaults.withCredentials = true; //The most important line for cookies
   const location = useLocation()
@@ -37,9 +38,6 @@ const Receipt = (props) => {
     principal: "",
     interest: "",
     narration: ""
-
-
-
   })
   const [formDataBankReceipt, setFormDataBankReceipt] = useState({})
   const [formDataCashReceipt, setFormDataCashReceipt] = useState({})
@@ -49,12 +47,7 @@ const Receipt = (props) => {
 
   //Functions
   const handleBillGenerationSubmit = async () => {
-    try {
 
-    } catch (err) {
-      console.log(err)
-
-    }
   }
   const handleMemberReceiptSubmit = async () => {
     try {
@@ -153,191 +146,186 @@ console.log(e)
     setSupplementaryReceipt(e.target.value)
   }
 
-
-      const fetchData = async () => {
-        try {
-          const res = await axios.get('transaction/memberreceipt');
-          const { data } = res
-          if (data.success) {
-            return data
-          } else {
-            console.log(data)
-          }
-        } catch (err) {
-          console.log(err)
-
-        }
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(`http://127.0.0.1:5003/api/v1/transaction/memberreceipt`);
+      const { data } = res
+      if (data.success) {
+        return data
+      } else {
+        console.log(data)
       }
+    } catch (err) {
+      console.log(err)
 
-      //UseEffects
-      useEffect(() => {
-        fetchData().then((res) => {
-          let arr = []
-          res.memberList.forEach((member, i) => {
-            if (i == 0) {
-              arr.push({
-                title: 'Select',
-                value: 'select_name'
-              })
-              arr.push({
-                title: member.Name,
-                value: member.Name
+    }
+  }
 
-              })
-            }
-            arr.push({
-              title: member.Name,
-              value: member.Name
-
-            })
+  //UseEffects
+  useEffect(() => {
+    console.log('Lund')
+    fetchData().then((res) => {
+      let arr = []
+      res.memberList.forEach((member, i) => {
+        if (i == 0) {
+          arr.push({
+            title: 'Select',
+            value: 'select_name'
           })
-          setMemberList(arr)
+          arr.push({
+            title: member.Name,
+            value: member.Name
+
+          })
+        }
+        arr.push({
+          title: member.Name,
+          value: member.Name
+
         })
-      }, [])
+      })
+      setMemberList(arr)
+    })
+  }, [])
 
-      useEffect(() => {
-        setMemberReceipt('bank')
-        setSupplementaryReceipt('bank')
-      }, [location.pathname])
+  useEffect(() => {
+    setMemberReceipt('bank')
+    setSupplementaryReceipt('bank')
+  }, [location.pathname])
 
-      return (
-        <>
-          <div className="flex flex-col bg-blue h-[85rem] px-2">
-            <h2 className="text-2xl font-semibold text-center">{page}</h2>
-            <div className="bg-[#E9F2F2] h-[10%] my-2 rounded-lg flex flex-col px-6 py-3 border-[#cdcdcd] border drop-shadow-lg ">
-              <div className="flex justify-between underline underline-offset-4 items-center h-[40%]  font-semibold">
-                {accountSelectionName}
+  return (
+    <>
+      <div className="flex flex-col bg-blue h-[85rem] px-2">
+        <h2 className="text-2xl font-semibold text-center">{page}</h2>
+        <div className="bg-[#E9F2F2] h-[10%] my-2 rounded-lg flex flex-col px-6 py-3 border-[#cdcdcd] border drop-shadow-lg ">
+          <div className="flex justify-between underline underline-offset-4 items-center h-[40%]  font-semibold">
+            {accountSelectionName}
+          </div>
+          <div className="h-[60%] flex items-center">
+            <div className="w-full flex justify-start">
+              <div className="w-[50%] flex">
+
+                {/* Member Receipt */}
+                {page === 'Member Receipt' &&
+                  <> <Select onChange={handleMemberChange} classNames={'h-10 w-[8.5rem]'} id={'bank_cash'} name={'bank_cash'} defaultValue={'bank'} optionArr={[{ title: 'Bank', value: 'bank' }, { title: 'Cash', value: 'cash' }]} />
+                    <Select classNames={`h-10 w-[12.5rem] ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={memberReceipt === 'bank' ? bankArr : cashArr} /></>}
+
+                {/* Supplementary Receipt */}
+                {page === 'Supplementary Receipt' && <> <Select onChange={handleSupplementaryChange} classNames={'h-10 w-[8.5rem]'} id={'bank_cash'} name={'bank_cash'} defaultValue={'bank'} optionArr={[{ title: 'Bank', value: 'bank' }, { title: 'Cash', value: 'cash' }]} />
+                  <Select classNames={`h-10 w-[12.5rem] ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={supplementaryReceipt === 'bank' ? bankArr : cashArr} /></>}
+
+                {/* Other Pages */}
+                {page !== 'Member Receipt' && page !== 'Supplementary Receipt' ? <Select classNames={`h-10 w-[12.5rem] ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={props.page === 'Bank Payment' || props.page === 'Bank Receipt' ? bankArr : cashArr} /> : ''}
+                <CustomButton
+                  onClick={handleViewBtn}
+                  type={"submit"}
+                  style={{
+                    backgroundColor: "#A9CEED",
+                    boxShadow: "2px 4px 4px 0px #00000040",
+                    border: "1px solid #aeaeae",
+                    width: "8.5rem",
+                    fontWeight: "600",
+                    fontSize: "1.1rem",
+                    display: "grid",
+                    placeItems: "center",
+                    color: "#2A353F",
+                    height: "2.5rem",
+                    padding: "0px",
+                  }}
+                >
+                  {"View Balance"}
+                </CustomButton>
               </div>
-              <div className="h-[60%] flex items-center">
-                <div className="w-full flex justify-start">
-                  <div className="w-[50%] flex">
-
-                    {/* Member Receipt */}
-                    {page === 'Member Receipt' && 
-                      <> <Select onChange={handleMemberChange}  classNames={'h-10 w-[8.5rem]'} id={'bank_cash'} name={'bank_cash'} defaultValue={'bank'} optionArr={[{ title: 'Bank', value: 'bank' }, { title: 'Cash', value: 'cash' }]} />
-                        <Select  classNames={`h-10 w-[12.5rem]  ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={memberReceipt === 'bank' ? bankArr : cashArr} /></>}
- 
-                    {/* Supplementary Receipt */}
-                    {page === 'Supplementary Receipt' && <> <Select  onChange={handleSupplementaryChange} classNames={'h-10 w-[8.5rem]'} id={'bank_cash'} name={'bank_cash'} defaultValue={'bank'} optionArr={[{ title: 'Bank', value: 'bank' }, { title: 'Cash', value: 'cash' }]} />
-                      <Select  classNames={`h-10 w-[12.5rem] ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={supplementaryReceipt === 'bank' ? bankArr : cashArr} /></>}
-
-                    {/* Other Pages */}
-                    {page !== 'Member Receipt' && page !== 'Supplementary Receipt' ? <Select  classNames={`h-10 w-[12.5rem] ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={props.page === 'Bank Payment' || props.page === 'Bank Receipt' ? bankArr : cashArr} /> : ''}
-                    <CustomButton
-                      onClick={handleViewBtn}
-                      type={"submit"}
-                      style={{
-                        backgroundColor: "#A9CEED",
-                        boxShadow: "2px 4px 4px 0px #00000040",
-                        border: "1px solid #aeaeae",
-                        width: "8.5rem",
-                        fontWeight: "600",
-                        fontSize: "1.1rem",
-                        display: "grid",
-                        placeItems: "center",
-                        color: "#2A353F",
-                        height: "2.5rem",
-                        padding: "0px",
-                      }}
-                    >
-                      {"View Balance"}
-                    </CustomButton>
-                  </div>
-                  <div className="w-[50%] flex items-center text-lg font-[500]">
-                    <p
-                      className="w-0 h-[1.8rem] max-h-[1.8rem] whitespace-nowrap overflow-hidden"
-                      style={{ transition: "width .2s linear" }}
-                      ref={myRef}
-                    >
-                      Current Balance Amount : 720165.46
-                    </p>
-                  </div>
-                </div>
+              <div className="w-[50%] flex items-center text-lg font-[500]">
+                <p
+                  className="w-0 h-[1.8rem] max-h-[1.8rem] whitespace-nowrap overflow-hidden"
+                  style={{ transition: "width .2s linear" }}
+                  ref={myRef}
+                >
+                  Current Balance Amount : 720165.46
+                </p>
               </div>
             </div>
-            <div className="bg-[#E9F2F2] h-[30%] my-2 rounded-lg flex flex-col px-6  border-[#cdcdcd] border drop-shadow-lg ">
-              <div className="flex justify-between items-center h-[15%]  font-bold underline underline-offset-4">
-                ENTRY FORM
-              </div>
-              <div className="h-[15%] flex items-center">
-                <div className="flex w-[32%]">
-                  <label
-                    htmlFor="entry_name"
-                    className=" text-lg grid place-items-center font-[500]"
-                  >
-                    Name :
-                  </label>
-                  {/* <input
+          </div>
+        </div>
+        <div className="bg-[#E9F2F2] h-[30%] my-2 rounded-lg flex flex-col px-6  border-[#cdcdcd] border drop-shadow-lg ">
+          <div className="flex justify-between items-center h-[15%]  font-bold underline underline-offset-4">
+            ENTRY FORM
+          </div>
+          <div className="h-[15%] flex items-center">
+            <div className="flex w-[32%]">
+              <label
+                htmlFor="entry_name"
+                className=" text-lg grid place-items-center font-[500]"
+              >
+                Name :
+              </label>
+              {/* <input
                 type="text"
                 name="entry_name"
                 id="entry_name"
                 className="w-[85%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
               /> */}
-                  <Select  id={'entry_name'} name={'entry_name'} classNames={'h-10 w-[80%] ml-2'} optionArr={memberList} />
-                </div>
-                <div className="w-[68%] flex justify-center">
-                  <label
-                    htmlFor="entry_bank"
-                    className=" text-lg grid place-items-center font-[500]"
-                  >
-                    Bank :
-                  </label>
-                  <input 
-                  defaultValue=""
-                    type="text"
-                    name="entry_bank"
-                    id="entry_bank"
-                    className="w-[23%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
-                  />
-                  <label
-                    htmlFor="entry_branch"
-                    className=" text-lg grid place-items-center ml-4 font-[500]"
-                  >
-                    Branch :
-                  </label>
-                  <input 
-                  defaultValue=""
-                    type="text"
-                    name="entry_branch"
-                    id="entry_branch"
-                    className="w-[23%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
-                  />
-                  <label
-                    htmlFor="date"
-                    className=" text-lg grid place-items-center font-[500] ml-4"
-                  >
-                    Date :
-                  </label>
-                  <input 
-                  
-                  
-                    type="date"
-                    name="date"
-                    id="date"
-                    defaultValue={new Date().toISOString().split('T')[0]}
-                    className="rounded-lg border border-[#d5d5d5] ml-2 w-[23%]"
-                  />
-                </div>
-              </div>
-              <div className="h-[15%] flex items-center ">
-                <div className="flex w-[40%]">
-                  <label
-                    htmlFor="cheque_refno"
-                    className=" text-lg grid place-items-center font-[500]"
-                  >
-                    Cheque/Ref no :
-                  </label>
-                  <input 
-                  defaultValue=""
-                    type="number"
-                    onKeyDown={handleKeyDown}
-                    name="cheque_refno"
-                    id="cheque_refno"
-                    className="w-[65%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
-                  />
-                </div>
-                <div className="w-[60%] flex ">
-            <label
+              <Select id={'entry_name'} name={'entry_name'} classNames={'h-10 w-[80%] ml-2'} optionArr={memberList} />
+            </div>
+            <div className="w-[68%] flex justify-center">
+              <label
+                htmlFor="entry_bank"
+                className=" text-lg grid place-items-center font-[500]"
+              >
+                Bank :
+              </label>
+              <input
+                type="text"
+                name="entry_bank"
+                id="entry_bank"
+                className="w-[23%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
+              />
+              <label
+                htmlFor="entry_branch"
+                className=" text-lg grid place-items-center ml-4 font-[500]"
+              >
+                Branch :
+              </label>
+              <input
+                type="text"
+                name="entry_branch"
+                id="entry_branch"
+                className="w-[23%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
+              />
+              <label
+                htmlFor="date"
+                className=" text-lg grid place-items-center font-[500] ml-4"
+              >
+                Date :
+              </label>
+              <input
+                type="date"
+                name="date"
+                id="date"
+                value={new Date().toISOString().split('T')[0]}
+                className="rounded-lg border border-[#d5d5d5] ml-2 w-[23%]"
+              />
+            </div>
+          </div>
+          <div className="h-[15%] flex items-center ">
+            <div className="flex w-[40%]">
+              <label
+                htmlFor="cheque_refno"
+                className=" text-lg grid place-items-center font-[500]"
+              >
+                Cheque/Ref no :
+              </label>
+              <input
+                type="number"
+                onKeyDown={handleKeyDown}
+                name="cheque_refno"
+                id="cheque_refno"
+                className="w-[65%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
+              />
+            </div>
+            <div className="w-[60%] flex ">
+              <label
                 htmlFor="micr_ifsc"
                 className=" text-lg grid place-items-center ml-4 font-[500]"
               >
@@ -356,15 +344,14 @@ console.log(e)
               >
                 Cheque/Ref Date :
               </label>
-                   <input 
-                   
+              <input
                 type="date"
                 name="start_date"
                 id="start_date"
                 defaultValue={new Date().toISOString().split('T')[0]}
                 className="rounded-lg border border-[#d5d5d5] ml-2 w-[25%]"
               />
-            
+
             </div >
           </div >
           <div className="h-[22%] mt-3 flex items-start ">
@@ -445,7 +432,7 @@ console.log(e)
               </p>
               <div className="h-[60%]  flex justify-end items-end pb-2">
                 <CustomButton onClick={handleMemberReceiptSubmit}
-                  type={"submit"} 
+                  type={"submit"}
                   style={{
                     backgroundColor: "#119F8E",
                     boxShadow: "2px 4px 4px 0px #00000040",
@@ -685,8 +672,10 @@ console.log(e)
     </>
   );
 };
+
 Receipt.propTypes = {
   page: PropTypes.string,
   accountSelectionName: PropTypes.string
 };
+
 export default Receipt;

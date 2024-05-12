@@ -1,29 +1,32 @@
 import express from "express";
 import { isAuthenticatedUser } from "../middleware/auth.js";
 import {
-    bankReceiptGet, bankReconcillationGet, billGenerationGet, cashReceiptGet,
-    chequeSlipGenerationGet, closingJVGet, creditNoteGet, debitNoteGet, journalVoucharGet, ledgerEditGet,
-    memberReceiptGet, memberReceiptPost, multiplePaymentGet, multipleReceiptGet, openingBalanceGet, supplementaryReceiptGet
+    bankReceiptGet, bankReceiptPost, bankReconcillationGet, bankReconcillationPost, billGenerationGet, cashReceiptGet,
+    cashReceiptPost,
+    chequeSlipGenerationGet, chequeSlipGenerationPost, closingJVGet, closingJVPost, creditNoteGet, creditNotePost, debitNoteGet, debitNotePost, journalVoucharGet, journalVoucharPost, ledgerEditGet,
+    ledgerEditPost,
+    memberReceiptGet, memberReceiptPost, multiplePaymentGet, multiplePaymentPost, multipleReceiptGet, multipleReceiptPost, openingBalanceGet, openingBalancePost, supplementaryReceiptGet,
+    supplementaryReceiptPost
 } from "../controllers/transactionController.js";
 const router = express.Router();
 
 router.route('/billGeneration').get(isAuthenticatedUser, billGenerationGet).post();
 router.route('/memberReceipt').get(isAuthenticatedUser, memberReceiptGet).post(isAuthenticatedUser, memberReceiptPost);
-router.route('/bankReceipt').get(isAuthenticatedUser, bankReceiptGet).post();
-router.route('/cashReceipt').get(isAuthenticatedUser, cashReceiptGet).post();
-router.route('/supplementaryReceipt').get(isAuthenticatedUser, supplementaryReceiptGet).post();
-router.route('/bankPayment').get(isAuthenticatedUser, bankReceiptGet).post();
-router.route('/cashPayment').get(isAuthenticatedUser, cashReceiptGet).post();
-router.route('/bankReconcillation').get(isAuthenticatedUser, bankReconcillationGet).post();
-router.route('/debitNote').get(isAuthenticatedUser, debitNoteGet).post();
-router.route('/creditNote').get(isAuthenticatedUser, creditNoteGet).post();
-router.route('/journalVouchar').get(isAuthenticatedUser, journalVoucharGet).post();
-router.route('/closingJV').get(isAuthenticatedUser, closingJVGet).post();
-router.route('/openingBalance').get(isAuthenticatedUser, openingBalanceGet).post();
-router.route('/multipleReceipt').get(isAuthenticatedUser, multipleReceiptGet).post();
-router.route('/multiplePayment').get(isAuthenticatedUser, multiplePaymentGet).post();
-router.route('/ledgerEdit').get(isAuthenticatedUser, ledgerEditGet).post();
-router.route('/chequeSlipGeneration').get(isAuthenticatedUser, chequeSlipGenerationGet).post();
+router.route('/bankReceipt').get(isAuthenticatedUser, bankReceiptGet).post(isAuthenticatedUser, bankReceiptPost);
+router.route('/cashReceipt').get(isAuthenticatedUser, cashReceiptGet).post(isAuthenticatedUser, cashReceiptPost);
+router.route('/supplementaryReceipt').get(isAuthenticatedUser, supplementaryReceiptGet).post(isAuthenticatedUser, supplementaryReceiptPost);
+router.route('/bankPayment').get(isAuthenticatedUser, bankReceiptGet).post(isAuthenticatedUser, bankReceiptPost);
+router.route('/cashPayment').get(isAuthenticatedUser, cashReceiptGet).post(isAuthenticatedUser, cashReceiptPost);
+router.route('/bankReconcillation').get(isAuthenticatedUser, bankReconcillationGet).post(isAuthenticatedUser, bankReconcillationPost);
+router.route('/debitNote').get(isAuthenticatedUser, debitNoteGet).post(isAuthenticatedUser, debitNotePost);
+router.route('/creditNote').get(isAuthenticatedUser, creditNoteGet).post(isAuthenticatedUser, creditNotePost);
+router.route('/journalVouchar').get(isAuthenticatedUser, journalVoucharGet).post(isAuthenticatedUser, journalVoucharPost);
+router.route('/closingJV').get(isAuthenticatedUser, closingJVGet).post(isAuthenticatedUser, closingJVPost);
+router.route('/openingBalance').get(isAuthenticatedUser, openingBalanceGet).post(isAuthenticatedUser, openingBalancePost);
+router.route('/multipleReceipt').get(isAuthenticatedUser, multipleReceiptGet).post(isAuthenticatedUser, multipleReceiptPost);
+router.route('/multiplePayment').get(isAuthenticatedUser, multiplePaymentGet).post(isAuthenticatedUser, multiplePaymentPost);
+router.route('/ledgerEdit').get(isAuthenticatedUser, ledgerEditGet).post(isAuthenticatedUser, ledgerEditPost);
+router.route('/chequeSlipGeneration').get(isAuthenticatedUser, chequeSlipGenerationGet).post(isAuthenticatedUser, chequeSlipGenerationPost);
 
 export default router
 
