@@ -1,4 +1,4 @@
-import  { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import CustomButton from "../../components/Button/CustomButton";
 import axios from "axios"
 import "./receipt.css";
@@ -6,11 +6,11 @@ import PropTypes from "prop-types";
 import Select from "../../components/Select/Select";
 import { useLocation } from "react-router-dom";
 const Receipt = (props) => {
- 
+
   const location = useLocation()
-  let bankArr =[{title:'Select Account',value:'select_amount'},{title:'Axis Bank',value:'axis_bank'},{title:'TDCC Bank',value:'tdcc_bank'}]
-  let cashArr =[{title:'Select Account',value:'select_amount'},{title:'Cash',value:'cash'}]
-  const { page,accountSelectionName } = props;
+  let bankArr = [{ title: 'Select Account', value: 'select_amount' }, { title: 'Axis Bank', value: 'axis_bank' }, { title: 'TDCC Bank', value: 'tdcc_bank' }]
+  let cashArr = [{ title: 'Select Account', value: 'select_amount' }, { title: 'Cash', value: 'cash' }]
+  const { page, accountSelectionName } = props;
   const myRef = useRef(null);
   const [expand, setExpand] = useState(false);
   const [arr, setArr] = useState([]);
@@ -42,82 +42,81 @@ const Receipt = (props) => {
     }
   };
   // const [receipt,setReceipt] = useState(props.page==='Cash Receipt'|| props.page==='Cash Payment'?'cash':'bank')
-  const [memberReceipt,setMemberReceipt] = useState('bank')
-  const [supplementaryReceipt,setSupplementaryReceipt] = useState('bank')
-  const [memberList,setMemberList] = useState([])
-  const handleMemberChange = (e)=>{
-setMemberReceipt(e.target.value)
+  const [memberReceipt, setMemberReceipt] = useState('bank')
+  const [supplementaryReceipt, setSupplementaryReceipt] = useState('bank')
+  const [memberList, setMemberList] = useState([])
+  const handleMemberChange = (e) => {
+    setMemberReceipt(e.target.value)
   }
-  const handleSupplementaryChange = (e)=>{
+  const handleSupplementaryChange = (e) => {
     setSupplementaryReceipt(e.target.value)
+  }
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(`http://127.0.0.1:5003/api/v1/transaction/memberReceipt`);
+      const { data } = res
+      if (data.success) {
+        return data
+      } else {
+        console.log(data)
       }
-      const fetchData =async ()=>{
-        try {
-          const res = await axios.get(`http://127.0.0.1:5003/api/v1/transaction/memberreceipt`);
-          const {data} = res
-          if(data.success){
-            return data
-          }else{
-            console.log(data)
-          }
-        } catch (err) {
-          console.log(err)
-          
-        }
+    } catch (err) {
+      console.log(err)
+    }
 
-      }
-      useEffect(()=>{
-        console.log('cehcking')
-    fetchData().then((res)=>{
+  }
+  useEffect(() => {
+    console.log('cehcking')
+    fetchData().then((res) => {
       let arr = []
-      res.memberList.forEach((member,i)=>{
-        if(i==0){
+      res.memberList.forEach((member, i) => {
+        if (i == 0) {
           arr.push({
-            title:'Select Name',
-            value:'select_name'
+            title: 'Select Name',
+            value: 'select_name'
           })
           arr.push({
-            title:member.Name,
-            value:member.Name
-          
+            title: member.Name,
+            value: member.Name
+
           })
         }
-arr.push({
-  title:member.Name,
-  value:member.Name
+        arr.push({
+          title: member.Name,
+          value: member.Name
 
-})
-})
-setMemberList(arr)
+        })
+      })
+      setMemberList(arr)
     })
-      },[])
-  useEffect(()=>{
+  }, [])
+  useEffect(() => {
     setMemberReceipt('bank')
     setSupplementaryReceipt('bank')
-  },[location.pathname])
+  }, [location.pathname])
   return (
     <>
       <div className="flex flex-col bg-blue h-[85rem] px-2">
         <h2 className="text-2xl font-semibold text-center">{page}</h2>
         <div className="bg-[#E9F2F2] h-[10%] my-2 rounded-lg flex flex-col px-6 py-3 border-[#cdcdcd] border drop-shadow-lg ">
           <div className="flex justify-between underline underline-offset-4 items-center h-[40%]  font-semibold">
-         {accountSelectionName}
+            {accountSelectionName}
           </div>
           <div className="h-[60%] flex items-center">
             <div className="w-full flex justify-start">
               <div className="w-[50%] flex">
 
                 {/* Member Receipt */}
-                {page==='Member Receipt'&&
-                 <> <Select onChange={handleMemberChange} classNames={'h-10 w-[8.5rem]'} id={'bank_cash'} name={'bank_cash'}  defaultValue={'bank'} optionArr={[{title:'Bank',value:'bank'},{title:'Cash',value:'cash'}]}/>
-                <Select classNames={`h-10 w-[12.5rem] ${page==='Member Receipt'||page ==='Supplementary Receipt'?'mx-6':'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={memberReceipt==='bank'?bankArr:cashArr}/></>}
+                {page === 'Member Receipt' &&
+                  <> <Select onChange={handleMemberChange} classNames={'h-10 w-[8.5rem]'} id={'bank_cash'} name={'bank_cash'} defaultValue={'bank'} optionArr={[{ title: 'Bank', value: 'bank' }, { title: 'Cash', value: 'cash' }]} />
+                    <Select classNames={`h-10 w-[12.5rem] ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={memberReceipt === 'bank' ? bankArr : cashArr} /></>}
 
                 {/* Supplementary Receipt */}
-                {page==='Supplementary Receipt'&& <> <Select onChange={handleSupplementaryChange} classNames={'h-10 w-[8.5rem]'} id={'bank_cash'} name={'bank_cash'}  defaultValue={'bank'} optionArr={[{title:'Bank',value:'bank'},{title:'Cash',value:'cash'}]}/>
-                <Select classNames={`h-10 w-[12.5rem] ${page==='Member Receipt'||page ==='Supplementary Receipt'?'mx-6':'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={supplementaryReceipt==='bank'?bankArr:cashArr}/></>}
+                {page === 'Supplementary Receipt' && <> <Select onChange={handleSupplementaryChange} classNames={'h-10 w-[8.5rem]'} id={'bank_cash'} name={'bank_cash'} defaultValue={'bank'} optionArr={[{ title: 'Bank', value: 'bank' }, { title: 'Cash', value: 'cash' }]} />
+                  <Select classNames={`h-10 w-[12.5rem] ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={supplementaryReceipt === 'bank' ? bankArr : cashArr} /></>}
 
                 {/* Other Pages */}
-                {page!=='Member Receipt'&&page!== 'Supplementary Receipt'? <Select classNames={`h-10 w-[12.5rem] ${page==='Member Receipt'||page ==='Supplementary Receipt'?'mx-6':'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={props.page ==='Bank Payment'|| props.page==='Bank Receipt'?bankArr:cashArr}/>:''}
+                {page !== 'Member Receipt' && page !== 'Supplementary Receipt' ? <Select classNames={`h-10 w-[12.5rem] ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={props.page === 'Bank Payment' || props.page === 'Bank Receipt' ? bankArr : cashArr} /> : ''}
                 <CustomButton
                   onClick={handleViewBtn}
                   type={"submit"}
@@ -168,7 +167,7 @@ setMemberList(arr)
                 id="entry_name"
                 className="w-[85%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
               /> */}
-<Select id={'entry_name'} name={'entry_name'}classNames={'h-10 w-[85%] ml-2'} optionArr={memberList}  />
+              <Select id={'entry_name'} name={'entry_name'} classNames={'h-10 w-[85%] ml-2'} optionArr={memberList} />
             </div>
             <div className="w-[55%] flex justify-center">
               <label
@@ -220,7 +219,7 @@ setMemberList(arr)
               >
                 Cheque/Ref Date :
               </label>
-                   <input
+              <input
                 type="date"
                 name="start_date"
                 id="start_date"
@@ -524,13 +523,11 @@ setMemberList(arr)
             {arr.map((e, i) => {
               return (
                 <div
-                  className={`min-h-12 statement ${
-                    i % 2 === 0 ? "bg-transparent" : "bg-[#F3F9FB]"
-                  } ${
-                    arr.length - 1 === i && arr.length > 7
+                  className={`min-h-12 statement ${i % 2 === 0 ? "bg-transparent" : "bg-[#F3F9FB]"
+                    } ${arr.length - 1 === i && arr.length > 7
                       ? "border-b-[0px]"
                       : "border-b[1px]"
-                  } border border-t-[0px] border-l-[0px] border-r-[0px] border-[#9F9F9F]  flex`}
+                    } border border-t-[0px] border-l-[0px] border-r-[0px] border-[#9F9F9F]  flex`}
                   key={i}
                 >
                   <p className="w-[11%] border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px]  "></p>
@@ -553,6 +550,6 @@ setMemberList(arr)
 };
 Receipt.propTypes = {
   page: PropTypes.string,
-  accountSelectionName:PropTypes.string
+  accountSelectionName: PropTypes.string
 };
 export default Receipt;
