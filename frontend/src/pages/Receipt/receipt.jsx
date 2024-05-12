@@ -1,27 +1,115 @@
 import  { useState, useRef, useEffect } from "react";
 import CustomButton from "../../components/Button/CustomButton";
-import axios from "axios"
+import axios from "../../utils/axiosConfig"
 import "./receipt.css";
 import PropTypes from "prop-types";
 import Select from "../../components/Select/Select";
 import { useLocation } from "react-router-dom";
 const Receipt = (props) => {
- 
   const location = useLocation()
   let bankArr =[{title:'Select Account',value:'select_amount'},{title:'Axis Bank',value:'axis_bank'},{title:'TDCC Bank',value:'tdcc_bank'}]
   let cashArr =[{title:'Select Account',value:'select_amount'},{title:'Cash',value:'cash'}]
+
+  //UseState
   const { page,accountSelectionName } = props;
   const myRef = useRef(null);
   const [expand, setExpand] = useState(false);
   const [arr, setArr] = useState([]);
+  const [memberReceipt,setMemberReceipt] = useState('bank')
+  const [supplementaryReceipt,setSupplementaryReceipt] = useState('bank')
+  const [memberList,setMemberList] = useState([])
+
+  //FormData Usestate
+  const [formDataBillGeneration,setFormDataBillGeneration] = useState({})
+  const [formDataMemberReceipt,setFormDataMemberReceipt] = useState({
+name:"",
+bank:"",
+branch:"",
+date:"",
+cheque_refno:"",
+micr_ifsc:"",
+cheque_ref_date:"",
+amount:"",
+principal:"",
+interest:"",
+narration:""
+
+
+
+  })
+  const [formDataBankReceipt,setFormDataBankReceipt] = useState({})
+  const [formDataCashReceipt,setFormDataCashReceipt] = useState({})
+  const [formDataSupplementaryReceipt,setFormDataSupplementaryReceipt] = useState({})
+  const [formDataBankPayment,setFormDataBankPayment] = useState({})
+  const [formDataCashPayment,setFormDataCashPayment] = useState({})
+
+  //Functions
+  const handleBillGenerationSubmit=async()=>{
+    try {
+      
+    } catch (err) {
+      console.log(err)
+      
+    }
+  }
+  const handleMemberReceiptSubmit=async()=>{
+    try {
+      axios.post('transaction/memberReceipt')
+    } catch (err) {
+      console.log(err)
+      
+    }
+  }
+  const handleBankReceiptSubmit=async()=>{
+    try {
+      
+    } catch (err) {
+      console.log(err)
+      
+    }
+  }
+  const handleCashReceiptSubmit=async()=>{
+    try {
+      
+    } catch (err) {
+      console.log(err)
+      
+    }
+  }
+  const handleSupplementaryReceiptSubmit=async()=>{
+    try {
+      
+    } catch (err) {
+      console.log(err)
+      
+    }
+  }
+  const handleBankPaymentSubmit=async()=>{
+    try {
+      
+    } catch (err) {
+      console.log(err)
+      
+    }
+  }
+  const handleCashPaymentSubmit=async()=>{
+    try {
+      
+    } catch (err) {
+      console.log(err)
+      
+    }
+  }
   const handleSearchBtn = () => {
     setArr([...arr, 1]);
   };
+
   const handleCancelBtn = () => {
     const newArr = [...arr];
     newArr.pop();
     setArr(newArr);
   };
+
   const handleViewBtn = () => {
     if (expand) {
       myRef.current.classList.add("w-0");
@@ -34,6 +122,7 @@ const Receipt = (props) => {
       setExpand(true);
     }
   };
+
   const handleKeyDown = (e) => {
     if (e.keyCode === 38) {
       e.preventDefault();
@@ -41,16 +130,15 @@ const Receipt = (props) => {
       e.preventDefault();
     }
   };
-  // const [receipt,setReceipt] = useState(props.page==='Cash Receipt'|| props.page==='Cash Payment'?'cash':'bank')
-  const [memberReceipt,setMemberReceipt] = useState('bank')
-  const [supplementaryReceipt,setSupplementaryReceipt] = useState('bank')
-  const [memberList,setMemberList] = useState([])
-  const handleMemberChange = (e)=>{
+
+ const handleMemberChange = (e)=>{
 setMemberReceipt(e.target.value)
   }
+
   const handleSupplementaryChange = (e)=>{
     setSupplementaryReceipt(e.target.value)
       }
+
       const fetchData =async ()=>{
         try {
           const res = await axios.get(`http://127.0.0.1:5003/api/v1/transaction/memberreceipt`);
@@ -64,16 +152,17 @@ setMemberReceipt(e.target.value)
           console.log(err)
           
         }
-
       }
+
+      //UseEffects
       useEffect(()=>{
-        console.log('cehcking')
+        console.log('Lund')
     fetchData().then((res)=>{
       let arr = []
       res.memberList.forEach((member,i)=>{
         if(i==0){
           arr.push({
-            title:'Select Name',
+            title:'Select',
             value:'select_name'
           })
           arr.push({
@@ -91,10 +180,12 @@ arr.push({
 setMemberList(arr)
     })
       },[])
+
   useEffect(()=>{
     setMemberReceipt('bank')
     setSupplementaryReceipt('bank')
   },[location.pathname])
+
   return (
     <>
       <div className="flex flex-col bg-blue h-[85rem] px-2">
@@ -155,7 +246,7 @@ setMemberList(arr)
             ENTRY FORM
           </div>
           <div className="h-[15%] flex items-center">
-            <div className="flex w-[45%]">
+            <div className="flex w-[32%]">
               <label
                 htmlFor="entry_name"
                 className=" text-lg grid place-items-center font-[500]"
@@ -168,9 +259,9 @@ setMemberList(arr)
                 id="entry_name"
                 className="w-[85%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
               /> */}
-<Select id={'entry_name'} name={'entry_name'}classNames={'h-10 w-[85%] ml-2'} optionArr={memberList}  />
+<Select id={'entry_name'} name={'entry_name'}classNames={'h-10 w-[80%] ml-2'} optionArr={memberList}  />
             </div>
-            <div className="w-[55%] flex justify-center">
+            <div className="w-[68%] flex justify-center">
               <label
                 htmlFor="entry_bank"
                 className=" text-lg grid place-items-center font-[500]"
@@ -181,7 +272,7 @@ setMemberList(arr)
                 type="text"
                 name="entry_bank"
                 id="entry_bank"
-                className="w-[35%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
+                className="w-[23%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
               />
               <label
                 htmlFor="entry_branch"
@@ -193,7 +284,20 @@ setMemberList(arr)
                 type="text"
                 name="entry_branch"
                 id="entry_branch"
-                className="w-[35%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
+                className="w-[23%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
+              />
+              <label
+                htmlFor="date"
+                className=" text-lg grid place-items-center font-[500] ml-4"
+              >
+                Date :
+              </label>
+                   <input
+                type="date"
+                name="date"
+                id="date"
+                value={new Date().toISOString().split('T')[0]}
+                className="rounded-lg border border-[#d5d5d5] ml-2 w-[23%]"
               />
             </div>
           </div>
@@ -214,19 +318,7 @@ setMemberList(arr)
               />
             </div>
             <div className="w-[60%] flex ">
-              <label
-                htmlFor="cheque_ref_date"
-                className=" text-lg grid place-items-center font-[500] ml-4"
-              >
-                Cheque/Ref Date :
-              </label>
-                   <input
-                type="date"
-                name="start_date"
-                id="start_date"
-                className="rounded-lg border border-[#d5d5d5] ml-2 w-[25%]"
-              />
-              <label
+            <label
                 htmlFor="micr_ifsc"
                 className=" text-lg grid place-items-center ml-4 font-[500]"
               >
@@ -238,6 +330,20 @@ setMemberList(arr)
                 id="micr_ifsc"
                 className="w-[25%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
               />
+              <label
+                htmlFor="cheque_ref_date"
+                className=" text-lg grid place-items-center font-[500] ml-4"
+              >
+                Cheque/Ref Date :
+              </label>
+                   <input
+                type="date"
+                name="start_date"
+                id="start_date"
+                value={new Date().toISOString().split('T')[0]}
+                className="rounded-lg border border-[#d5d5d5] ml-2 w-[25%]"
+              />
+            
             </div>
           </div>
           <div className="h-[22%] mt-3 flex items-start ">
@@ -314,8 +420,8 @@ setMemberList(arr)
                 Interest :
               </p>
               <div className="h-[60%]  flex justify-end items-end pb-2">
-                <CustomButton
-                  type={"submit"}
+                <CustomButton onClick={handleMemberReceiptSubmit}
+                  type={"submit"} 
                   style={{
                     backgroundColor: "#119F8E",
                     boxShadow: "2px 4px 4px 0px #00000040",

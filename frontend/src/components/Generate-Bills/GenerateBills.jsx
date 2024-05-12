@@ -5,7 +5,7 @@ import CustomInput from '../Input/CustomInput'
 
 const GenerateBills = ({ heading, inputs,children }) => {
     return (            
-        <div className='generate-bills'>
+        <div className='generate-bills drop-shadow-lg my-2 '>
             <h2 className="heading ">{heading}</h2>
             <div className="inputs-parent">
                 {
