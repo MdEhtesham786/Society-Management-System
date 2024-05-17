@@ -164,7 +164,7 @@ const [formData,setFormData] = useState({
   });
   return (
     <>
-      <div className="">
+      <div className="px-2">
         <h2 className="text-2xl font-semibold text-center">Generate Bills</h2>
         <GenerateBills inputs={amountInputs}>
           {

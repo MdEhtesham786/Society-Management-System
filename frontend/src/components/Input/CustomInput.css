@@ -1,7 +1,7 @@
 /* CustomInput.css */
 .input-wrapper {
     display: flex;
-    width: 85%;
+    width: 100%;
     align-items: center;
     gap: 10px;
 }
@@ -12,7 +12,7 @@
     border: 0.5px #d5d5d5 solid;
     border-radius: 10px;
     font-size: 18px;
-    width: 64%;
+    width: 55%;
     padding: 3px 8px;
 }
 
