@@ -12,7 +12,7 @@ const Receipt = (props) => {
 
   let bankArr = [{ title: 'Select Account', value: 'select_amount' }, { title: 'Axis Bank', value: 'axis_bank' }, { title: 'TDCC Bank', value: 'tdcc_bank' }]
   let cashArr = [{ title: 'Select Account', value: 'select_amount' }, { title: 'Cash', value: 'cash' }]
-//UseREF
+  //UseREF
 
   const myRef = useRef(null);
 
@@ -51,22 +51,22 @@ const Receipt = (props) => {
   }
   const handleMemberReceiptSubmit = async () => {
     try {
-//     memberReceiptRef.current.forEach((member)=>{
-// console.log(member)
-//     })
-     const res =  axios.post('transaction/memberReceipt')
-     setFormDataMemberReceipt({})
-const {data} = res
-  // console.log(data)
+      //     memberReceiptRef.current.forEach((member)=>{
+      // console.log(member)
+      //     })
+      const res = axios.post('transaction/memberReceipt')
+      setFormDataMemberReceipt({})
+      const { data } = res
+      // console.log(data)
     } catch (err) {
       console.log(err)
 
     }
   }
-  const handleMemberReceiptChange = async(e)=>{
-console.log(e)
+  const handleMemberReceiptChange = async (e) => {
+    console.log(e)
   }
-  
+
   const handleBankReceiptSubmit = async () => {
     try {
 
@@ -331,8 +331,8 @@ console.log(e)
               >
                 MICR/IFSC :
               </label>
-              <input 
-              defaultValue=""
+              <input
+                defaultValue=""
                 type="text"
                 name="micr_ifsc"
                 id="micr_ifsc"
@@ -362,8 +362,8 @@ console.log(e)
               >
                 Amount :
               </label>
-              <input 
-              defaultValue=""
+              <input
+                defaultValue=""
                 type="number"
                 onKeyDown={handleKeyDown}
                 name="amount"
@@ -376,8 +376,8 @@ console.log(e)
               >
                 Principal :
               </label>
-              <input 
-              defaultValue=""
+              <input
+                defaultValue=""
                 type="number"
                 onKeyDown={handleKeyDown}
                 name="principal"
@@ -393,8 +393,8 @@ console.log(e)
                 >
                   Interest :
                 </label>
-                <input 
-                defaultValue=""
+                <input
+                  defaultValue=""
                   type="number"
                   onKeyDown={handleKeyDown}
                   name="interest"
@@ -420,7 +420,7 @@ console.log(e)
               >
                 Narration :
               </label>
-              <textarea 
+              <textarea
                 name="narration"
                 id="narration"
                 className="ml-2 resize-none w-[85%] h-24 rounded-lg border border-[#d5d5d5]"
@@ -486,7 +486,7 @@ console.log(e)
                 Name :
               </label>
               <input
-              defaultValue=""
+                defaultValue=""
                 type="text"
                 name="selection_name"
                 id="selection_name"
@@ -501,7 +501,7 @@ console.log(e)
                 Bank :
               </label>
               <input
-              defaultValue=""
+                defaultValue=""
                 type="text"
                 name="selection_bank"
                 id="selection_bank"
@@ -514,7 +514,7 @@ console.log(e)
                 Amount :
               </label>
               <input
-              defaultValue=""
+                defaultValue=""
                 type="number"
                 onKeyDown={handleKeyDown}
                 name="selection_amount"
@@ -532,7 +532,7 @@ console.log(e)
                 Date :
               </label>
               <input
-              defaultValue=""
+                defaultValue=""
                 type="date"
                 name="start_date"
                 id="start_date"
@@ -546,7 +546,7 @@ console.log(e)
               </label>
 
               <input
-              defaultValue=""
+                defaultValue=""
                 type="date"
                 name="end_date"
                 id="end_date"
@@ -580,7 +580,7 @@ console.log(e)
                 Cheque no :
               </label>
               <input
-              defaultValue=""
+                defaultValue=""
                 type="number"
                 onKeyDown={handleKeyDown}
                 name="cheque_no"

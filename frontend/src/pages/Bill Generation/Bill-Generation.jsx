@@ -188,7 +188,6 @@ const [formData,setFormData] = useState({
             style={{
               backgroundColor: "#119F8E",
               boxShadow: "2px 4px 4px 0px #00000040",
-              border: "1px solid #000000",
             }}
           >
             {"Generate Bills"}
@@ -197,7 +196,6 @@ const [formData,setFormData] = useState({
             style={{
               backgroundColor: "#045E92",
               boxShadow: "2px 4px 4px 0px #00000040",
-              border: "1px solid #000000",
             }}
           >
             {"Edit Bills"}
@@ -206,7 +204,6 @@ const [formData,setFormData] = useState({
             style={{
               backgroundColor: "#A9CEED",
               boxShadow: "2px 3px 3px 0px #00000040",
-              border: "1px solid #000000",
             }}
           >
             {"View"}
