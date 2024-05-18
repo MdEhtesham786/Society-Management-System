@@ -9,6 +9,11 @@
   margin-top: 9px;
 }
 
+label {
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
 .bill-btns {
   display: flex;
   align-items: center;

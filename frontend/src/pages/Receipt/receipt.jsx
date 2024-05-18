@@ -13,7 +13,7 @@ const Receipt = (props) => {
 
   let bankArr = [{ title: 'Select Account', value: 'select_amount' }, { title: 'Axis Bank', value: 'axis_bank' }, { title: 'TDCC Bank', value: 'tdcc_bank' }]
   let cashArr = [{ title: 'Select Account', value: 'select_amount' }, { title: 'Cash', value: 'cash' }]
-//UseREF
+  //UseREF
 
   const myRef = useRef(null);
 
@@ -26,7 +26,6 @@ const Receipt = (props) => {
   const [memberList, setMemberList] = useState([])
 
   //FormData Usestate
-  const [formDataBillGeneration, setFormDataBillGeneration] = useState({})
   const [formData, setFormData] = useState({
     bank_cash:page==='Cash Payment'||page==='Cash Receipt'?'cash':'bank',
     bank_cash_account:'select_account',//required
@@ -133,8 +132,9 @@ setFormData({
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(`http://127.0.0.1:5003/api/v1/transaction/memberreceipt`);
+      const res = await axios.get(`http://127.0.0.1:5003/api/v1/transaction/memberReceipt`);
       const { data } = res
+      console.log(data)
       if (data.success) {
         return data
       } else {
