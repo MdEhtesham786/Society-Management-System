@@ -39,11 +39,10 @@ dispatch(setUser({}))
   return (
   <>
   <div className=" grid grid-rows-10 items-center  w-[97%] m-4 mb-0 rounded-lg overflow-hidden">
-
   <div className="  h-full row-span-3 flex justify-center items-center bg-blue-">
-    <img src="../../../img/dummy.jpeg" className="h-[10.9rem] w-[77.6rem] object-cover object-center" alt="" />
+    <img src="../../../img/dummy.jpeg"  fetchPriority='high' className="h-[10.9rem] w-[77.6rem] object-cover object-center" alt="" />
   </div>
-  <div className="  h-full row-span-1 text-[2rem] text-center grid items-center  bg-red-">
+  <div className="  h-full row-span-1 text-[2rem] text-center grid items-center  ">
     Man opus building no 2 and 3
   </div>
   <div className="  h-full row-span-6 flex justify-center bg-[#ABBFD0]">
@@ -63,6 +62,7 @@ dispatch(setUser({}))
 </div>
   </div>
   </div>
+
   </>
   )
 }

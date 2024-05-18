@@ -7,6 +7,7 @@ import Select from "../../components/Select/Select";
 import { useLocation } from "react-router-dom";
 
 const Receipt = (props) => {
+ 
   axios.defaults.withCredentials = true; //The most important line for cookies
   const location = useLocation()
 
@@ -26,86 +27,78 @@ const Receipt = (props) => {
 
   //FormData Usestate
   const [formDataBillGeneration, setFormDataBillGeneration] = useState({})
-  const [formDataMemberReceipt, setFormDataMemberReceipt] = useState({
-    name: "",
-    bank: "",
-    branch: "",
-    date: "",
-    cheque_refno: "",
-    micr_ifsc: "",
-    cheque_ref_date: "",
-    amount: "",
-    principal: "",
-    interest: "",
-    narration: ""
+  const [formData, setFormData] = useState({
+    bank_cash:page==='Cash Payment'||page==='Cash Receipt'?'cash':'bank',
+    bank_cash_account:'select_account',//required
+    entry_name:'select_name',//required
+    entry_bank:'',
+    entry_branch:'',
+    date:new Date().toISOString().split('T')[0],
+    cheque_refno:'',//required
+    micr_ifsc:'',
+    cheque_ref_date:new Date().toISOString().split('T')[0],
+    amount:'',//required
+    principal:'',//required
+    interest:'',//required
+    narration:''
   })
-  const [formDataBankReceipt, setFormDataBankReceipt] = useState({})
-  const [formDataCashReceipt, setFormDataCashReceipt] = useState({})
-  const [formDataSupplementaryReceipt, setFormDataSupplementaryReceipt] = useState({})
-  const [formDataBankPayment, setFormDataBankPayment] = useState({})
-  const [formDataCashPayment, setFormDataCashPayment] = useState({})
 
   //Functions
-  const handleBillGenerationSubmit = async () => {
-
-  }
-  const handleMemberReceiptSubmit = async () => {
+  const handleSubmit = async () => {
     try {
-//     memberReceiptRef.current.forEach((member)=>{
-// console.log(member)
-//     })
-     const res =  axios.post('transaction/memberReceipt')
-     setFormDataMemberReceipt({})
-const {data} = res
-  // console.log(data)
-    } catch (err) {
-      console.log(err)
-
-    }
-  }
-  const handleMemberReceiptChange = async(e)=>{
-console.log(e)
-  }
+      const apiEndpoints = {
+        'Member Receipt': '/transaction/memberReceipt',
+        'Bank Receipt': '/transaction/bankReceipt',
+        'Cash Receipt': '/transaction/cashReceipt',
+        'Supplementary Receipt': '/transaction/supplementaryReceipt',
+        'Bank Payment': '/transaction/bankPayment',
+        'Cash Payment': '/transaction/cashPayment',
+      };
   
-  const handleBankReceiptSubmit = async () => {
-    try {
-
+      const endpoint = apiEndpoints[page];
+  
+      if (endpoint) {
+        const {bank_cash,bank_cash_account,entry_name,entry_bank,entry_branch,date,cheque_refno,cheque_ref_date,micr_ifsc,amount,principal,interest,narration} = formData
+//         if(!bank_cash_account||!entry_name||!cheque_refno||!amount||!principal||!interest){
+// alert('Please fill all the required inputs')
+//         }else{
+//           const sendData ={bank_cash,bank_cash_account,entry_name,entry_bank,entry_branch,date,cheque_refno,cheque_ref_date,micr_ifsc,amount,principal,interest,narration} 
+//           const res = await axios.post(endpoint,sendData);
+//           const {data} = res
+//           if(data.success){
+//             console.log(data.body)
+//           }else{
+// console.log(res)
+//           }
+//         }
+        const sendData ={bank_cash,bank_cash_account,entry_name,entry_bank,entry_branch,date,cheque_refno,cheque_ref_date,micr_ifsc,amount,principal,interest,narration} 
+        const res = await axios.post(endpoint,sendData);
+        const {data} = res
+        if(data.success){
+          console.log(data)
+        }else{
+console.log(res)
+        }
+      } else {
+        console.log('Page not found');
+      }
     } catch (err) {
       console.log(err)
-
     }
   }
-  const handleCashReceiptSubmit = async () => {
-    try {
+  const handleChange = async(e)=>{
+    if(e.target.name==='bank_cash'){
+      if(page==='Supplementary Receipt'){
+        setSupplementaryReceipt(e.target.value)
 
-    } catch (err) {
-      console.log(err)
-
+      }else if(page==='Member Receipt'){
+setMemberReceipt(e.target.value)
+      }
     }
-  }
-  const handleSupplementaryReceiptSubmit = async () => {
-    try {
-
-    } catch (err) {
-      console.log(err)
-
-    }
-  }
-  const handleBankPaymentSubmit = async () => {
-    try {
-
-    } catch (err) {
-      console.log(err)
-
-    }
-  }
-  const handleCashPaymentSubmit = async () => {
-    try {
-
-    } catch (err) {
-      console.log(err)
-
-    }
+setFormData({
+ ...formData,
+ [e.target.name]:e.target.value
+})
   }
   const handleSearchBtn = () => {
     setArr([...arr, 1]);
@@ -138,14 +131,6 @@ console.log(e)
     }
   };
 
-  const handleMemberChange = (e) => {
-    setMemberReceipt(e.target.value)
-  }
-
-  const handleSupplementaryChange = (e) => {
-    setSupplementaryReceipt(e.target.value)
-  }
-
   const fetchData = async () => {
     try {
       const res = await axios.get(`http://127.0.0.1:5003/api/v1/transaction/memberreceipt`);
@@ -163,7 +148,6 @@ console.log(e)
 
   //UseEffects
   useEffect(() => {
-    console.log('Lund')
     fetchData().then((res) => {
       let arr = []
       res.memberList.forEach((member, i) => {
@@ -177,20 +161,35 @@ console.log(e)
             value: member.Name
 
           })
+        }else{
+          arr.push({
+            title: member.Name,
+            value: member.Name
+  
+          })
         }
-        arr.push({
-          title: member.Name,
-          value: member.Name
-
-        })
+      
       })
       setMemberList(arr)
     })
   }, [])
 
   useEffect(() => {
-    setMemberReceipt('bank')
-    setSupplementaryReceipt('bank')
+    setFormData({
+      bank_cash:page==='Cash Payment'||page==='Cash Receipt'?'cash':'bank',
+      bank_cash_account:'select_account',
+      entry_name:'select_name',
+      entry_bank:'',
+      entry_branch:'',
+      date:new Date().toISOString().split('T')[0],
+      cheque_refno:'',
+      micr_ifsc:'',
+      cheque_ref_date:new Date().toISOString().split('T')[0],
+      amount:'',
+      principal:'',
+      interest:'',
+      narration:''
+    })
   }, [location.pathname])
 
   return (
@@ -207,15 +206,15 @@ console.log(e)
 
                 {/* Member Receipt */}
                 {page === 'Member Receipt' &&
-                  <> <Select onChange={handleMemberChange} classNames={'h-10 w-[8.5rem]'} id={'bank_cash'} name={'bank_cash'} defaultValue={'bank'} optionArr={[{ title: 'Bank', value: 'bank' }, { title: 'Cash', value: 'cash' }]} />
-                    <Select classNames={`h-10 w-[12.5rem] ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={memberReceipt === 'bank' ? bankArr : cashArr} /></>}
+                  <> <Select  classNames={'h-10 w-[8.5rem]'} id={'bank_cash'}  onChange={handleChange} name={'bank_cash'} value={formData.bank_cash} optionArr={[{ title: 'Bank', value: 'bank' }, { title: 'Cash', value: 'cash' }]} />
+                    <Select classNames={`h-10 w-[12.5rem] ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_cash_account'} onChange={handleChange} name={'bank_cash_account'} defaultValue={formData.bank_cash_account} optionArr={formData.bank_cash === 'bank' ? bankArr : cashArr} /></>}
 
                 {/* Supplementary Receipt */}
-                {page === 'Supplementary Receipt' && <> <Select onChange={handleSupplementaryChange} classNames={'h-10 w-[8.5rem]'} id={'bank_cash'} name={'bank_cash'} defaultValue={'bank'} optionArr={[{ title: 'Bank', value: 'bank' }, { title: 'Cash', value: 'cash' }]} />
-                  <Select classNames={`h-10 w-[12.5rem] ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={supplementaryReceipt === 'bank' ? bankArr : cashArr} /></>}
+                {page === 'Supplementary Receipt' && <> <Select  classNames={'h-10 w-[8.5rem]'} id={'bank_cash'} onChange={handleChange} name={'bank_cash'} value={formData.bank_cash} optionArr={[{ title: 'Bank', value: 'bank' }, { title: 'Cash', value: 'cash' }]} />
+                  <Select classNames={`h-10 w-[12.5rem] ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_cash_account'} onChange={handleChange} name={'bank_cash_account'} defaultValue={formData.bank_cash_account} optionArr={formData.bank_cash === 'bank' ? bankArr : cashArr} /></>}
 
                 {/* Other Pages */}
-                {page !== 'Member Receipt' && page !== 'Supplementary Receipt' ? <Select classNames={`h-10 w-[12.5rem] ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_account'} name={'bank_account'} defaultValue={'select_account'} optionArr={props.page === 'Bank Payment' || props.page === 'Bank Receipt' ? bankArr : cashArr} /> : ''}
+                {page !== 'Member Receipt' && page !== 'Supplementary Receipt' ? <Select classNames={`h-10 w-[12.5rem] ${page === 'Member Receipt' || page === 'Supplementary Receipt' ? 'mx-6' : 'mr-6'}`} id={'bank_cash_account'} onChange={handleChange} name={'bank_cash_account'} value={formData.bank_cash_account} optionArr={props.page === 'Bank Payment' || props.page === 'Bank Receipt' ? bankArr : cashArr} /> : ''}
                 <CustomButton
                   onClick={handleViewBtn}
                   type={"submit"}
@@ -260,13 +259,7 @@ console.log(e)
               >
                 Name :
               </label>
-              {/* <input
-                type="text"
-                name="entry_name"
-                id="entry_name"
-                className="w-[85%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
-              /> */}
-              <Select id={'entry_name'} name={'entry_name'} classNames={'h-10 w-[80%] ml-2'} optionArr={memberList} />
+              <Select id={'entry_name'} onChange={handleChange} name={'entry_name'} value={formData.entry_name}  classNames={'h-10 w-[80%] ml-2'} optionArr={memberList} />
             </div>
             <div className="w-[68%] flex justify-center">
               <label
@@ -277,8 +270,9 @@ console.log(e)
               </label>
               <input
                 type="text"
-                name="entry_bank"
+                onChange={handleChange} name="entry_bank"
                 id="entry_bank"
+                value={formData.entry_bank}
                 className="w-[23%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
               />
               <label
@@ -289,8 +283,9 @@ console.log(e)
               </label>
               <input
                 type="text"
-                name="entry_branch"
+                onChange={handleChange} name="entry_branch"
                 id="entry_branch"
+                value={formData.entry_branch}
                 className="w-[23%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
               />
               <label
@@ -301,9 +296,9 @@ console.log(e)
               </label>
               <input
                 type="date"
-                name="date"
+                onChange={handleChange} name="date"
                 id="date"
-                value={new Date().toISOString().split('T')[0]}
+                value={formData.date}
                 className="rounded-lg border border-[#d5d5d5] ml-2 w-[23%]"
               />
             </div>
@@ -319,8 +314,9 @@ console.log(e)
               <input
                 type="number"
                 onKeyDown={handleKeyDown}
-                name="cheque_refno"
+                onChange={handleChange} name="cheque_refno"
                 id="cheque_refno"
+                value={formData.cheque_refno}
                 className="w-[65%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
               />
             </div>
@@ -332,10 +328,10 @@ console.log(e)
                 MICR/IFSC :
               </label>
               <input 
-              defaultValue=""
                 type="text"
-                name="micr_ifsc"
+                onChange={handleChange} name="micr_ifsc"
                 id="micr_ifsc"
+                value={formData.micr_ifsc}
                 className="w-[25%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
               />
               <label
@@ -346,9 +342,9 @@ console.log(e)
               </label>
               <input
                 type="date"
-                name="start_date"
+                onChange={handleChange} name="cheque_ref_date"
                 id="start_date"
-                defaultValue={new Date().toISOString().split('T')[0]}
+                defaultValue={formData.cheque_ref_date}
                 className="rounded-lg border border-[#d5d5d5] ml-2 w-[25%]"
               />
 
@@ -363,11 +359,11 @@ console.log(e)
                 Amount :
               </label>
               <input 
-              defaultValue=""
                 type="number"
                 onKeyDown={handleKeyDown}
-                name="amount"
+                onChange={handleChange} name="amount"
                 id="amount"
+                value={formData.amount}
                 className="w-[28%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
               />
               <label
@@ -377,11 +373,11 @@ console.log(e)
                 Principal :
               </label>
               <input 
-              defaultValue=""
                 type="number"
                 onKeyDown={handleKeyDown}
-                name="principal"
+                onChange={handleChange} name="principal"
                 id="principal"
+                value={formData.principal}
                 className="w-[35%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
               />
             </div>
@@ -394,12 +390,12 @@ console.log(e)
                   Interest :
                 </label>
                 <input 
-                defaultValue=""
                   type="number"
                   onKeyDown={handleKeyDown}
-                  name="interest"
+                  onChange={handleChange} name="interest"
                   id="interest"
-                  className="w-[67%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
+                value={formData.interest}
+                className="w-[67%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
                 />
               </div>
               <div className="w-[50%] flex flex-col h-full ml-4">
@@ -421,8 +417,9 @@ console.log(e)
                 Narration :
               </label>
               <textarea 
-                name="narration"
+                onChange={handleChange} name="narration"
                 id="narration"
+                value={formData.narration}
                 className="ml-2 resize-none w-[85%] h-24 rounded-lg border border-[#d5d5d5]"
               ></textarea>
             </div>
@@ -431,7 +428,7 @@ console.log(e)
                 Interest :
               </p>
               <div className="h-[60%]  flex justify-end items-end pb-2">
-                <CustomButton onClick={handleMemberReceiptSubmit}
+                <CustomButton onClick={handleSubmit}
                   type={"submit"}
                   style={{
                     backgroundColor: "#119F8E",
@@ -485,13 +482,8 @@ console.log(e)
               >
                 Name :
               </label>
-              <input
-              defaultValue=""
-                type="text"
-                name="selection_name"
-                id="selection_name"
-                className="w-[85%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
-              />
+           
+                <Select id={'selection_name'}  name={'selection_name'}defaultValue={''} classNames={'w-[85%] h-10 rounded-lg border-[#d5d5d5] ml-2 border'} optionArr={memberList} />
             </div>
             <div className="w-[55%] flex justify-center">
               <label
@@ -501,10 +493,10 @@ console.log(e)
                 Bank :
               </label>
               <input
-              defaultValue=""
                 type="text"
                 name="selection_bank"
                 id="selection_bank"
+                value={''}
                 className="w-[35%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
               />
               <label
@@ -514,11 +506,11 @@ console.log(e)
                 Amount :
               </label>
               <input
-              defaultValue=""
                 type="number"
                 onKeyDown={handleKeyDown}
-                name="selection_amount"
+               name="selection_amount"
                 id="selection_amount"
+                value={''}
                 className="w-[35%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
               />
             </div>
@@ -532,10 +524,10 @@ console.log(e)
                 Date :
               </label>
               <input
-              defaultValue=""
                 type="date"
-                name="start_date"
+             name="start_date"
                 id="start_date"
+                value={new Date().toISOString().split('T')[0]}
                 className="w-[35%] ml-4 rounded-lg border border-[#d5d5d5] "
               />
               <label
@@ -546,10 +538,10 @@ console.log(e)
               </label>
 
               <input
-              defaultValue=""
                 type="date"
-                name="end_date"
+                 name="end_date"
                 id="end_date"
+                value={new Date().toISOString().split('T')[0]}
                 className="w-[35%] rounded-lg border border-[#d5d5d5] "
               />
             </div>
@@ -563,7 +555,7 @@ console.log(e)
 
               <select
                 id="records"
-                name="records"
+                 name="records"
                 defaultValue={"10"}
                 className="ml-4 w-[7.5rem] h-10  font-[500] bg-gray-50 border border-[#d5d5d5] text-[#282828]  rounded-lg focus:ring-blue-500 focus:border-blue-500 block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               >
@@ -580,11 +572,11 @@ console.log(e)
                 Cheque no :
               </label>
               <input
-              defaultValue=""
                 type="number"
                 onKeyDown={handleKeyDown}
-                name="cheque_no"
+                 name="cheque_no"
                 id="cheque_no"
+                value={''}
                 className="w-[38%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
               />
             </div>

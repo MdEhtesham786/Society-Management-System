@@ -38,6 +38,7 @@ export const memberReceiptGet = async (req, res) => {
 export const memberReceiptPost = async (req, res) => {
     if (req.token) {
         // const memberList = await memberModel.find();
+        console.log(req.body);
         return res.json({
             success: true,
             body: req.body
