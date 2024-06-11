@@ -5,9 +5,11 @@
 // export const registerPage = async (req, res) => {
 //     res.send('(register get)' + ' ' + req.query?.error);
 // }; 
+import receiptModel from "../models/receiptModel.js";
 import memberModel from "../models/memberModel.js";
 export const ledger = async (req, res) => {
     if (req.token) {
+
         return res.json({
             success: true,
             token: req.token,

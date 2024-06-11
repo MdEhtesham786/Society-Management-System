@@ -1,5 +1,5 @@
 import memberModel from "../models/memberModel.js";
-
+import receiptModel from "../models/receiptModel.js";
 export const billGenerationGet = async (req, res) => {
     if (req.token) {
         // const memberList = await memberModel.find();
@@ -37,11 +37,20 @@ export const memberReceiptGet = async (req, res) => {
 
 export const memberReceiptPost = async (req, res) => {
     if (req.token) {
-        // const memberList = await memberModel.find();
-        console.log(req.body);
+        const { bank_cash, bank_cash_account, entry_name, entry_bank, entry_branch, date, cheque_refno, cheque_ref_date, micr_ifsc, amount, principal, interest, narration } = req.body;
+        if (!bank_cash || bank_cash_account === 'select_account' || entry_name === 'select_name' || !entry_bank || !entry_branch || !date || !cheque_refno || !cheque_ref_date || !micr_ifsc || !amount || !principal || !interest || !narration) {
+            return res.json({
+                status: false,
+                message: 'Please enter the required details'
+            });
+        }
+
+        const receipt = new receiptModel(req.body);
+        await receipt.save();
         return res.json({
             success: true,
-            body: req.body
+            body: receipt,
+            page: 'Member receipt'
         });
     } else {
         return res.json({
@@ -71,10 +80,20 @@ export const bankReceiptGet = async (req, res) => {
 
 export const bankReceiptPost = async (req, res) => {
     if (req.token) {
-        // const memberList = await memberModel.find();
+        const { bank_cash, bank_cash_account, entry_name, entry_bank, entry_branch, date, cheque_refno, cheque_ref_date, micr_ifsc, amount, principal, interest, narration } = req.body;
+        if (!bank_cash || bank_cash_account === 'select_account' || entry_name === 'select_name' || !entry_bank || !entry_branch || !date || !cheque_refno || !cheque_ref_date || !micr_ifsc || !amount || !principal || !interest || !narration) {
+            return res.json({
+                status: false,
+                message: 'Please enter the required details'
+            });
+        }
+
+        const receipt = new receiptModel(req.body);
+        // await receipt.save();
         return res.json({
             success: true,
-            body: req.body
+            body: receipt,
+            page: 'Bank receipt'
         });
     } else {
         return res.json({
@@ -87,13 +106,7 @@ export const bankReceiptPost = async (req, res) => {
 // Cash Receipt
 export const cashReceiptGet = async (req, res) => {
     if (req.token) {
-        // const memberList = await memberModel.find();
-        return res.json({
-            success: true,
-            // memberList,
-            token: req.token,
-            user: req.user
-        });
+
     } else {
         return res.json({
             success: false,
@@ -104,10 +117,20 @@ export const cashReceiptGet = async (req, res) => {
 
 export const cashReceiptPost = async (req, res) => {
     if (req.token) {
-        // const memberList = await memberModel.find();
+        const { bank_cash, bank_cash_account, entry_name, entry_bank, entry_branch, date, cheque_refno, cheque_ref_date, micr_ifsc, amount, principal, interest, narration } = req.body;
+        if (!bank_cash || bank_cash_account === 'select_account' || entry_name === 'select_name' || !entry_bank || !entry_branch || !date || !cheque_refno || !cheque_ref_date || !micr_ifsc || !amount || !principal || !interest || !narration) {
+            return res.json({
+                status: false,
+                message: 'Please enter the required details'
+            });
+        }
+
+        const receipt = new receiptModel(req.body);
+        // await receipt.save();
         return res.json({
             success: true,
-            body: req.body
+            body: receipt,
+            page: 'Cash receipt'
         });
     } else {
         return res.json({
@@ -120,13 +143,7 @@ export const cashReceiptPost = async (req, res) => {
 // Supplementary Receipt
 export const supplementaryReceiptGet = async (req, res) => {
     if (req.token) {
-        // const memberList = await memberModel.find();
-        return res.json({
-            success: true,
-            // memberList,
-            token: req.token,
-            user: req.user
-        });
+
     } else {
         return res.json({
             success: false,
@@ -137,10 +154,20 @@ export const supplementaryReceiptGet = async (req, res) => {
 
 export const supplementaryReceiptPost = async (req, res) => {
     if (req.token) {
-        // const memberList = await memberModel.find();
+        const { bank_cash, bank_cash_account, entry_name, entry_bank, entry_branch, date, cheque_refno, cheque_ref_date, micr_ifsc, amount, principal, interest, narration } = req.body;
+        if (!bank_cash || bank_cash_account === 'select_account' || entry_name === 'select_name' || !entry_bank || !entry_branch || !date || !cheque_refno || !cheque_ref_date || !micr_ifsc || !amount || !principal || !interest || !narration) {
+            return res.json({
+                status: false,
+                message: 'Please enter the required details'
+            });
+        }
+
+        const receipt = new receiptModel(req.body);
+        // await receipt.save();
         return res.json({
             success: true,
-            body: req.body
+            body: receipt,
+            page: 'Supplementary receipt'
         });
     } else {
         return res.json({
@@ -153,10 +180,8 @@ export const supplementaryReceiptPost = async (req, res) => {
 // Bank Payment
 export const bankPaymentGet = async (req, res) => {
     if (req.token) {
-        // const memberList = await memberModel.find();
         return res.json({
             success: true,
-            // memberList,
             token: req.token,
             user: req.user
         });
@@ -170,10 +195,20 @@ export const bankPaymentGet = async (req, res) => {
 
 export const bankPaymentPost = async (req, res) => {
     if (req.token) {
-        // const memberList = await memberModel.find();
+        const { bank_cash, bank_cash_account, entry_name, entry_bank, entry_branch, date, cheque_refno, cheque_ref_date, micr_ifsc, amount, principal, interest, narration } = req.body;
+        if (!bank_cash || bank_cash_account === 'select_account' || entry_name === 'select_name' || !entry_bank || !entry_branch || !date || !cheque_refno || !cheque_ref_date || !micr_ifsc || !amount || !principal || !interest || !narration) {
+            return res.json({
+                status: false,
+                message: 'Please enter the required details'
+            });
+        }
+
+        const receipt = new receiptModel(req.body);
+        // await receipt.save();
         return res.json({
             success: true,
-            body: req.body
+            body: receipt,
+            page: 'Bank payment'
         });
     } else {
         return res.json({
@@ -204,9 +239,20 @@ export const cashPaymentGet = async (req, res) => {
 export const cashPaymentPost = async (req, res) => {
     if (req.token) {
         // const memberList = await memberModel.find();
+        const { bank_cash, bank_cash_account, entry_name, entry_bank, entry_branch, date, cheque_refno, cheque_ref_date, micr_ifsc, amount, principal, interest, narration } = req.body;
+        if (!bank_cash || bank_cash_account === 'select_account' || entry_name === 'select_name' || !entry_bank || !entry_branch || !date || !cheque_refno || !cheque_ref_date || !micr_ifsc || !amount || !principal || !interest || !narration) {
+            return res.json({
+                status: false,
+                message: 'Please enter the required details'
+            });
+        }
+
+        const receipt = new receiptModel(req.body);
+        // await receipt.save();
         return res.json({
             success: true,
-            body: req.body
+            body: receipt,
+            page: 'Cash payment'
         });
     } else {
         return res.json({

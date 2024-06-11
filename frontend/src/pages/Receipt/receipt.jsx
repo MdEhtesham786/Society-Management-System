@@ -76,7 +76,7 @@ const Receipt = (props) => {
         if(data.success){
           console.log(data)
         }else{
-console.log(res)
+console.log(res.data)
         }
       } else {
         console.log('Page not found');
@@ -86,14 +86,14 @@ console.log(res)
     }
   }
   const handleChange = async(e)=>{
-    if(e.target.name==='bank_cash'){
-      if(page==='Supplementary Receipt'){
-        setSupplementaryReceipt(e.target.value)
+//     if(e.target.name==='bank_cash'){
+//       if(page==='Supplementary Receipt'){
+//         setSupplementaryReceipt(e.target.value)
 
-      }else if(page==='Member Receipt'){
-setMemberReceipt(e.target.value)
-      }
-    }
+//       }else if(page==='Member Receipt'){
+// setMemberReceipt(e.target.value)
+//       }
+//     }
 setFormData({
  ...formData,
  [e.target.name]:e.target.value
