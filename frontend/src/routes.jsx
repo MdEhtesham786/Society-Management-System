@@ -211,9 +211,8 @@ const routes = [
   { path: "/admin", component: Admin, exact: true },
   // { path: "/bill-generation", component: BillGeneration, exact: true },
 
-  ...admin,
+  ...admin,  
   ...transactions,
-
   { path: "/ledger", component: Ledger, exact: true },
   { path: "/pay", component: Dashboard, exact: true },
   { path: "/outstandingreport", component: Dashboard, exact: true },

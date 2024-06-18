@@ -21,6 +21,10 @@ const MenuData = [
     ],
   },
   {
+    title: "Ledger",
+    path: "/api/v1/ledger",
+  },
+  {
     title: "Transaction",
     path: "/api/v1/transaction",
 
@@ -60,10 +64,7 @@ const MenuData = [
     ],
   },
 
-  {
-    title: "Ledger",
-    path: "/api/v1/ledger",
-  },
+ 
   {
     title: "Pay Now",
     path: "/api/v1/pay",

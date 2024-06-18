@@ -12,6 +12,7 @@ import { setIsLoggedIn, setUser } from "./reducer/authSlice.js";
 import Spinner from "./components/Loader/Spinner.jsx";
 // import { Helmet,HelmetProvider } from 'react-helmet-async';
 function App() {
+
   const defaultPath = "/api/v1";
   axios.defaults.withCredentials = true; //The most important line for cookies
   const navigate = useNavigate();
@@ -20,13 +21,14 @@ function App() {
   const isLoginPage = location.pathname === "/api/v1/auth/login";
   const [loading, setLoading] = useState(true); // State to track loading status
   const [authChecked, setAuthChecked] = useState(false); // State to track if authentication check completed
-
+    
   //Redux State
   const user = useSelector((state) => state.user);
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
 
   const fetchData = async () => {
     try {
+
       const res = await axios.post(`http://127.0.0.1:5003/api/v1/auth/islogin`);
       const { data } = res;
       if (!data.success) {
@@ -51,18 +53,19 @@ function App() {
     } finally {
       setLoading(false);
       setAuthChecked(true);
+
     }
   };
   useEffect(() => {
-    fetchData();
+    fetchData()
   }, []);
   useEffect(() => {
+
     if ((authChecked && !isLoggedIn) || !user) {
       if (location.pathname !== "/api/v1/auth/login") {
         navigate("/api/v1/auth/login");
       }
     }
-    console.log(user)
   }, [location.pathname, isLoggedIn, user, authChecked, navigate]);
   return (
     <>

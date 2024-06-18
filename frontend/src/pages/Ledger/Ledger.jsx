@@ -1,7 +1,15 @@
 import CustomButton from "../../components/Button/CustomButton";
 import "./Ledger.css";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import axios from "../../utils/axiosConfig"
+
+import { useLocation } from "react-router-dom";
+
 const Ledger = () => {
+  axios.defaults.withCredentials = true; //The most important line for cookies
+
+const location = useLocation()
+
   const handleKeyDown = (e) => {
     if (e.keyCode === 38) {
       console.log("up");
@@ -21,6 +29,27 @@ const Ledger = () => {
     newArr.pop();
     setArr(newArr);
   };
+  const fetchData = async()=>{
+    try {
+      const res = await axios.get('/ledger');
+      const { data } = res
+      console.log(data)
+      if (data.success) {
+        return data
+      } else {
+        console.log(data)
+      }
+    } catch (err) {
+      console.log(err)
+
+    }
+
+  }
+  useEffect(()=>{
+fetchData().then((res)=>{
+  console.log('checking',res)
+})
+  },[location.pathname])
   return (
     <>
       <div className="flex flex-col bg-blue h-[100%] px-2">
@@ -142,13 +171,26 @@ const Ledger = () => {
         <div className="bg-[#E9F2F2] h-[55%] my-2 rounded-lg flex flex-col px-2 pt-1 border-[#cdcdcd] border drop-shadow-lg">
           <h3 className="text-xl font-semibold text-center">STATEMENT</h3>
           <div className="border border-[#959595] min-h-[90%] w-full rounded-lg overflow-y-auto flex flex-col">
+          <div
+                  className={`min-h-12 statement bg-[#F3F9FB] border-b-[1px] border border-t-[0px] border-l-[0px] border-r-[0px] border-[#9F9F9F]  flex`}
+                >
+                  <p className="w-[11%] border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px]  ">NO</p>
+                  <p className="w-[9%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] ">DATE</p>
+                  <p className="w-[13%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] ">REF</p>
+                  <p className="w-[19%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] ">PARTICULAR</p>
+                  <p className="w-[15%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] ">DUE DATE/CHEQUE</p>
+                  <p className="w-[8%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] ">DEBIT</p>
+                  <p className="w-[8%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] ">CREDIT</p>
+                  <p className="w-[8%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] ">BALANCE</p>
+                  <p className="w-[9%]  ">VIEW</p>
+                </div>
             {arr.map((e, i) => {
               return (
                 <div
                   className={`min-h-12 statement ${
-                    i % 2 === 0 ? "bg-[#F3F9FB]" : "bg-transparent"
+                    i % 2 === 0 ? "bg-transparent" : "bg-[#F3F9FB]"
                   } ${
-                    arr.length - 1 === i && arr.length > 6
+                    arr.length - 1 === i && arr.length > 5
                       ? "border-b-[0px]"
                       : "border-b[1px]"
                   } border border-t-[0px] border-l-[0px] border-r-[0px] border-[#9F9F9F]  flex`}
@@ -158,10 +200,10 @@ const Ledger = () => {
                   <p className="w-[9%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] "></p>
                   <p className="w-[13%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] "></p>
                   <p className="w-[19%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] "></p>
-                  <p className="w-[12%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] "></p>
-                  <p className="w-[9%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] "></p>
-                  <p className="w-[9%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] "></p>
-                  <p className="w-[9%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] "></p>
+                  <p className="w-[15%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] "></p>
+                  <p className="w-[8%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] "></p>
+                  <p className="w-[8%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] "></p>
+                  <p className="w-[8%]  border border-t-[0px] border-[#9F9F9F] border-l-[0px] border-b-[0px] border-r-[1px] "></p>
                   <p className="w-[9%]  "></p>
                 </div>
               );
