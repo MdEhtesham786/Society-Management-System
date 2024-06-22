@@ -1,4 +1,5 @@
 import Dashboard from "./pages/Dashboard/Dashboard";
+import BankReconcillation from "./pages/Bank-Reconcillation/Bank-Reconcillation.jsx";
 import BillGeneration from "./pages/Bill Generation/Bill-Generation";
 import Ledger from "./pages/Ledger/Ledger.jsx";
 import Receipt from "./pages/Receipt/receipt.jsx";
@@ -116,7 +117,7 @@ const transactions = [
   },
   {
     path: "/transaction/bankreconcillation",
-    component: Dashboard,
+    component: BankReconcillation,
     exact: true,
   },
   {
