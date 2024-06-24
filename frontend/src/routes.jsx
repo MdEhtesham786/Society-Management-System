@@ -1,4 +1,5 @@
 import Dashboard from "./pages/Dashboard/Dashboard";
+import BankReconcillation from "./pages/Bank-Reconcillation/Bank-Reconcillation.jsx";
 import BillGeneration from "./pages/Bill Generation/Bill-Generation";
 import Ledger from "./pages/Ledger/Ledger.jsx";
 import Receipt from "./pages/Receipt/receipt.jsx";
@@ -9,6 +10,7 @@ import MultipleReceiptAndPayment from "./pages/MultipleReceiptAndPayment/Multipl
 import LedgerEdit from "./pages/LedgerEdit/LedgerEdit";
 import ChequeSlipGeneration from "./pages/ChequeSlipGeneration/ChequeSlipGeneration";
 import Admin from "./pages/Admin/admin.jsx";
+import PayNow from "./pages/PayNow/Pay-Now.jsx";
 import deposit from "./pages/Register/deposit";
 
 const vendorManagement = [
@@ -43,6 +45,7 @@ const registers = [
       page: "Deposit Account",
     },
   },
+
   { path: "/registers/insurance", component: Dashboard, exact: true },
   { path: "/registers/noticeboard", component: Dashboard, exact: true },
   { path: "/registers/pollingbooth", component: Dashboard, exact: true },
@@ -125,7 +128,7 @@ const transactions = [
   },
   {
     path: "/transaction/bankreconcillation",
-    component: Dashboard,
+    component: BankReconcillation,
     exact: true,
   },
   {
@@ -225,7 +228,7 @@ const routes = [
   ...admin,
   ...transactions,
   { path: "/ledger", component: Ledger, exact: true },
-  { path: "/pay", component: Dashboard, exact: true },
+  { path: "/pay", component: PayNow, exact: true },
   { path: "/outstandingreport", component: Dashboard, exact: true },
   { path: "/complaint", component: Dashboard, exact: true },
   { path: "/ledger", component: Dashboard, exact: true },

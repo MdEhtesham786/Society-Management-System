@@ -47,7 +47,6 @@ const location = useLocation()
   }
   useEffect(()=>{
 fetchData().then((res)=>{
-  console.log('checking',res)
 })
   },[location.pathname])
   return (
