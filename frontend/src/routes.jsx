@@ -35,14 +35,25 @@ const registers = [
   { path: "/registers/iform", component: Dashboard, exact: true },
   { path: "/registers/shares", component: Dashboard, exact: true },
   { path: "/registers/nomination", component: Dashboard, exact: true },
-  { path: "/registers/deposit", component: deposit, exact: true },
+  {
+    path: "/registers/deposit",
+    component: deposit,
+    exact: true,
+    props: {
+      page: "Deposit Account",
+    },
+  },
   { path: "/registers/insurance", component: Dashboard, exact: true },
   { path: "/registers/noticeboard", component: Dashboard, exact: true },
   { path: "/registers/pollingbooth", component: Dashboard, exact: true },
   { path: "/registers/documentissue", component: Dashboard, exact: true },
   { path: "/registers/documentsissued", component: Dashboard, exact: true },
   { path: "/registers/documentupload", component: Dashboard, exact: true },
-  { path: "/registers/loanregister", component: Dashboard, exact: true },
+  {
+    path: "/registers/loanregister",
+    component: Dashboard,
+    exact: true,
+  },
   { path: "/registers/tenantregister", component: Dashboard, exact: true },
 ];
 
@@ -211,7 +222,7 @@ const routes = [
   { path: "/admin", component: Admin, exact: true },
   // { path: "/bill-generation", component: BillGeneration, exact: true },
 
-  ...admin,  
+  ...admin,
   ...transactions,
   { path: "/ledger", component: Ledger, exact: true },
   { path: "/pay", component: Dashboard, exact: true },
