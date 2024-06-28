@@ -10,12 +10,8 @@ import MultipleReceiptAndPayment from "./pages/MultipleReceiptAndPayment/Multipl
 import LedgerEdit from "./pages/LedgerEdit/LedgerEdit";
 import ChequeSlipGeneration from "./pages/ChequeSlipGeneration/ChequeSlipGeneration";
 import Admin from "./pages/Admin/admin.jsx";
-<<<<<<< HEAD
-// import deposit from "./pages/Register/deposit";
-=======
 import PayNow from "./pages/PayNow/Pay-Now.jsx";
 import deposit from "./pages/Register/deposit";
->>>>>>> bbdb288d97ebce23144a49d2646998cd808188d4
 
 const vendorManagement = [
   {
