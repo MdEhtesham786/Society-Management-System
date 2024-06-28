@@ -1,3 +1,4 @@
+import noteModel from "../models/debitCreditModel.js";
 import memberModel from "../models/memberModel.js";
 import receiptModel from "../models/receiptModel.js";
 export const billGenerationGet = async (req, res) => {
@@ -19,6 +20,7 @@ export const billGenerationGet = async (req, res) => {
 
 // Member Receipt
 export const memberReceiptGet = async (req, res) => {
+
     if (req.token) {
         const memberList = await memberModel.find();
         return res.json({
@@ -315,10 +317,20 @@ export const debitNoteGet = async (req, res) => {
 
 export const debitNotePost = async (req, res) => {
     if (req.token) {
-        // const memberList = await memberModel.find();
+        const { name, date, amount, principal, interest, narration, type, receipt_type } = req.body;
+        if (name === 'select_name' || !date || !amount || !principal || !interest || !type) {
+            return res.json({
+                status: false,
+                message: 'Please enter the required details'
+            });
+        }
+
+        const debitNote = new noteModel(req.body);
+        // await debitNote.save();
         return res.json({
             success: true,
-            body: req.body
+            body: debitNote,
+            page: 'Debit note'
         });
     } else {
         return res.json({
@@ -348,10 +360,20 @@ export const creditNoteGet = async (req, res) => {
 
 export const creditNotePost = async (req, res) => {
     if (req.token) {
-        // const memberList = await memberModel.find();
+        const { name, date, amount, principal, interest, narration, type, receipt_type } = req.body;
+        if (name === 'select_name' || !date || !amount || !principal || !interest || !type) {
+            return res.json({
+                status: false,
+                message: 'Please enter the required details'
+            });
+        }
+
+        const creditNote = new noteModel(req.body);
+        // await creditNote.save();
         return res.json({
             success: true,
-            body: req.body
+            body: creditNote,
+            page: 'Credit note'
         });
     } else {
         return res.json({
@@ -361,8 +383,8 @@ export const creditNotePost = async (req, res) => {
     }
 };
 
-// Journal Vouchar
-export const journalVoucharGet = async (req, res) => {
+// Journal Voucher
+export const journalVoucherGet = async (req, res) => {
     if (req.token) {
         // const memberList = await memberModel.find();
         return res.json({
@@ -379,7 +401,7 @@ export const journalVoucharGet = async (req, res) => {
     }
 };
 
-export const journalVoucharPost = async (req, res) => {
+export const journalVoucherPost = async (req, res) => {
     if (req.token) {
         // const memberList = await memberModel.find();
         return res.json({

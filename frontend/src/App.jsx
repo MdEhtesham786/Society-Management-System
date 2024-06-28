@@ -5,7 +5,8 @@ import Navbar from "./components/Navbar/Navbar";
 import SideMenu from "./layout/Side-Menu/SideMenu";
 import Login from "./pages/Login/Login";
 import { useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
+import axios from "./utils/axiosConfig.js"
 import routes from "./routes";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoggedIn, setUser } from "./reducer/authSlice.js";
@@ -21,6 +22,8 @@ function App() {
   const isLoginPage = location.pathname === "/api/v1/auth/login";
   const [loading, setLoading] = useState(true); // State to track loading status
   const [authChecked, setAuthChecked] = useState(false); // State to track if authentication check completed
+  const [memberList, setMemberList] = useState([])
+
     
   //Redux State
   const user = useSelector((state) => state.user);
@@ -29,7 +32,7 @@ function App() {
   const fetchData = async () => {
     try {
 
-      const res = await axios.post(`http://127.0.0.1:5003/api/v1/auth/islogin`);
+      const res = await axios.post(`/auth/islogin`);
       const { data } = res;
       if (!data.success) {
         if (!isLoginPage) {
@@ -56,8 +59,24 @@ function App() {
 
     }
   };
+  const fetchMemberList = async () => {
+    try {
+      const res = await axios.get(`/memberList`);
+      const { data } = res
+      if (data.success) {
+        setMemberList(data.memberList)
+      } else {
+        console.log(data)
+      }
+    } catch (err) {
+      console.log(err)
+
+    }
+  }
+  //USE EFFECT
   useEffect(() => {
     fetchData()
+    fetchMemberList()
   }, []);
   useEffect(() => {
 
@@ -85,7 +104,7 @@ function App() {
                 <Route
                   key={index}
                   path={index === 0 ? route.path : defaultPath + route.path}
-                  element={<route.component {...route.props} user={user} />}
+                  element={<route.component {...route.props} memberList={memberList} user={user} />}
                   exact={route.exact}
                 />
               ))}

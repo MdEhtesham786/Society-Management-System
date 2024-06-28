@@ -1,14 +1,55 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import CustomButton from "../../components/Button/CustomButton";
-import "./DebitNote.css";
+import "./DebitCreditNote.css";
+import Select from "../../components/Select/Select";
+import axios from "../../utils/axiosConfig"
 
 const DebitNote = (props) => {
-  const { page } = props;
+  axios.defaults.withCredentials = true; //The most important line for cookies
+  const { page,memberList } = props;
+
+//USE STATES
+  const [formData, setFormData] = useState({
+    name:'select_name',//required
+    date:new Date().toISOString().split('T')[0],
+    type:'select',
+    receipt_type:'select',
+    amount:'',//required
+    principal:'',//required
+    interest:'',//required
+    narration:''
+  })
+
+  //Functions
+  const handleSubmit = async () => {
+    try {
+      const apiEndpoints = {
+        'Debit Note': '/transaction/debitNote',
+        'Credit Note': '/transaction/creditNote',
+        'Journal Voucher': '/transaction/journalVoucher',
+      };
+      const endpoint = apiEndpoints[page];
+
+      if (endpoint) {
+
+        const {name,date,amount,principal,interest,narration,type,receipt_type} = formData
+        const sendData ={name,date,amount,principal,interest,narration,type,receipt_type} 
+        const res = await axios.post(endpoint,sendData);
+        const {data} = res
+        if(data.success){
+          console.log(data)
+        }else{
+console.log(res.data)
+        }
+      } else {
+        console.log('Page not found');
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
   const [arr1, setArr1] = useState([]);
   const [arr2, setArr2] = useState([]);
-  const handleAddBtn = () => {
-    setArr1([...arr1, 1]);
-  };
   const handleSearchBtn = () => {
     setArr2([...arr2, 1]);
   };
@@ -22,6 +63,25 @@ const DebitNote = (props) => {
       e.preventDefault();
     }
   };
+  const handleChange = async(e)=>{
+    setFormData({
+     ...formData,
+     [e.target.name]:e.target.value
+    })
+      }
+//USE EFFECT
+      useEffect(() => {
+        setFormData({
+          name:'select_name',//required
+          date:new Date().toISOString().split('T')[0],
+          type:'select',
+          receipt_type:'select',
+          amount:'',//required
+          principal:'',//required
+          interest:'',//required
+          narration:''
+        })
+      }, [location.pathname,])
   return (
     <>
       <div className="flex flex-col bg-blue h-[85rem] px-2">
@@ -40,7 +100,9 @@ const DebitNote = (props) => {
             <input
               type="date"
               name="date"
+              value={formData.date}
               id="date"
+              onChange={handleChange}
               className="w-[16.2%] ml-4 rounded-lg border border-[#d5d5d5] "
             />
             <label
@@ -53,7 +115,8 @@ const DebitNote = (props) => {
             <select
               id="type"
               name="type"
-              defaultValue={"select"}
+              value={formData.type}
+              onChange={handleChange}
               className="ml-4 w-[16rem] h-10  font-[500] bg-gray-50 border border-[#d5d5d5] text-[#282828]  rounded-lg focus:ring-blue-500 focus:border-blue-500 block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
               <option value="select">Select</option>
@@ -77,6 +140,8 @@ const DebitNote = (props) => {
               <textarea
                 name="narration"
                 id="narration"
+                value={formData.narration}
+              onChange={handleChange}
                 className="ml-2 resize-none w-[83%] h-24 rounded-lg border border-[#d5d5d5]"
               ></textarea>
             </div>
@@ -92,23 +157,14 @@ const DebitNote = (props) => {
         </div>
         <div className="bg-[#E9F2F2] h-[9%] flex-col rounded-lg px-6 py-3 border-[#cdcdcd] border drop-shadow-lg mt-3">
           <div className="flex">
+           
             <label
-              htmlFor="name"
-              className=" text-xl grid place-items-center  font-[500]"
-            >
-              Name :
-            </label>
-            <select
-              id="name"
-              name="name"
-              defaultValue={"select"}
-              className="ml-4 w-[22rem] h-10  font-[500] bg-gray-50 border border-[#d5d5d5] text-[#282828]  rounded-lg focus:ring-blue-500 focus:border-blue-500 block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <option value="select">Select</option>
-              <option value="name1">name1</option>
-              <option value="name2">name2</option>
-            </select>
-
+                htmlFor="name"
+                className=" text-lg grid place-items-center font-[500]"
+              >
+                Name :
+              </label>
+              <Select id={'name'} onChange={handleChange} name={'name'} value={formData.name}  classNames={'ml-4 w-[22rem] h-10  font-[500] bg-gray-50 border border-[#d5d5d5] text-[#282828]  rounded-lg focus:ring-blue-500 focus:border-blue-500 block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'} optionArr={memberList} />
             <label
               htmlFor="type"
               className=" text-xl grid place-items-center ml-5 font-[500]"
@@ -116,9 +172,10 @@ const DebitNote = (props) => {
               Type :
             </label>
             <select
-              id="type"
-              name="type"
-              defaultValue={"select"}
+              id="receipt_type"
+              name="receipt_type"
+              value={formData.receipt_type}
+              onChange={handleChange}
               className="ml-4 w-[15rem] h-10  font-[500] bg-gray-50 border border-[#d5d5d5] text-[#282828]  rounded-lg focus:ring-blue-500 focus:border-blue-500 block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
               <option value="select">Select</option>
@@ -127,7 +184,7 @@ const DebitNote = (props) => {
             </select>
             <CustomButton
               type={"submit"}
-              onClick={handleAddBtn}
+              onClick={handleSubmit}
               className={"ml-10"}
               style={{
                 backgroundColor: "#119F8E",
@@ -158,6 +215,8 @@ const DebitNote = (props) => {
               onKeyDown={handleKeyDown}
               name="amount"
               id="amount"
+              value={formData.amount}
+              onChange={handleChange}
               className="w-[25%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
             />
             <label
@@ -171,6 +230,8 @@ const DebitNote = (props) => {
               onKeyDown={handleKeyDown}
               name="principal"
               id="principal"
+              value={formData.principal}
+              onChange={handleChange}
               className="w-[25%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
             />
             <label
@@ -184,6 +245,8 @@ const DebitNote = (props) => {
               onKeyDown={handleKeyDown}
               name="interest"
               id="interest"
+              value={formData.interest}
+              onChange={handleChange}
               className="w-[25%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
             />
           </div>

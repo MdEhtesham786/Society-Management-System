@@ -3,14 +3,14 @@ import BankReconcillation from "./pages/Bank-Reconcillation/Bank-Reconcillation.
 import BillGeneration from "./pages/Bill Generation/Bill-Generation";
 import Ledger from "./pages/Ledger/Ledger.jsx";
 import Receipt from "./pages/Receipt/receipt.jsx";
-import DebitNote from "./pages/DebitNote/DebitNote";
+import DebitCreditNote from "./pages/DebitCreditNote/DebitCreditNote.jsx";
 import ClosingJV from "./pages/ClosingJV/ClosingJV";
 import OpeningBalance from "./pages/OpeningBalance/OpeningBalance";
 import MultipleReceiptAndPayment from "./pages/MultipleReceiptAndPayment/MultipleReceiptAndPayment";
 import LedgerEdit from "./pages/LedgerEdit/LedgerEdit";
 import ChequeSlipGeneration from "./pages/ChequeSlipGeneration/ChequeSlipGeneration";
 import Admin from "./pages/Admin/admin.jsx";
-import deposit from "./pages/Register/deposit";
+// import deposit from "./pages/Register/deposit";
 
 const vendorManagement = [
   {
@@ -36,7 +36,7 @@ const registers = [
   { path: "/registers/iform", component: Dashboard, exact: true },
   { path: "/registers/shares", component: Dashboard, exact: true },
   { path: "/registers/nomination", component: Dashboard, exact: true },
-  { path: "/registers/deposit", component: deposit, exact: true },
+  // { path: "/registers/deposit", component: deposit, exact: true },
   { path: "/registers/insurance", component: Dashboard, exact: true },
   { path: "/registers/noticeboard", component: Dashboard, exact: true },
   { path: "/registers/pollingbooth", component: Dashboard, exact: true },
@@ -55,12 +55,12 @@ const masters = [
 
 const transactions = [
   {
-    path: "/transaction/billgeneration",
+    path: "/transaction/billGeneration",
     component: BillGeneration,
     exact: true,
   },
   {
-    path: "/transaction/memberreceipt",
+    path: "/transaction/memberReceipt",
     component: Receipt,
     exact: true,
     props: {
@@ -69,7 +69,7 @@ const transactions = [
     },
   },
   {
-    path: "/transaction/bankreceipt",
+    path: "/transaction/bankReceipt",
     component: Receipt,
     exact: true,
     props: {
@@ -78,7 +78,7 @@ const transactions = [
     },
   },
   {
-    path: "/transaction/cashreceipt",
+    path: "/transaction/cashReceipt",
     component: Receipt,
     exact: true,
     props: {
@@ -87,7 +87,7 @@ const transactions = [
     },
   },
   {
-    path: "/transaction/supplementaryreceipt",
+    path: "/transaction/supplementaryReceipt",
     component: Receipt,
     exact: true,
     props: {
@@ -96,7 +96,7 @@ const transactions = [
     },
   },
   {
-    path: "/transaction/bankpayment",
+    path: "/transaction/bankPayment",
     component: Receipt,
     exact: true,
     props: {
@@ -105,7 +105,7 @@ const transactions = [
     },
   },
   {
-    path: "/transaction/cashpayment",
+    path: "/transaction/cashPayment",
     component: Receipt,
     exact: true,
     props: {
@@ -114,30 +114,30 @@ const transactions = [
     },
   },
   {
-    path: "/transaction/bankreconcillation",
+    path: "/transaction/bankReconcillation",
     component: BankReconcillation,
     exact: true,
   },
   {
-    path: "/transaction/debitnote",
-    component: DebitNote,
+    path: "/transaction/debitNote",
+    component: DebitCreditNote,
     exact: true,
     props: { page: "Debit Note" },
   },
   {
-    path: "/transaction/creditnote",
-    component: DebitNote,
+    path: "/transaction/creditNote",
+    component: DebitCreditNote,
     exact: true,
     props: { page: "Credit Note" },
   },
   {
-    path: "/transaction/journalvoucher",
-    component: DebitNote,
+    path: "/transaction/journalVoucher",
+    component: DebitCreditNote,
     exact: true,
     props: { page: "Journal Voucher" },
   },
   {
-    path: "/transaction/closingjv",
+    path: "/transaction/closingJV",
     component: ClosingJV,
     exact: true,
     props: { page: "Journal Voucher (Closing)" },

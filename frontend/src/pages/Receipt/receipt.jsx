@@ -18,12 +18,9 @@ const Receipt = (props) => {
   const myRef = useRef(null);
 
   //UseState
-  const { page, accountSelectionName } = props;
+  const { page, accountSelectionName,memberList } = props;
   const [expand, setExpand] = useState(false);
   const [arr, setArr] = useState([]);
-  const [memberReceipt, setMemberReceipt] = useState('bank')
-  const [supplementaryReceipt, setSupplementaryReceipt] = useState('bank')
-  const [memberList, setMemberList] = useState([])
 
   //FormData Usestate
   const [formData, setFormData] = useState({
@@ -55,21 +52,9 @@ const Receipt = (props) => {
       };
   
       const endpoint = apiEndpoints[page];
-  
+
       if (endpoint) {
         const {bank_cash,bank_cash_account,entry_name,entry_bank,entry_branch,date,cheque_refno,cheque_ref_date,micr_ifsc,amount,principal,interest,narration} = formData
-//         if(!bank_cash_account||!entry_name||!cheque_refno||!amount||!principal||!interest){
-// alert('Please fill all the required inputs')
-//         }else{
-//           const sendData ={bank_cash,bank_cash_account,entry_name,entry_bank,entry_branch,date,cheque_refno,cheque_ref_date,micr_ifsc,amount,principal,interest,narration} 
-//           const res = await axios.post(endpoint,sendData);
-//           const {data} = res
-//           if(data.success){
-//             console.log(data.body)
-//           }else{
-// console.log(res)
-//           }
-//         }
         const sendData ={bank_cash,bank_cash_account,entry_name,entry_bank,entry_branch,date,cheque_refno,cheque_ref_date,micr_ifsc,amount,principal,interest,narration} 
         const res = await axios.post(endpoint,sendData);
         const {data} = res
@@ -86,14 +71,7 @@ console.log(res.data)
     }
   }
   const handleChange = async(e)=>{
-//     if(e.target.name==='bank_cash'){
-//       if(page==='Supplementary Receipt'){
-//         setSupplementaryReceipt(e.target.value)
 
-//       }else if(page==='Member Receipt'){
-// setMemberReceipt(e.target.value)
-//       }
-//     }
 setFormData({
  ...formData,
  [e.target.name]:e.target.value
@@ -129,50 +107,6 @@ setFormData({
       e.preventDefault();
     }
   };
-
-  const fetchData = async () => {
-    try {
-      const res = await axios.get(`http://127.0.0.1:5003/api/v1/transaction/memberReceipt`);
-      const { data } = res
-      console.log(data)
-      if (data.success) {
-        return data
-      } else {
-        console.log(data)
-      }
-    } catch (err) {
-      console.log(err)
-
-    }
-  }
-
-  //UseEffects
-  useEffect(() => {
-    fetchData().then((res) => {
-      let arr = []
-      res.memberList.forEach((member, i) => {
-        if (i == 0) {
-          arr.push({
-            title: 'Select',
-            value: 'select_name'
-          })
-          arr.push({
-            title: member.Name,
-            value: member.Name
-
-          })
-        }else{
-          arr.push({
-            title: member.Name,
-            value: member.Name
-  
-          })
-        }
-      
-      })
-      setMemberList(arr)
-    })
-  }, [])
 
   useEffect(() => {
     setFormData({
