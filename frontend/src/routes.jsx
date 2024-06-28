@@ -10,7 +10,12 @@ import MultipleReceiptAndPayment from "./pages/MultipleReceiptAndPayment/Multipl
 import LedgerEdit from "./pages/LedgerEdit/LedgerEdit";
 import ChequeSlipGeneration from "./pages/ChequeSlipGeneration/ChequeSlipGeneration";
 import Admin from "./pages/Admin/admin.jsx";
+<<<<<<< HEAD
 // import deposit from "./pages/Register/deposit";
+=======
+import PayNow from "./pages/PayNow/Pay-Now.jsx";
+import deposit from "./pages/Register/deposit";
+>>>>>>> bbdb288d97ebce23144a49d2646998cd808188d4
 
 const vendorManagement = [
   {
@@ -36,14 +41,26 @@ const registers = [
   { path: "/registers/iform", component: Dashboard, exact: true },
   { path: "/registers/shares", component: Dashboard, exact: true },
   { path: "/registers/nomination", component: Dashboard, exact: true },
-  // { path: "/registers/deposit", component: deposit, exact: true },
+  {
+    path: "/registers/deposit",
+    component: deposit,
+    exact: true,
+    props: {
+      page: "Deposit Account",
+    },
+  },
+
   { path: "/registers/insurance", component: Dashboard, exact: true },
   { path: "/registers/noticeboard", component: Dashboard, exact: true },
   { path: "/registers/pollingbooth", component: Dashboard, exact: true },
   { path: "/registers/documentissue", component: Dashboard, exact: true },
   { path: "/registers/documentsissued", component: Dashboard, exact: true },
   { path: "/registers/documentupload", component: Dashboard, exact: true },
-  { path: "/registers/loanregister", component: Dashboard, exact: true },
+  {
+    path: "/registers/loanregister",
+    component: Dashboard,
+    exact: true,
+  },
   { path: "/registers/tenantregister", component: Dashboard, exact: true },
 ];
 
@@ -212,10 +229,10 @@ const routes = [
   { path: "/admin", component: Admin, exact: true },
   // { path: "/bill-generation", component: BillGeneration, exact: true },
 
-  ...admin,  
+  ...admin,
   ...transactions,
   { path: "/ledger", component: Ledger, exact: true },
-  { path: "/pay", component: Dashboard, exact: true },
+  { path: "/pay", component: PayNow, exact: true },
   { path: "/outstandingreport", component: Dashboard, exact: true },
   { path: "/complaint", component: Dashboard, exact: true },
   { path: "/ledger", component: Dashboard, exact: true },
