@@ -7,7 +7,8 @@ import axios from "../../utils/axiosConfig"
 const DebitNote = (props) => {
   axios.defaults.withCredentials = true; //The most important line for cookies
   const { page,memberList } = props;
-
+let arr1 = [1,2,3]
+let arr2 = [1,2,3]
 //USE STATES
   const [formData, setFormData] = useState({
     name:'select_name',//required
@@ -18,6 +19,13 @@ const DebitNote = (props) => {
     principal:'',//required
     interest:'',//required
     narration:''
+  })
+  const [searchFormData, setSearchFormData] = useState({
+    name_search:'select_name',//required
+    start_date:new Date().toISOString().split('T')[0],
+    end_date:new Date().toISOString().split('T')[0],
+    amount_search:'',//required
+    records:10
   })
 
   //Functions
@@ -48,11 +56,40 @@ console.log(res.data)
       console.log(err)
     }
   }
-  const [arr1, setArr1] = useState([]);
-  const [arr2, setArr2] = useState([]);
-  const handleSearchBtn = () => {
-    setArr2([...arr2, 1]);
-  };
+  const handleSearchSubmit = async () => {
+    try {
+      const apiEndpoints = {
+        'Debit Note': '/transaction/debitNoteSearch',
+        'Credit Note': '/transaction/creditNoteSearch',
+        'Journal Voucher': '/transaction/journalVoucherSearch',
+      };
+      const endpoint = apiEndpoints[page];
+
+      if (endpoint) {
+
+        const {name_search,start_date,end_date,amount_search,records} = searchFormData
+        const sendData = {name_search,start_date,end_date,amount_search,records}
+        console.log(sendData)
+        const res = await axios.post(endpoint,sendData);
+        const {data} = res
+        if(data.success){
+          console.log(data)
+        }else{
+console.log(res.data)
+        }
+      } else {
+        console.log('Page not found');
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  const handleSearchChange = async(e)=>{
+    setSearchFormData({
+     ...searchFormData,
+     [e.target.name]:e.target.value
+    })
+      }
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 38) {
@@ -80,6 +117,13 @@ console.log(res.data)
           principal:'',//required
           interest:'',//required
           narration:''
+        })
+        setSearchFormData({
+          name_search:'select_name',//required
+    start_date:new Date().toISOString().split('T')[0],
+    end_date:new Date().toISOString().split('T')[0],
+    amount_search:'',//required
+    records:10
         })
       }, [location.pathname,])
   return (
@@ -312,27 +356,34 @@ console.log(res.data)
             >
               Name :
             </label>
-            <select
-              id="name_search"
-              name="name_search"
-              defaultValue={"select"}
-              className="ml-4 w-[30rem] h-10  font-[500] bg-gray-50 border border-[#d5d5d5] text-[#282828]  rounded-lg focus:ring-blue-500 focus:border-blue-500 block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <option value="select">Select</option>
-              <option value="name1">name1</option>
-              <option value="name2">name2</option>
-            </select>
-
+           
+            <Select id={'name_search'} onChange={handleSearchChange} name={'name_search'} value={searchFormData.name_search}  classNames={'ml-4 w-[30rem] h-10  font-[500] bg-gray-50 border border-[#d5d5d5] text-[#282828]  rounded-lg focus:ring-blue-500 focus:border-blue-500 block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'} optionArr={memberList} />
             <label
-              htmlFor="date_search"
+              htmlFor="start_date"
               className=" text-lg grid place-items-center font-[600] ml-5"
             >
               Date :
             </label>
             <input
               type="date"
-              name="date_search"
-              id="date_search"
+              name="start_date"
+              id="start_date"
+              onChange={handleSearchChange}
+              value={searchFormData.start_date}
+              className="w-[16.9%] ml-4 rounded-lg border border-[#d5d5d5] "
+            />
+             <label
+              htmlFor="end_date"
+              className=" text-lg grid place-items-center font-[600] ml-5"
+            >
+              To
+            </label>
+            <input
+              type="date"
+              name="end_date"
+              id="end_date"
+              onChange={handleSearchChange}
+              value={searchFormData.end_date}
               className="w-[16.9%] ml-4 rounded-lg border border-[#d5d5d5] "
             />
           </div>
@@ -348,6 +399,8 @@ console.log(res.data)
               onKeyDown={handleKeyDown}
               name="amount_search"
               id="amount_search"
+              onChange={handleSearchChange}
+              value={searchFormData.amount_search}
               className="w-[20.8%] h-10 rounded-lg border-[#d5d5d5] ml-2 border"
             />
             <label
@@ -360,7 +413,8 @@ console.log(res.data)
             <select
               id="records"
               name="records"
-              defaultValue={"10"}
+              value={searchFormData.records}
+              onChange={handleSearchChange}
               className="ml-5 w-[7.8rem] h-10  font-[500] bg-gray-50 border border-[#d5d5d5] text-[#282828]  rounded-lg focus:ring-blue-500 focus:border-blue-500 block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
               <option value="10">10</option>
@@ -370,7 +424,7 @@ console.log(res.data)
               <option value="50">50</option>
             </select>
             <CustomButton
-              onClick={handleSearchBtn}
+              onClick={handleSearchSubmit}
               type={"submit"}
               className={"ml-[10.2rem]"}
               style={{

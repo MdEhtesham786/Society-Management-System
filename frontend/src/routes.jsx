@@ -11,7 +11,7 @@ import LedgerEdit from "./pages/LedgerEdit/LedgerEdit";
 import ChequeSlipGeneration from "./pages/ChequeSlipGeneration/ChequeSlipGeneration";
 import Admin from "./pages/Admin/admin.jsx";
 import PayNow from "./pages/PayNow/Pay-Now.jsx";
-import deposit from "./pages/Register/deposit";
+import deposit from "./pages/Register/Deposit.jsx";
 
 const vendorManagement = [
   {

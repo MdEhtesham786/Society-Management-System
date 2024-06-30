@@ -340,6 +340,30 @@ export const debitNotePost = async (req, res) => {
     }
 };
 
+export const debitNoteSearchPost = async (req, res) => {
+    if (req.token) {
+        const { name_search, start_date, end_date, records, amount_search, } = req.body;
+        if (name_search === 'select_name') {
+            return res.json({
+                status: false,
+                message: 'Please enter the required details'
+            });
+        }
+
+        const debitNoteSearch = await noteModel.find({ name_search });
+        // await debitNoteSearch.save();
+        return res.json({
+            success: true,
+            body: debitNoteSearch,
+            page: 'Debit note'
+        });
+    } else {
+        return res.json({
+            success: false,
+            message: 'User must be logged in to get access to this page',
+        });
+    }
+};
 // Credit Note
 export const creditNoteGet = async (req, res) => {
     if (req.token) {
@@ -382,7 +406,31 @@ export const creditNotePost = async (req, res) => {
         });
     }
 };
+export const creditNoteSearchPost = async (req, res) => {
+    if (req.token) {
+        const { name_search, start_date, end_date, records, amount_search, } = req.body;
+        if (name_search === 'select_name') {
+            return res.json({
+                status: false,
+                message: 'Please enter the required details'
+            });
+        }
 
+        const creditNoteSearch = await noteModel.find({ name_search });
+
+        // await creditNoteSearch.save();
+        return res.json({
+            success: true,
+            body: creditNoteSearch,
+            page: 'Credit note'
+        });
+    } else {
+        return res.json({
+            success: false,
+            message: 'User must be logged in to get access to this page',
+        });
+    }
+};
 // Journal Voucher
 export const journalVoucherGet = async (req, res) => {
     if (req.token) {
@@ -403,10 +451,44 @@ export const journalVoucherGet = async (req, res) => {
 
 export const journalVoucherPost = async (req, res) => {
     if (req.token) {
-        // const memberList = await memberModel.find();
+        const { name, date, amount, principal, interest, narration, type, receipt_type } = req.body;
+        if (name === 'select_name' || !date || !amount || !principal || !interest || !type) {
+            return res.json({
+                status: false,
+                message: 'Please enter the required details'
+            });
+        }
+
+        const journalVoucher = new noteModel(req.body);
+        // await creditNote.save();
         return res.json({
             success: true,
-            body: req.body
+            body: journalVoucher,
+            page: 'Journal Voucher'
+        });
+    } else {
+        return res.json({
+            success: false,
+            message: 'User must be logged in to get access to this page',
+        });
+    }
+};
+export const journalVoucherSearchPost = async (req, res) => {
+    if (req.token) {
+        const { name_search, start_date, end_date, records, amount_search, } = req.body;
+        if (name_search === 'select_name') {
+            return res.json({
+                status: false,
+                message: 'Please enter the required details'
+            });
+        }
+
+        const journalVoucherSearch = await noteModel.find({ name_search });
+        // await journalVoucherSearch.save();
+        return res.json({
+            success: true,
+            body: journalVoucherSearch,
+            page: 'Journal Voucher'
         });
     } else {
         return res.json({

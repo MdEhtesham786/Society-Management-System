@@ -3,7 +3,7 @@ import { isAuthenticatedUser } from "../middleware/auth.js";
 import {
     bankReceiptGet, bankReceiptPost, bankReconcillationGet, bankReconcillationPost, billGenerationGet, cashReceiptGet,
     cashReceiptPost,
-    chequeSlipGenerationGet, chequeSlipGenerationPost, closingJVGet, closingJVPost, creditNoteGet, creditNotePost, debitNoteGet, debitNotePost, journalVoucherGet, journalVoucherPost, ledgerEditGet,
+    chequeSlipGenerationGet, chequeSlipGenerationPost, closingJVGet, closingJVPost, creditNoteGet, creditNotePost, creditNoteSearchPost, debitNoteGet, debitNotePost, debitNoteSearchPost, journalVoucherGet, journalVoucherPost, journalVoucherSearchPost, ledgerEditGet,
     ledgerEditPost,
     memberReceiptGet, memberReceiptPost, multiplePaymentGet, multiplePaymentPost, multipleReceiptGet, multipleReceiptPost, openingBalanceGet, openingBalancePost, supplementaryReceiptGet,
     supplementaryReceiptPost
@@ -19,8 +19,11 @@ router.route('/bankPayment').get(isAuthenticatedUser, bankReceiptGet).post(isAut
 router.route('/cashPayment').get(isAuthenticatedUser, cashReceiptGet).post(isAuthenticatedUser, cashReceiptPost);
 router.route('/bankReconcillation').get(isAuthenticatedUser, bankReconcillationGet).post(isAuthenticatedUser, bankReconcillationPost);
 router.route('/debitNote').get(isAuthenticatedUser, debitNoteGet).post(isAuthenticatedUser, debitNotePost);
+router.route('/debitNoteSearch').get(isAuthenticatedUser, debitNoteGet).post(isAuthenticatedUser, debitNoteSearchPost);
 router.route('/creditNote').get(isAuthenticatedUser, creditNoteGet).post(isAuthenticatedUser, creditNotePost);
+router.route('/creditNoteSearch').get(isAuthenticatedUser, creditNoteGet).post(isAuthenticatedUser, creditNoteSearchPost);
 router.route('/journalVoucher').get(isAuthenticatedUser, journalVoucherGet).post(isAuthenticatedUser, journalVoucherPost);
+router.route('/journalVoucherSearch').get(isAuthenticatedUser, journalVoucherGet).post(isAuthenticatedUser, journalVoucherSearchPost);
 router.route('/closingJV').get(isAuthenticatedUser, closingJVGet).post(isAuthenticatedUser, closingJVPost);
 router.route('/openingBalance').get(isAuthenticatedUser, openingBalanceGet).post(isAuthenticatedUser, openingBalancePost);
 router.route('/multipleReceipt').get(isAuthenticatedUser, multipleReceiptGet).post(isAuthenticatedUser, multipleReceiptPost);
