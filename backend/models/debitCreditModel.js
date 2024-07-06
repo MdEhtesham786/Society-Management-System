@@ -35,5 +35,5 @@ const noteSchema = new mongoose.Schema({
         type: String
     }
 });
-const noteModel = mongoose.model('Debite/Credit/JV Details', noteSchema);
+const noteModel = mongoose.model('Debit/Credit/JV Details', noteSchema);
 export default noteModel;

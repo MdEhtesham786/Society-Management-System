@@ -67,7 +67,7 @@ const DebitNote = (props) => {
           </div>
 
           <div className="flex">
-            <div className="flex w-[65%] h-full items-start ">
+            <div className="flex w-[55%] h-full justify-between items-start ">
               <label
                 htmlFor="narration"
                 className=" text-lg grid place-items-center font-[500]"
@@ -77,10 +77,10 @@ const DebitNote = (props) => {
               <textarea
                 name="narration"
                 id="narration"
-                className="ml-2 resize-none w-[85%] h-24 rounded-lg border border-[#d5d5d5]"
+                className="ml-2 resize-none w-[80%] h-24 rounded-lg border border-[#d5d5d5]"
               ></textarea>
             </div>
-            <div className="w-[50%] flex flex-col h-full ml-10">
+            <div className="w-[41%] flex flex-col h-full ml-10">
               <p className="h-[50%] flex items-center text-lg font-[500] mb-6">
                 Amount :
               </p>

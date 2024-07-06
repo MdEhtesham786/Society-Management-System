@@ -1,6 +1,7 @@
 import noteModel from "../models/debitCreditModel.js";
 import memberModel from "../models/memberModel.js";
 import receiptModel from "../models/receiptModel.js";
+import billModel from "../models/billModel.js";
 export const billGenerationGet = async (req, res) => {
     if (req.token) {
         // const memberList = await memberModel.find();
@@ -17,7 +18,126 @@ export const billGenerationGet = async (req, res) => {
         });
     }
 };
+export const billGenerationPost = async (req, res) => {
+    if (req.token) {
+        // const memberList = await memberModel.find();
+        return res.json({
+            success: true,
+            // memberList,
+            token: req.token,
+            user: req.user
+        });
+    } else {
+        return res.json({
+            success: false,
+            message: 'User must be logged in to get access to this page',
+        });
+    }
+};
+export const billGenerateGet = async (req, res) => {
+    if (req.token) {
+        // const memberList = await memberModel.find();
+        return res.json({
+            success: true,
+            // memberList,
+            token: req.token,
+            user: req.user
+        });
+    } else {
+        return res.json({
+            success: false,
+            message: 'User must be logged in to get access to this page',
+        });
+    }
+};
+export const billGeneratePost = async (req, res) => {
+    if (req.token) {
+        const { type, sub_type, name, bill_date, is_credit_limit, due_date, credit_amount, rebate_date, rebate_days, rebate_percentage, interest_type, interest_days, interest_percentage, manuaL_interest, narration, building, wing } = req.body;
+        if (!type || !sub_type) {
+            return res.json({
+                status: false,
+                message: 'Please enter the required details'
+            });
+        }
 
+        const bill = new billModel(req.body);
+        // await receipt.save();
+        return res.json({
+            success: true,
+            body: bill,
+            page: 'Bill Generation'
+        });
+    } else {
+        return res.json({
+            success: false,
+            message: 'User must be logged in to get access to this page',
+        });
+    }
+};
+export const billEditGet = async (req, res) => {
+    if (req.token) {
+        // const memberList = await memberModel.find();
+        return res.json({
+            success: true,
+            // memberList,
+            token: req.token,
+            user: req.user
+        });
+    } else {
+        return res.json({
+            success: false,
+            message: 'User must be logged in to get access to this page',
+        });
+    }
+};
+export const billEditPost = async (req, res) => {
+    if (req.token) {
+        // const memberList = await memberModel.find();
+        return res.json({
+            success: true,
+            // memberList,
+            token: req.token,
+            user: req.user
+        });
+    } else {
+        return res.json({
+            success: false,
+            message: 'User must be logged in to get access to this page',
+        });
+    }
+};
+export const billViewGet = async (req, res) => {
+    if (req.token) {
+        // const memberList = await memberModel.find();
+        return res.json({
+            success: true,
+            // memberList,
+            token: req.token,
+            user: req.user
+        });
+    } else {
+        return res.json({
+            success: false,
+            message: 'User must be logged in to get access to this page',
+        });
+    }
+};
+export const billViewPost = async (req, res) => {
+    if (req.token) {
+        // const memberList = await memberModel.find();
+        return res.json({
+            success: true,
+            // memberList,
+            token: req.token,
+            user: req.user
+        });
+    } else {
+        return res.json({
+            success: false,
+            message: 'User must be logged in to get access to this page',
+        });
+    }
+};
 // Member Receipt
 export const memberReceiptGet = async (req, res) => {
 

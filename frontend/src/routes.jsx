@@ -71,6 +71,7 @@ const transactions = [
     path: "/transaction/billGeneration",
     component: BillGeneration,
     exact: true,
+    props:{page:'Bill Generation'}
   },
   {
     path: "/transaction/memberReceipt",
