@@ -6,11 +6,12 @@ import SideMenu from "./layout/Side-Menu/SideMenu";
 import Login from "./pages/Login/Login";
 import { useEffect } from "react";
 // import axios from "axios";
-import axios from "./utils/axiosConfig.js"
+import axios from "./utils/axiosConfig.js" 
 import routes from "./routes";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoggedIn, setUser } from "./reducer/authSlice.js";
 import Spinner from "./components/Loader/Spinner.jsx";
+import { setAdminSettings, setPrimaryColor, setSecondaryColor } from "./reducer/adminSettingsSlice.js";
 // import { Helmet,HelmetProvider } from 'react-helmet-async';
 function App() {
 
@@ -23,12 +24,10 @@ function App() {
   const [loading, setLoading] = useState(true); // State to track loading status
   const [authChecked, setAuthChecked] = useState(false); // State to track if authentication check completed
   const [memberList, setMemberList] = useState([])
-
-    
+  const adminSettings= useSelector((state)=>state.adminSettings)
   //Redux State
-  const user = useSelector((state) => state.user);
-  const isLoggedIn = useSelector((state) => state.isLoggedIn);
-
+  const user = useSelector((state) => state.auth.user);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const fetchData = async () => {
     try {
 
@@ -65,6 +64,22 @@ function App() {
       const { data } = res
       if (data.success) {
         setMemberList(data.memberList)
+        console.log(memberList)
+      } else {
+        console.log(data)
+      }
+    } catch (err) {
+      console.log(err)
+
+    }
+  }
+  const fetchAdminSettings = async()=>{
+    try {
+      const res = await axios.get(`/admin/settings`);
+      const { data } = res
+      if (data.success) {
+        dispatch(setPrimaryColor(data.settings.primaryColor))
+        dispatch(setSecondaryColor(data.settings.secondaryColor))
       } else {
         console.log(data)
       }
@@ -78,6 +93,9 @@ function App() {
     fetchData()
     fetchMemberList()
   }, []);
+  useEffect(()=>{
+    fetchAdminSettings()
+  },[location.pathname])
   useEffect(() => {
 
     if ((authChecked && !isLoggedIn) || !user) {
@@ -88,8 +106,9 @@ function App() {
   }, [location.pathname, isLoggedIn, user, authChecked, navigate]);
   return (
     <>
-      <Navbar user={user} />
-      <div className="Container">
+
+      <Navbar user={user} adminSettings={adminSettings} />
+      <div className="Container" style={{backgroundColor:adminSettings.primaryColor}}>
         {isLoginPage ? null : <SideMenu />}
         <section
           className={`${
@@ -104,7 +123,7 @@ function App() {
                 <Route
                   key={index}
                   path={index === 0 ? route.path : defaultPath + route.path}
-                  element={<route.component {...route.props} memberList={memberList} user={user} />}
+                  element={<route.component {...route.props} memberList={memberList} user={user} adminSettings={adminSettings} />}
                   exact={route.exact}
                 />
               ))}
@@ -117,6 +136,7 @@ function App() {
           )}
         </section>
       </div>
+
     </>
   );
 }

@@ -32,6 +32,9 @@ const userSchema = new mongoose.Schema({
         type: Array,
         default: ['manager']
     },
+    settings: {
+        type: Object
+    }
 });
 
 // Hashing password before save

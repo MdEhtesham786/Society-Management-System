@@ -6,6 +6,7 @@ import CustomButton from "../../components/Button/CustomButton";
 import "./Bill-Generation.css";
 import Select from "../../components/Select/Select";
 import axios from "../../utils/axiosConfig"
+import { setAdminSettings} from "../../reducer/adminSettingsSlice";
 
 
 
@@ -14,8 +15,8 @@ const BillGeneration = (props) => {
 
   const navigate = useNavigate();
 
-  const {page,memberList} = props
-
+  const {page,memberList,adminSettings} = props
+  const {primaryColor,secondaryColor} = adminSettings 
   //FormData Usestate
   const [formData, setFormData] = useState({
 type:'select',
@@ -125,7 +126,7 @@ useEffect(() => {
     <>
     <div className="flex flex-col bg-blue h-[50rem]   px-2">
     <h2 className="text-2xl font-semibold text-center">{page}</h2>
-<div className="bg-[#E9F2F2] h-[29%] my-2 rounded-lg flex flex-col px-6 py-3 border-[#cdcdcd]  border drop-shadow-lg ">
+<div className=" h-[29%] my-2 rounded-lg flex flex-col px-6 py-3 border-[#cdcdcd]  border drop-shadow-lg "style={{backgroundColor:secondaryColor}}>
 <div className="flex justify-between underline text-lg underline-offset-4 items-center h-[15%]  font-semibold">
             Period
           </div>
@@ -240,7 +241,7 @@ useEffect(() => {
        
           
 </div>
-<div className="bg-[#E9F2F2] h-[30%] my-2 rounded-lg flex flex-col px-6 py-3 border-[#cdcdcd] border drop-shadow-lg ">
+<div className="bg-[#E9F2F2] h-[30%] my-2 rounded-lg flex flex-col px-6 py-3 border-[#cdcdcd] border drop-shadow-lg " style={{backgroundColor:secondaryColor}}>
 <div className="flex justify-between underline text-lg underline-offset-4 items-center h-[15%]  font-semibold">
             Rebate on Null
           </div>
@@ -361,7 +362,7 @@ useEffect(() => {
           </div>
        
 </div>
-<div className="bg-[#E9F2F2] h-[18%] my-2 rounded-lg flex flex-col px-6 py-3 border-[#cdcdcd] border drop-shadow-lg ">
+<div className="bg-[#E9F2F2] h-[18%] my-2 rounded-lg flex flex-col px-6 py-3 border-[#cdcdcd] border drop-shadow-lg " style={{backgroundColor:secondaryColor}}>
 <div className="flex justify-between underline text-lg underline-offset-4 items-center h-[30%]  font-semibold">
             Selection
           </div>

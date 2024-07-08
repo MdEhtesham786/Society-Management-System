@@ -8,10 +8,14 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 // import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch} from "react-redux";
 import {setIsLoggedIn,setUser} from "../../reducer/authSlice"
+
 const Navbar = (props) => {
-  const {user} =props 
+  axios.defaults.withCredentials = true; //The most important line for cookies
+
+  const {user,adminSettings} =props 
+  const {primaryColor,secondaryColor}= adminSettings
   const dispatch = useDispatch()
   const location = useLocation();
   const isLoginPage = location.pathname === "/api/v1/auth/login";
@@ -42,7 +46,7 @@ dispatch(setUser({}))
   };
 
   return (
-    <nav className="navbar Container">
+    <nav className={`navbar Container`} style={{backgroundColor:secondaryColor}}>
       <Link to="/" className="logo-wrapper cursor-pointer">
         <div className="logo-icon">
           <img src={logo} alt="logo-icon" />

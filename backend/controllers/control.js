@@ -7,6 +7,7 @@
 // }; 
 import receiptModel from "../models/receiptModel.js";
 import memberModel from "../models/memberModel.js";
+import userModel from "../models/userModel.js";
 export const ledger = async (req, res) => {
     if (req.token) {
 
@@ -60,6 +61,41 @@ export const memberList = async (req, res) => {
         });
     }
 };
+export const adminSettingsGet = async (req, res) => {
+    if (req.token) {
+        const user = await userModel.findById(req.user.id);
+        return res.json({
+            success: true,
+            settings: user.settings
+        });
+    } else {
+        return res.json({
+            success: false,
+            message: 'User must be logged in to get access to this page',
+            cookies: req.cookies
+        });
+    }
+};
+export const adminSettingsPost = async (req, res) => {
+    if (req.token) {
+        const { primaryColor, secondaryColor } = req.body;
+        const newSettings = { primaryColor, secondaryColor };
+
+        const user = await userModel.findByIdAndUpdate(req.user.id, { settings: newSettings }, { new: true, runValidators: true });
+        await user.save();
+        return res.json({
+            success: true,
+            updatedSettings: user.settings
+        });
+    } else {
+        return res.json({
+            success: false,
+            message: 'User must be logged in to get access to this page',
+            cookies: req.cookies
+        });
+    }
+};
+
 
 
 

@@ -9,9 +9,10 @@ import { readFile } from "fs";
 // import userModel from "./models/userModel.js";
 import userRoutes from "./routes/userRoutes.js";
 import routes from "./routes/routes.js";
-import transactionRoutes from './routes/transactionRoutes.js'
+import transactionRoutes from './routes/transactionRoutes.js';
 import catchAsyncErrors from "./middleware/catchAsyncErrors.js";
 import userModel from "./models/userModel.js";
+import { setPrimaryColor } from "../frontend/src/reducer/adminSettingsSlice.js";
 
 const app = express();
 
@@ -29,12 +30,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1", routes);
-app.use('/api/v1/transaction', transactionRoutes)
+app.use('/api/v1/transaction', transactionRoutes);
 
 // Endpoints
 app.get("/", catchAsyncErrors(async (req, res, next) => {
-    res.json({ success: true });
-  })
+  res.json({ success: true });
+})
 );
 
 app.get("/makeSeller", catchAsyncErrors(async (req, res) => {
@@ -42,6 +43,18 @@ app.get("/makeSeller", catchAsyncErrors(async (req, res) => {
   // user.roles.push('admin');
   // await user.save();
   res.json({ user });
+})
+);
+app.get("/updateSeller", catchAsyncErrors(async (req, res) => {
+  // const user = await userModel.findOne({ _id: '663cc99733356e422ca18d05' });
+  // const settings = {
+  //   primaryColor: '#ffffff',
+  //   secondaryColor: '#e9f2f2'
+  // };
+  // const result = await userModel.findByIdAndUpdate('663cc99733356e422ca18d05', { settings }, { new: true, runValidators: true });
+  // user.roles.push('admin');
+  // await user.save();
+  res.json({ result });
 })
 );
 
