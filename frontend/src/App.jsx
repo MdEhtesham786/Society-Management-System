@@ -6,7 +6,7 @@ import SideMenu from "./layout/Side-Menu/SideMenu";
 import Login from "./pages/Login/Login";
 import { useEffect } from "react";
 // import axios from "axios";
-import axios from "./utils/axiosConfig.js" 
+import axios from "./utils/axiosConfig.js";
 import routes from "./routes";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoggedIn, setUser } from "./reducer/authSlice.js";
@@ -23,8 +23,8 @@ function App() {
   const isLoginPage = location.pathname === "/api/v1/auth/login";
   const [loading, setLoading] = useState(true); // State to track loading status
   const [authChecked, setAuthChecked] = useState(false); // State to track if authentication check completed
-  const [memberList, setMemberList] = useState([])
-  const adminSettings= useSelector((state)=>state.adminSettings)
+  const [memberList, setMemberList] = useState([]);
+  const adminSettings = useSelector((state) => state.adminSettings);
   //Redux State
   const user = useSelector((state) => state.auth.user);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -61,41 +61,41 @@ function App() {
   const fetchMemberList = async () => {
     try {
       const res = await axios.get(`/memberList`);
-      const { data } = res
+      const { data } = res;
       if (data.success) {
-        setMemberList(data.memberList)
-        console.log(memberList)
+        setMemberList(data.memberList);
+        console.log(memberList);
       } else {
-        console.log(data)
+        console.log(data);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
 
     }
-  }
-  const fetchAdminSettings = async()=>{
+  };
+  const fetchAdminSettings = async () => {
     try {
       const res = await axios.get(`/admin/settings`);
-      const { data } = res
+      const { data } = res;
       if (data.success) {
-        dispatch(setPrimaryColor(data.settings.primaryColor))
-        dispatch(setSecondaryColor(data.settings.secondaryColor))
+        dispatch(setPrimaryColor(data.settings.primaryColor));
+        dispatch(setSecondaryColor(data.settings.secondaryColor));
       } else {
-        console.log(data)
+        console.log(data);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
 
     }
-  }
+  };
   //USE EFFECT
   useEffect(() => {
-    fetchData()
-    fetchMemberList()
+    fetchData();
+    fetchMemberList();
   }, []);
-  useEffect(()=>{
-    fetchAdminSettings()
-  },[location.pathname])
+  useEffect(() => {
+    fetchAdminSettings();
+  }, [location.pathname]);
   useEffect(() => {
 
     if ((authChecked && !isLoggedIn) || !user) {
@@ -108,18 +108,17 @@ function App() {
     <>
 
       <Navbar user={user} adminSettings={adminSettings} />
-      <div className="Container" style={{backgroundColor:adminSettings.primaryColor}}>
+      <div className="Container" style={{ backgroundColor: adminSettings.primaryColor }}>
         {isLoginPage ? null : <SideMenu />}
         <section
-          className={`${
-            isLoginPage ? "w-full" : "w-[78.77%]"
-          } mt-3 h-[40.37rem] max-h-[40.37rem] overflow-y-auto`}
+          className={`${isLoginPage ? "w-full" : "w-[78.77%]"
+            } mt-3 h-[40.37rem] max-h-[40.37rem] overflow-y-auto`}
         >
           {loading ? (
             <Spinner />
           ) : (
             <Routes>
-              {routes.map((route, index) => ( 
+              {routes.map((route, index) => (
                 <Route
                   key={index}
                   path={index === 0 ? route.path : defaultPath + route.path}
